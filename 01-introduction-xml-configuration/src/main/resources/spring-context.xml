@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="questionsReadService" class="ru.otus.shurupov.spring.introdutionxmlconfig.service.QuestionsReadService"/>
+    <bean id="questionsReadService" class="ru.otus.shurupov.spring.introdutionxmlconfig.service.QuestionsReadService">
+        <constructor-arg value="questions.csv"/>
+    </bean>
 
 </beans>

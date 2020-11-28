@@ -15,11 +15,16 @@ import java.util.List;
 
 @Service
 public class QuestionsReadService {
-    private static final String QUESTIONS_FILE_NAME = "questions.csv";
+
+    private final String questionsFileName;
+
+    public QuestionsReadService(String questionsFileName) {
+        this.questionsFileName = questionsFileName;
+    }
 
     public List<Question> readQuestions() throws IOException {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(QUESTIONS_FILE_NAME).getFile());
+        File file = new File(classLoader.getResource(questionsFileName).getFile());
         Reader in = new FileReader(file);
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader(new String[]{"question", "answer1", "answer2", "answer3"}).parse(in);
         List<Question> questions = new ArrayList<>();
@@ -28,12 +33,5 @@ public class QuestionsReadService {
             questions.add(question);
         }
         return questions;
-    }
-
-    public String removeQuotes(String value) {
-        if (value.startsWith("\"") && value.endsWith("\"")) {
-            return value.substring(1, value.length() - 2);
-        }
-        return value;
     }
 }
