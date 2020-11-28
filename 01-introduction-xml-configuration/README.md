@@ -1,7 +1,7 @@
 # Spring Context Introduction. XML Configuration
 
 ## Task
-It is needed to create an application that reads questions and answers from an CSV-file from a classpath and outputs them in terminal.
+You need to create an application that reads questions and answers from an CSV-file in a classpath and outputs them in terminal.
 
 ## Some implementation details
 * Spring context contains one bean

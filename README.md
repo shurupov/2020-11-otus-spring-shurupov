@@ -6,5 +6,5 @@
 
 ### [Spring Context Introduction. XML Configuration](01-introduction-xml-configuration)
 
-It is needed to create an application that reads questions and answers from an CSV-file from a classpath and outputs them in terminal.
+You need to create an application that reads questions and answers from an CSV-file in a classpath and outputs them in terminal.
 
