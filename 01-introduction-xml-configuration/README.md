@@ -10,3 +10,8 @@ You need to create an application that reads questions and answers from an CSV-f
 * Service bean has only one method.
 * This method reads data from CSV-file from classpath and maps it to a list of domain objects
 * Single bean method is tested by unit-test.
+* Project is packaged to JAR and executed by `java -jar` command
+
+To build project to jar use command `maven package`
+
+To start application use command `java -jar target/01-introduction-xml-configuration-1.0-spring-boot.jar`
