@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.introdutionxmlconfig.service;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.shurupov.spring.introdutionxmlconfig.domain.Question;
 
@@ -8,12 +9,14 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DisplayName("QuestionsReadService")
 class QuestionsReadServiceTest {
 
     private QuestionsReadService questionsReadService;
 
+    @DisplayName("Read questions correctly")
     @Test
-    public void readQuestions() throws IOException {
+    public void shouldReadQuestionsCorrectly() throws IOException {
         questionsReadService = new QuestionsReadService("testquestions.csv");
         List<Question> questions = questionsReadService.readQuestions();
         assertEquals(2, questions.size());
