@@ -7,6 +7,9 @@ import ru.otus.shurupov.spring.introdutionxmlconfig.domain.Question;
 import java.io.IOException;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.atIndex;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DisplayName("QuestionsReadService")
@@ -19,16 +22,20 @@ class QuestionsReadServiceTest {
     public void shouldReadQuestionsCorrectly() throws IOException {
         questionsReadService = new QuestionsReadService("testquestions.csv");
         List<Question> questions = questionsReadService.readQuestions();
-        assertEquals(2, questions.size());
-        assertEquals("The first question", questions.get(0).getQuestion());
-        assertEquals(3, questions.get(0).getAnswers().size());
-        assertEquals("The first answer", questions.get(0).getAnswers().get(0));
-        assertEquals("The second answer", questions.get(0).getAnswers().get(1));
-        assertEquals("The third answer", questions.get(0).getAnswers().get(2));
-        assertEquals("The second question", questions.get(1).getQuestion());
-        assertEquals(3, questions.get(1).getAnswers().size());
-        assertEquals("1", questions.get(1).getAnswers().get(0));
-        assertEquals("2", questions.get(1).getAnswers().get(1));
-        assertEquals("3", questions.get(1).getAnswers().get(2));
+        assertAll(
+                () -> assertThat(questions).hasSize(2),
+                () -> assertThat(questions.get(0).getQuestion()).isEqualTo("The first question"),
+                () -> assertThat(questions.get(0).getAnswers())
+                    .hasSize(3)
+                    .contains("The first answer", atIndex(0))
+                    .contains("The second answer", atIndex(1))
+                    .contains("The third answer", atIndex(2)),
+                () -> assertThat(questions.get(1).getQuestion()).isEqualTo("The second question"),
+                () -> assertThat(questions.get(1).getAnswers())
+                        .hasSize(3)
+                        .contains("1", atIndex(0))
+                        .contains("2", atIndex(1))
+                        .contains("3", atIndex(2))
+        );
     }
 }
