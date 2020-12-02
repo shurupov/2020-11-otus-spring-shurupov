@@ -24,10 +24,14 @@ public class QuestionsReadService {
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream csvStream = classLoader.getResource(questionsFileName).openStream();
         Reader in = new InputStreamReader(csvStream);
-        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader(new String[]{"question", "answer1", "answer2", "answer3"}).parse(in);
+        Iterable<CSVRecord> records = CSVFormat.DEFAULT.withHeader(new String[]{"question", "answer1", "answer2", "answer3", "correctAnswer"}).parse(in);
         List<Question> questions = new ArrayList<>();
         for (CSVRecord record : records) {
-            Question question = new Question(record.get("question"), Arrays.asList(record.get("answer1"), record.get("answer2"), record.get("answer3")));
+            Question question = new Question(
+                    record.get("question"),
+                    Arrays.asList(record.get("answer1"), record.get("answer2"), record.get("answer3")),
+                    Integer.parseInt(record.get("correctAnswer"))
+            );
             questions.add(question);
         }
         return questions;
