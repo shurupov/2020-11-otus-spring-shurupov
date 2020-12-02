@@ -2,6 +2,7 @@ package ru.otus.shurupov.spring.introdutionxmlconfig.service;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.otus.shurupov.spring.introdutionxmlconfig.domain.Question;
 
@@ -15,7 +16,7 @@ public class QuestionsReadService {
 
     private final String questionsFileName;
 
-    public QuestionsReadService(String questionsFileName) {
+    public QuestionsReadService(@Value("${questions.path}") String questionsFileName) {
         this.questionsFileName = questionsFileName;
     }
 
