@@ -1,4 +1,4 @@
-package ru.otus.shurupov.spring.introdutionxmlconfig.service;
+package ru.otus.shurupov.spring.introdutionxmlconfig.dao;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -12,11 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class QuestionsReadService {
+public class QuestionsDao {
 
     private final String questionsFileName;
 
-    public QuestionsReadService(@Value("${questions.path}") String questionsFileName) {
+    public QuestionsDao(@Value("${questions.path}") String questionsFileName) {
         this.questionsFileName = questionsFileName;
     }
 
