@@ -7,6 +7,8 @@ import ru.otus.shurupov.spring.introdutionxmlconfig.domain.Question;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class QuestionService {
@@ -15,19 +17,23 @@ public class QuestionService {
     private final QuestionsDao questionsDao;
     private final InteractiveService interactiveService;
     private final int quizQuestionCount;
-    //Wanted to store this to properties. Couldn't
-    private final Map<Double, Integer> scoresToRating = Map.of(
-            1.0, 5,
-            0.8, 4,
-            0.6, 3
-    );
+    private final Map<Double, Integer> scoresToRating = new LinkedHashMap<>();
 
     public QuestionService(QuestionsDao questionsDao,
                            InteractiveService interactiveService,
-                           @Value("${quiz.questionCount}") int quizQuestionCount) {
+                           @Value("${quiz.questionCount}") int quizQuestionCount,
+                           @Value("${quiz.scores}") String scores) {
         this.interactiveService = interactiveService;
         this.quizQuestionCount = quizQuestionCount;
         this.questionsDao = questionsDao;
+        initScores(scores);
+    }
+
+    private void initScores(String scores) {
+        List<Double> scoresList = Stream.of(scores.split(",")).map(Double::parseDouble).collect(Collectors.toList());
+        for (int i = 0; i < scoresList.size(); i++) {
+            scoresToRating.put(scoresList.get(i), 5 - i);
+        }
     }
 
     public void quiz() throws IOException {
@@ -54,7 +60,7 @@ public class QuestionService {
         } while (askedQuestions < quizQuestionCount && !questions.isEmpty());
         float result = (float) correctAnswers / askedQuestions;
         int rating = getRating(result);
-        interactiveService.println(firstName + " " + lastName +", your result is " + rating);
+        interactiveService.println(firstName + " " + lastName +", your rating is " + rating);
     }
 
     private void printQuestion(Question question) {
