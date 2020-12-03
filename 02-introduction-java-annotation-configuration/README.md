@@ -12,4 +12,4 @@ You need to create an application that asks first name and last name then writes
 
 To build project to jar use command `maven package`
 
-To start application use command `java -jar target/01-introduction-xml-configuration-1.0-spring-boot.jar`
+To start application use command `java -jar target/02-introduction-java-annotation-configuration-1.0-spring-boot.jar`
