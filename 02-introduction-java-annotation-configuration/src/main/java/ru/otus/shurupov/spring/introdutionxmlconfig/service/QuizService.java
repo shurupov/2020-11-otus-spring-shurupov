@@ -2,7 +2,7 @@ package ru.otus.shurupov.spring.introdutionxmlconfig.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import ru.otus.shurupov.spring.introdutionxmlconfig.dao.QuestionsDao;
+import ru.otus.shurupov.spring.introdutionxmlconfig.dao.QuestionDao;
 import ru.otus.shurupov.spring.introdutionxmlconfig.domain.Question;
 
 import java.io.IOException;
@@ -11,21 +11,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class QuestionService {
+public class QuizService {
     private final Random random = new Random();
 
-    private final QuestionsDao questionsDao;
+    private final QuestionDao questionDao;
     private final InteractiveService interactiveService;
     private final int quizQuestionCount;
     private final Map<Double, Integer> scoresToRating = new LinkedHashMap<>();
 
-    public QuestionService(QuestionsDao questionsDao,
-                           InteractiveService interactiveService,
-                           @Value("${quiz.questionCount}") int quizQuestionCount,
-                           @Value("${quiz.scores}") String scores) {
+    public QuizService(QuestionDao questionDao,
+                       InteractiveService interactiveService,
+                       @Value("${quiz.questionCount}") int quizQuestionCount,
+                       @Value("${quiz.scores}") String scores) {
         this.interactiveService = interactiveService;
         this.quizQuestionCount = quizQuestionCount;
-        this.questionsDao = questionsDao;
+        this.questionDao = questionDao;
         initScores(scores);
     }
 
@@ -37,7 +37,7 @@ public class QuestionService {
     }
 
     public void quiz() throws IOException {
-        List<Question> questions = new LinkedList<>(questionsDao.readQuestions());
+        List<Question> questions = new LinkedList<>(questionDao.readQuestions());
         int askedQuestions = 0;
         int correctAnswers = 0;
 
@@ -63,7 +63,7 @@ public class QuestionService {
         interactiveService.println(firstName + " " + lastName +", your rating is " + rating);
     }
 
-    private void printQuestion(Question question) {
+    protected void printQuestion(Question question) {
         StringBuilder answersText = new StringBuilder();
         for (int i = 0; i < question.getAnswers().size(); i++) {
             answersText.append(i + 1).append(") ").append(question.getAnswers().get(i));
@@ -76,7 +76,7 @@ public class QuestionService {
         interactiveService.println(textQuestion);
     }
 
-    private int getRating(float currentScore) {
+    protected int getRating(float currentScore) {
         for (Map.Entry<Double, Integer> entry : scoresToRating.entrySet()) {
             if (currentScore >= entry.getKey()) {
                 return entry.getValue();

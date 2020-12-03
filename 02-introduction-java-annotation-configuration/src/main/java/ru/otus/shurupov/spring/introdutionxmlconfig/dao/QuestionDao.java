@@ -12,11 +12,11 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class QuestionsDao {
+public class QuestionDao {
 
     private final String questionsFileName;
 
-    public QuestionsDao(@Value("${questions.path}") String questionsFileName) {
+    public QuestionDao(@Value("${questions.path}") String questionsFileName) {
         this.questionsFileName = questionsFileName;
     }
 

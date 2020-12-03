@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.introdutionxmlconfig.dao;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.shurupov.spring.introdutionxmlconfig.domain.Question;
@@ -12,15 +13,19 @@ import static org.assertj.core.api.Assertions.atIndex;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("QuestionDao")
-class QuestionsDaoTest {
+class QuestionDaoTest {
 
-    private QuestionsDao questionsDao;
+    private QuestionDao questionDao;
+
+    @BeforeEach
+    private void setup() {
+        questionDao = new QuestionDao("testquestions.csv");
+    }
 
     @DisplayName("Read questions correctly")
     @Test
     public void shouldReadQuestionsCorrectly() throws IOException {
-        questionsDao = new QuestionsDao("testquestions.csv");
-        List<Question> questions = questionsDao.readQuestions();
+        List<Question> questions = questionDao.readQuestions();
         assertAll(
                 () -> assertAll(
                         () -> assertThat(questions).hasSize(2),
