@@ -51,17 +51,20 @@ class QuestionServiceTest {
         when(interactiveService.readString()).thenReturn("Maxim", "Patashov");
         when(interactiveService.readInt()).thenReturn(2);
         quizService.quiz();
-        verify(interactiveService, times(3)).readInt();
-        verify(interactiveService, times(2)).readString();
-        verify(interactiveService, times(1)).println(eq("Enter your first name"));
-        verify(interactiveService, times(1)).println(eq("Enter your last name"));
-        verify(interactiveService, times(1)).println(eq("Your answer is Maybe"));
-        verify(interactiveService, times(1)).println(eq("Your answer is Anywhere"));
-        verify(interactiveService, times(1)).println(eq("Your answer is Now"));
-        verify(interactiveService, times(1)).println(eq("Maxim Patashov, your rating is 3"));
-        verify(interactiveService, times(1)).println(eq("Question: What?\nAnswers: 1) Yes; 2) No; 3) Maybe"));
-        verify(interactiveService, times(1)).println(eq("Question: Where?\nAnswers: 1) Here; 2) There; 3) Anywhere"));
-        verify(interactiveService, times(1)).println(eq("Question: When?\nAnswers: 1) Tomorrow; 2) Yesterday; 3) Now"));
+        assertAll(
+                () -> verify(interactiveService, times(3)).readInt(),
+                () -> verify(interactiveService, times(2)).readString(),
+                () -> verify(interactiveService, times(1)).println(eq("Enter your first name")),
+                () -> verify(interactiveService, times(1)).println(eq("Enter your last name")),
+                () -> verify(interactiveService, times(1)).println(eq("Your answer is Maybe")),
+                () -> verify(interactiveService, times(1)).println(eq("Your answer is Anywhere")),
+                () -> verify(interactiveService, times(1)).println(eq("Your answer is Now")),
+                () -> verify(interactiveService, times(1)).println(eq("Maxim Patashov, your rating is 3")),
+                () -> verify(interactiveService, times(1)).println(eq("Question: What?\nAnswers: 1) Yes; 2) No; 3) Maybe")),
+                () -> verify(interactiveService, times(1)).println(eq("Question: Where?\nAnswers: 1) Here; 2) There; 3) Anywhere")),
+                () -> verify(interactiveService, times(1)).println(eq("Question: When?\nAnswers: 1) Tomorrow; 2) Yesterday; 3) Now"))
+        );
+
     }
 
     @Test
