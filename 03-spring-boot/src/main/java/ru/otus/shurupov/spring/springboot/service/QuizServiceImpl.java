@@ -21,7 +21,7 @@ public class QuizServiceImpl implements QuizService {
 
     public QuizServiceImpl(QuestionDao questionDao,
                            InteractiveService interactiveService,
-                           @Value("${quiz.questionCount}") int quizQuestionCount,
+                           @Value("${quiz.questions.count}") int quizQuestionCount,
                            @Value("${quiz.scores}") String scores) {
         this.interactiveService = interactiveService;
         this.quizQuestionCount = quizQuestionCount;

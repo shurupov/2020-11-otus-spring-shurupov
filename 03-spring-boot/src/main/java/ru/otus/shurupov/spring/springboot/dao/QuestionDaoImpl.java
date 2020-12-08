@@ -19,7 +19,7 @@ public class QuestionDaoImpl implements QuestionDao {
 
     private final String questionsFileName;
 
-    public QuestionDaoImpl(@Value("${questions.path}") String questionsFileName) {
+    public QuestionDaoImpl(@Value("${quiz.questions.path}") String questionsFileName) {
         this.questionsFileName = questionsFileName;
     }
 

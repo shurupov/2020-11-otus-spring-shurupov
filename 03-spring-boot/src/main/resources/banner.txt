@@ -3,4 +3,4 @@ ${AnsiColor.GREEN}'   .-'  |  ,---.  ,--.,--. ,--.--. ,--.,--.  ,---.   ,---.  ,
 ${AnsiColor.GREEN}`.  `-.  |  .-.  | |  ||  | |  .--' |  ||  | | .-. | | .-. |  \  `'  /    ${AnsiColor.RED}| .-. | |  ||  | ,--. `-.  /
 ${AnsiColor.GREEN}.-'    | |  | |  | '  ''  ' |  |    '  ''  ' | '-' ' ' '-' '   \    /     ${AnsiColor.RED}' '-' | '  ''  ' |  |  /  `-.
 ${AnsiColor.GREEN}`-----'  `--' `--'  `----'  `--'     `----'  |  |-'   `---'     `--'      ${AnsiColor.RED} `-|  |  `----'  `--' `-----'
-                                             `--'                            `--'
+${AnsiColor.GREEN}                                             `--'                         ${AnsiColor.RED}   `--'
