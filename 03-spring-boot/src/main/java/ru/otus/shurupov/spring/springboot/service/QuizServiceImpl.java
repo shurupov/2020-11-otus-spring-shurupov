@@ -1,6 +1,7 @@
 package ru.otus.shurupov.spring.springboot.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.shurupov.spring.springboot.dao.QuestionDao;
 import ru.otus.shurupov.spring.springboot.domain.Question;
@@ -16,16 +17,21 @@ public class QuizServiceImpl implements QuizService {
 
     private final QuestionDao questionDao;
     private final InteractiveService interactiveService;
+    private final MessageSource messageSource;
     private final int quizQuestionCount;
+    private final Locale locale;
     private final Map<Double, Integer> scoresToRating = new LinkedHashMap<>();
 
     public QuizServiceImpl(QuestionDao questionDao,
                            InteractiveService interactiveService,
-                           @Value("${quiz.questions.count}") int quizQuestionCount,
-                           @Value("${quiz.scores}") String scores) {
+                           MessageSource messageSource, @Value("${quiz.questions.count}") int quizQuestionCount,
+                           @Value("${quiz.scores}") String scores,
+                           @Value("${quiz.locale}") Locale locale) {
         this.interactiveService = interactiveService;
+        this.messageSource = messageSource;
         this.quizQuestionCount = quizQuestionCount;
         this.questionDao = questionDao;
+        this.locale = locale;
         initScores(scores);
     }
 
@@ -41,9 +47,9 @@ public class QuizServiceImpl implements QuizService {
         int askedQuestions = 0;
         int correctAnswers = 0;
 
-        interactiveService.println("Enter your first name");
+        interactiveService.println(messageSource.getMessage("Enter your first name", new String[] {}, locale));
         String firstName = interactiveService.readString();
-        interactiveService.println("Enter your last name");
+        interactiveService.println(messageSource.getMessage("Enter your last name", new String[] {}, locale));
         String lastName = interactiveService.readString();
 
         do {
@@ -51,7 +57,7 @@ public class QuizServiceImpl implements QuizService {
             Question question = questions.remove(questionNumber);
             printQuestion(question);
             int answer = interactiveService.readInt();
-            interactiveService.println("Your answer is " + question.getAnswers().get(answer));
+            interactiveService.println(messageSource.getMessage("Your answer is", new String[] { question.getAnswers().get(answer) }, locale));
             interactiveService.println();
             if (answer == question.getCorrectAnswerNumber()) {
                 correctAnswers++;
@@ -60,7 +66,7 @@ public class QuizServiceImpl implements QuizService {
         } while (askedQuestions < quizQuestionCount && !questions.isEmpty());
         float result = (float) correctAnswers / askedQuestions;
         int rating = getRating(result);
-        interactiveService.println(firstName + " " + lastName +", your rating is " + rating);
+        interactiveService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
     }
 
     protected void printQuestion(Question question) {
@@ -71,8 +77,7 @@ public class QuizServiceImpl implements QuizService {
                 answersText.append("; ");
             }
         }
-        String textQuestion = "Question: " + question.getQuestion() + "\n" +
-                "Answers: " + answersText;
+        String textQuestion = messageSource.getMessage("Question", new Object[] { question.getQuestion(), answersText }, locale);
         interactiveService.println(textQuestion);
     }
 

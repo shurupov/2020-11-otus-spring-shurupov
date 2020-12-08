@@ -3,4 +3,4 @@ quiz:
     path: questions.csv
     count: 5
   scores: 1.0,0.8,0.6
-  locale: en
+  locale: ru

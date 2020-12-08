@@ -3,11 +3,13 @@ package ru.otus.shurupov.spring.springboot.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.MessageSource;
 import ru.otus.shurupov.spring.springboot.dao.QuestionDao;
 import ru.otus.shurupov.spring.springboot.domain.Question;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -18,12 +20,14 @@ class QuizServiceImplTest {
     private QuizServiceImpl quizService;
     private QuestionDao questionDao;
     private InteractiveService interactiveService;
+    private MessageSource messageSource;
 
     @BeforeEach
     private void setup() {
         questionDao = mock(QuestionDao.class);
         interactiveService = mock(InteractiveService.class);
-        quizService = new QuizServiceImpl(questionDao, interactiveService, 3, "1,0.8,0.6");
+        messageSource = mock(MessageSource.class);
+        quizService = new QuizServiceImpl(questionDao, interactiveService, messageSource, 3, "1,0.8,0.6", Locale.ENGLISH);
     }
 
     @Test
