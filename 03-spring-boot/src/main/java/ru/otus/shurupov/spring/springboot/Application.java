@@ -2,12 +2,18 @@ package ru.otus.shurupov.spring.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import ru.otus.shurupov.spring.springboot.service.QuizService;
+
+import java.io.IOException;
 
 @SpringBootApplication
 public class Application {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+	public static void main(String[] args) throws IOException {
+		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+		QuizService quizService = context.getBean(QuizService.class);
+		quizService.quiz();
 	}
 
 }
