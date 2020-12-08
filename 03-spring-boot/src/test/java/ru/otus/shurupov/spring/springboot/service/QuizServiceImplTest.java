@@ -21,14 +21,12 @@ class QuizServiceImplTest {
     private QuizServiceImpl quizService;
     private QuestionDao questionDao;
     private InteractiveService interactiveService;
-    private MessageSource messageSource;
 
     @BeforeEach
     private void setup() {
         questionDao = mock(QuestionDao.class);
         interactiveService = mock(InteractiveService.class);
-        messageSource = messageSource();
-        quizService = new QuizServiceImpl(questionDao, interactiveService, messageSource, 3, "1,0.8,0.6", Locale.ENGLISH);
+        quizService = new QuizServiceImpl(questionDao, interactiveService, messageSource(), 3, "1,0.8,0.6", Locale.ENGLISH);
     }
 
     @Test
