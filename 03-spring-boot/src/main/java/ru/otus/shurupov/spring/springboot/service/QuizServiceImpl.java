@@ -1,15 +1,13 @@
 package ru.otus.shurupov.spring.springboot.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import ru.otus.shurupov.spring.springboot.config.QuizProps;
 import ru.otus.shurupov.spring.springboot.dao.QuestionDao;
 import ru.otus.shurupov.spring.springboot.domain.Question;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class QuizServiceImpl implements QuizService {
@@ -20,26 +18,17 @@ public class QuizServiceImpl implements QuizService {
     private final MessageSource messageSource;
     private final int quizQuestionCount;
     private final Locale locale;
-    private final Map<Double, Integer> scoresToRating = new LinkedHashMap<>();
+    private final Map<Double, Integer> scoresToRating;
 
     public QuizServiceImpl(QuestionDao questionDao,
                            InteractiveService interactiveService,
-                           MessageSource messageSource, @Value("${quiz.questions.count}") int quizQuestionCount,
-                           @Value("${quiz.scores}") String scores,
-                           @Value("${quiz.locale}") Locale locale) {
+                           MessageSource messageSource, QuizProps quizProps) {
         this.interactiveService = interactiveService;
         this.messageSource = messageSource;
-        this.quizQuestionCount = quizQuestionCount;
         this.questionDao = questionDao;
-        this.locale = locale;
-        initScores(scores);
-    }
-
-    private void initScores(String scores) {
-        List<Double> scoresList = Stream.of(scores.split(",")).map(Double::parseDouble).collect(Collectors.toList());
-        for (int i = 0; i < scoresList.size(); i++) {
-            scoresToRating.put(scoresList.get(i), 5 - i);
-        }
+        this.quizQuestionCount = quizProps.getQuestions().getCount();
+        this.locale = quizProps.getLocale();
+        this.scoresToRating = quizProps.getScores();
     }
 
     public void quiz() throws IOException {

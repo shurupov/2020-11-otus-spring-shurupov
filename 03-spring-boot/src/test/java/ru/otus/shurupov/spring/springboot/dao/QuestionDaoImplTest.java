@@ -3,6 +3,7 @@ package ru.otus.shurupov.spring.springboot.dao;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.otus.shurupov.spring.springboot.config.QuizProps;
 import ru.otus.shurupov.spring.springboot.domain.Question;
 
 import java.io.IOException;
@@ -19,7 +20,11 @@ class QuestionDaoImplTest {
 
     @BeforeEach
     private void setup() {
-        questionDao = new QuestionDaoImpl("testquestions.csv");
+        QuizProps.Questions questionsProps = new QuizProps.Questions();
+        questionsProps.setPath("testquestions.csv");
+        QuizProps props = new QuizProps();
+        props.setQuestions(questionsProps);
+        questionDao = new QuestionDaoImpl(props);
     }
 
     @DisplayName("Read questions correctly")

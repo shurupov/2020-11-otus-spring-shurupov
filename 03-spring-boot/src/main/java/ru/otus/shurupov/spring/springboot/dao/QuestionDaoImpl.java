@@ -2,8 +2,8 @@ package ru.otus.shurupov.spring.springboot.dao;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import ru.otus.shurupov.spring.springboot.config.QuizProps;
 import ru.otus.shurupov.spring.springboot.domain.Question;
 
 import java.io.IOException;
@@ -19,8 +19,8 @@ public class QuestionDaoImpl implements QuestionDao {
 
     private final String questionsFileName;
 
-    public QuestionDaoImpl(@Value("${quiz.questions.path}") String questionsFileName) {
-        this.questionsFileName = questionsFileName;
+    public QuestionDaoImpl(QuizProps props) {
+        this.questionsFileName = props.getQuestions().getPath();
     }
 
     public List<Question> readQuestions() throws IOException {

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import ru.otus.shurupov.spring.springboot.config.QuizProps;
 import ru.otus.shurupov.spring.springboot.dao.QuestionDao;
 import ru.otus.shurupov.spring.springboot.domain.Question;
 
@@ -26,7 +27,14 @@ class QuizServiceImplTest {
     private void setup() {
         questionDao = mock(QuestionDao.class);
         interactiveService = mock(InteractiveService.class);
-        quizService = new QuizServiceImpl(questionDao, interactiveService, messageSource(), 3, "1,0.8,0.6", Locale.ENGLISH);
+        QuizProps props = new QuizProps();
+        QuizProps.Questions questionsProps = new QuizProps.Questions();
+        questionsProps.setCount(3);
+        props.setQuestions(questionsProps);
+        props.setLocale(Locale.ENGLISH);
+        props.setScores("1,0.8,0.6");
+
+        quizService = new QuizServiceImpl(questionDao, interactiveService, messageSource(), props);
     }
 
     @Test
