@@ -2,6 +2,7 @@ package ru.otus.shurupov.spring.springboot.service;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
+import ru.otus.shurupov.spring.springboot.aop.QuizLogging;
 import ru.otus.shurupov.spring.springboot.config.QuizProps;
 import ru.otus.shurupov.spring.springboot.dao.QuestionDao;
 import ru.otus.shurupov.spring.springboot.domain.Question;
@@ -31,6 +32,7 @@ public class QuizServiceImpl implements QuizService {
         this.scoresToRating = quizProps.getScores();
     }
 
+    @QuizLogging
     public void quiz() throws IOException {
         List<Question> questions = new LinkedList<>(questionDao.readQuestions());
         int askedQuestions = 0;
