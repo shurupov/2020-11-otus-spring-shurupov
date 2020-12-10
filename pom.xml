@@ -13,5 +13,6 @@
     <modules>
         <module>01-introduction-xml-configuration</module>
         <module>02-introduction-java-annotation-configuration</module>
+        <module>03-spring-boot</module>
     </modules>
 </project>
