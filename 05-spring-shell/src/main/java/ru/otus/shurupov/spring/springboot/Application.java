@@ -14,11 +14,7 @@ import java.io.IOException;
 @EnableConfigurationProperties(QuizProps.class)
 @EnableAspectJAutoProxy
 public class Application {
-
-	public static void main(String[] args) throws IOException {
-		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-		QuizService quizService = context.getBean(QuizService.class);
-		quizService.quiz();
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
 	}
-
 }
