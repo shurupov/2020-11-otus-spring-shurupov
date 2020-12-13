@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.springboot.config;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.LinkedHashMap;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ConfigurationProperties(prefix = "quiz")
+@Getter
 public class QuizProps {
     private Questions questions;
     private Map<Double, Integer> scoresToRating;

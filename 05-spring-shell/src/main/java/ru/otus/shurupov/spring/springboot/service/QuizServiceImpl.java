@@ -21,6 +21,8 @@ public class QuizServiceImpl implements QuizService {
     private final Locale locale;
     private final Map<Double, Integer> scoresToRating;
 
+    private String firstName;
+
     public QuizServiceImpl(QuestionDao questionDao,
                            InteractiveService interactiveService,
                            MessageSource messageSource, QuizProps quizProps) {
@@ -30,6 +32,11 @@ public class QuizServiceImpl implements QuizService {
         this.quizQuestionCount = quizProps.getQuestions().getCount();
         this.locale = quizProps.getLocale();
         this.scoresToRating = quizProps.getScores();
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        System.out.println("Hello, " + this.firstName + "!");
     }
 
     @QuizLogging
