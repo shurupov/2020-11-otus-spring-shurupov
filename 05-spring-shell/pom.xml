@@ -10,10 +10,10 @@
 	</parent>
 
 	<groupId>ru.otus.shurupov.spring</groupId>
-	<artifactId>03-spring-boot</artifactId>
+	<artifactId>05-spring-shell</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>03-spring-boot</name>
-	<description>Demo project for Spring Boot</description>
+	<name>05-spring-shell</name>
+	<description>Demo project for Spring Shell</description>
 
 	<properties>
 		<java.version>11</java.version>
