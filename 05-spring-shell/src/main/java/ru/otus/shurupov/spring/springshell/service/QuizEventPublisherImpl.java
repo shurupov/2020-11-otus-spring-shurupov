@@ -3,6 +3,7 @@ package ru.otus.shurupov.spring.springshell.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
+import ru.otus.shurupov.spring.springshell.event.AnswerEvent;
 import ru.otus.shurupov.spring.springshell.event.EnterFirstNameEvent;
 import ru.otus.shurupov.spring.springshell.event.EnterLastNameEvent;
 import ru.otus.shurupov.spring.springshell.event.EnterNameEvent;
@@ -30,6 +31,13 @@ public class QuizEventPublisherImpl implements QuizEventPublisher {
     public void publishNameEntered(String firstName, String lastName) {
         applicationEventPublisher.publishEvent(
                 new EnterNameEvent(this, firstName, lastName)
+        );
+    }
+
+    @Override
+    public void publishAnswered(int answerNumber) {
+        applicationEventPublisher.publishEvent(
+                new AnswerEvent(this, answerNumber)
         );
     }
 

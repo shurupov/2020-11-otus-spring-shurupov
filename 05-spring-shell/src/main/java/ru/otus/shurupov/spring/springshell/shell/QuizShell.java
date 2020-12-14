@@ -35,10 +35,22 @@ public class QuizShell {
         quizEventPublisher.publishNameEntered(firstName, lastName);
     }
 
+    @ShellMethod(value = "Enter answer number", key = {"a", "answer"})
+    @ShellMethodAvailability("isAnsweringAvailable")
+    public void enterAnswer(@ShellOption(defaultValue = "-1") int answerNumber) {
+        quizEventPublisher.publishAnswered(answerNumber);
+    }
+
     public Availability isEnteringNameAvailable() {
+        return QuizState.ENTERING_NAME.equals(quizService.getState())
+                ? Availability.available()
+                : Availability.unavailable("you have already entered name");
+    }
+
+    public Availability isAnsweringAvailable() {
         return QuizState.QUESTIONS.equals(quizService.getState())
-                ? Availability.unavailable("you have already entered name")
-                : Availability.available();
+                ? Availability.available()
+                : Availability.unavailable("first enter your name");
     }
 
 }

@@ -3,6 +3,7 @@ package ru.otus.shurupov.spring.springshell.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
+import ru.otus.shurupov.spring.springshell.event.AnswerEvent;
 import ru.otus.shurupov.spring.springshell.event.EnterFirstNameEvent;
 import ru.otus.shurupov.spring.springshell.event.EnterLastNameEvent;
 import ru.otus.shurupov.spring.springshell.event.EnterNameEvent;
@@ -26,5 +27,10 @@ public class QuizEventListener {
     @EventListener
     public void setFullName(EnterNameEvent enterNameEvent) {
         quizService.setFullName(enterNameEvent.getFirstName(), enterNameEvent.getLastName());
+    }
+
+    @EventListener
+    public void answer(AnswerEvent answerEvent) {
+        quizService.answer(answerEvent.getAnswerNumber());
     }
 }

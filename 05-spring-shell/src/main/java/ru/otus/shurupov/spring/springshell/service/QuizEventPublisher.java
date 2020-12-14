@@ -6,4 +6,6 @@ public interface QuizEventPublisher {
     void publishLastNameEntered(String lastName);
 
     void publishNameEntered(String firstName, String lastName);
+
+    void publishAnswered(int answerNumber);
 }

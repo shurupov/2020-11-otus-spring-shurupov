@@ -27,6 +27,12 @@ public class QuizServiceImpl implements QuizService {
 
     private QuizState state = QuizState.ENTERING_NAME;
 
+    private List<Question> questions;
+    private Question question;
+
+    private int askedQuestions = 0;
+    private int correctAnswers = 0;
+
     public QuizServiceImpl(QuestionDao questionDao,
                            InteractiveService interactiveService,
                            MessageSource messageSource, QuizProps quizProps) {
@@ -43,19 +49,19 @@ public class QuizServiceImpl implements QuizService {
     }
 
     public void setFirstName(String firstName) {
+        this.firstName = firstName;
         if (lastName == null) {
             System.out.println("Enter also last name");
         } else {
-            this.firstName = firstName;
             nameEntered();
         }
     }
 
     public void setLastName(String lastName) {
+        this.lastName = lastName;
         if (this.firstName == null) {
             System.out.println("Enter also first name");
         } else {
-            this.lastName = lastName;
             nameEntered();
         }
     }
@@ -69,11 +75,43 @@ public class QuizServiceImpl implements QuizService {
     private void nameEntered() {
         state = QuizState.QUESTIONS;
         System.out.println("Hello, " + this.firstName + " " + this.lastName + "!");
+        startQuiz();
+    }
+
+    private void startQuiz() {
+        try {
+            questions = new LinkedList<>(questionDao.readQuestions());
+            askQuestion();
+        } catch (IOException e) {
+            throw new RuntimeException("Questions can't be read");
+        }
+    }
+
+    private void askQuestion() {
+        int questionNumber = random.nextInt(questions.size());
+        question = questions.remove(questionNumber);
+        printQuestion(question);
+    }
+
+    public void answer(int answerNumber) {
+        interactiveService.println(messageSource.getMessage("Your answer is", new String[] { question.getAnswers().get(answerNumber) }, locale));
+        interactiveService.println();
+        if (answerNumber == question.getCorrectAnswerNumber()) {
+            correctAnswers++;
+        }
+        askedQuestions++;
+        if (askedQuestions < quizQuestionCount && !questions.isEmpty()) {
+            askQuestion();
+        } else {
+            float result = (float) correctAnswers / askedQuestions;
+            int rating = getRating(result);
+            interactiveService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
+        }
     }
 
     @QuizLogging
     public void quiz() throws IOException {
-        List<Question> questions = new LinkedList<>(questionDao.readQuestions());
+        questions = new LinkedList<>(questionDao.readQuestions());
         int askedQuestions = 0;
         int correctAnswers = 0;
 
