@@ -45,7 +45,7 @@ public class QuizServiceImpl implements QuizService {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
         if (lastName == null) {
-            outputService.printMessage("Enter also last name");
+            outputService.println("Enter also last name");
         } else {
             nameEntered();
         }
@@ -54,7 +54,7 @@ public class QuizServiceImpl implements QuizService {
     public void setLastName(String lastName) {
         this.lastName = lastName;
         if (this.firstName == null) {
-            outputService.printMessage("Enter also first name");
+            outputService.println("Enter also first name");
         } else {
             nameEntered();
         }
@@ -68,7 +68,7 @@ public class QuizServiceImpl implements QuizService {
 
     private void nameEntered() {
         state = QuizState.QUESTIONS;
-        outputService.printMessage("Hello", this.firstName, this.lastName);
+        outputService.println("Hello", this.firstName, this.lastName);
         startQuiz();
     }
 
@@ -88,7 +88,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     public void answer(int answerNumber) {
-        outputService.printMessage("Your answer is", question.getAnswers().get(answerNumber));
+        outputService.println("Your answer is", question.getAnswers().get(answerNumber));
         outputService.println();
         if (answerNumber == question.getCorrectAnswerNumber()) {
             correctAnswers++;
@@ -99,7 +99,7 @@ public class QuizServiceImpl implements QuizService {
         } else {
             float result = (float) correctAnswers / askedQuestions;
             int rating = getRating(result);
-            outputService.printMessage("your rating is", firstName, lastName, rating);
+            outputService.println("your rating is", firstName, lastName, rating);
             quit();
         }
     }
@@ -112,7 +112,7 @@ public class QuizServiceImpl implements QuizService {
                 answersText.append("; ");
             }
         }
-        outputService.printMessage("Question", question.getQuestion(), answersText.toString());
+        outputService.println("Question", question.getQuestion(), answersText.toString());
     }
 
     protected int getRating(float currentScore) {

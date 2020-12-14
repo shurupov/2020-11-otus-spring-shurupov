@@ -19,13 +19,8 @@ public class OutputServiceSystemImpl implements OutputService {
     }
 
     @Override
-    public void printMessage(String message, Object ...parameters) {
-        println(messageSource.getMessage(message, parameters, locale));
-    }
-
-    @Override
-    public void println(String text) {
-        System.out.println(text);
+    public void println(String message, Object ...parameters) {
+        System.out.println(messageSource.getMessage(message, parameters, locale));
     }
 
     @Override

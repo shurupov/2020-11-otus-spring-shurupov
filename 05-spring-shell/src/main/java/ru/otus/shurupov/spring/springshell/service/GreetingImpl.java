@@ -16,6 +16,6 @@ public class GreetingImpl implements Greeting {
     @Override
     @PostConstruct
     public void sayHello() {
-        outputService.printMessage("Hello! This is a quiz application!");
+        outputService.println("Hello! This is a quiz application!");
     }
 }

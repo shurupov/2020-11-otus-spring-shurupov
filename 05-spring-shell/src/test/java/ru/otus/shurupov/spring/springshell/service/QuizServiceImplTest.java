@@ -45,7 +45,7 @@ class QuizServiceImplTest {
                 2
         );
         quizService.printQuestion(question);
-        verify(outputService, times(1)).printMessage(eq("Question"), eq("What?"), eq("1) Yes; 2) No; 3) Maybe"));
+        verify(outputService, times(1)).println(eq("Question"), eq("What?"), eq("1) Yes; 2) No; 3) Maybe"));
     }
 
     @Test
@@ -64,12 +64,5 @@ class QuizServiceImplTest {
                 () -> assertThat(quizService.getRating(0.1f)).isEqualTo(2),
                 () -> assertThat(quizService.getRating(0f)).isEqualTo(2)
         );
-    }
-
-    private MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-        messageSource.setBasename("classpath:/i18n/quiz");
-        messageSource.setDefaultEncoding("UTF-8");
-        return messageSource;
     }
 }
