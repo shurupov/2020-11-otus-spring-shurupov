@@ -15,6 +15,4 @@ public interface QuizService {
     void setFullName(String firstName, String lastName);
 
     void answer(int answerNumber);
-
-    void quiz() throws IOException;
 }

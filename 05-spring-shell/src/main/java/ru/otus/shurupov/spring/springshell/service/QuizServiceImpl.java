@@ -2,7 +2,6 @@ package ru.otus.shurupov.spring.springshell.service;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import ru.otus.shurupov.spring.springshell.aop.QuizLogging;
 import ru.otus.shurupov.spring.springshell.config.QuizProps;
 import ru.otus.shurupov.spring.springshell.dao.QuestionDao;
 import ru.otus.shurupov.spring.springshell.domain.Question;
@@ -106,35 +105,8 @@ public class QuizServiceImpl implements QuizService {
             float result = (float) correctAnswers / askedQuestions;
             int rating = getRating(result);
             interactiveService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
+            quit(0);
         }
-    }
-
-    @QuizLogging
-    public void quiz() throws IOException {
-        questions = new LinkedList<>(questionDao.readQuestions());
-        int askedQuestions = 0;
-        int correctAnswers = 0;
-
-        interactiveService.println(messageSource.getMessage("Enter your first name", new String[] {}, locale));
-        String firstName = interactiveService.readString();
-        interactiveService.println(messageSource.getMessage("Enter your last name", new String[] {}, locale));
-        String lastName = interactiveService.readString();
-
-        do {
-            int questionNumber = random.nextInt(questions.size());
-            Question question = questions.remove(questionNumber);
-            printQuestion(question);
-            int answer = interactiveService.readInt();
-            interactiveService.println(messageSource.getMessage("Your answer is", new String[] { question.getAnswers().get(answer) }, locale));
-            interactiveService.println();
-            if (answer == question.getCorrectAnswerNumber()) {
-                correctAnswers++;
-            }
-            askedQuestions++;
-        } while (askedQuestions < quizQuestionCount && !questions.isEmpty());
-        float result = (float) correctAnswers / askedQuestions;
-        int rating = getRating(result);
-        interactiveService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
     }
 
     protected void printQuestion(Question question) {
@@ -156,5 +128,9 @@ public class QuizServiceImpl implements QuizService {
             }
         }
         return 2;
+    }
+
+    protected void quit(int code) {
+        System.exit(code);
     }
 }
