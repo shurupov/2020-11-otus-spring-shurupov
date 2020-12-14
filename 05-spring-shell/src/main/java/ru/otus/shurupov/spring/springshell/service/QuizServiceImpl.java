@@ -6,6 +6,7 @@ import ru.otus.shurupov.spring.springshell.aop.QuizLogging;
 import ru.otus.shurupov.spring.springshell.config.QuizProps;
 import ru.otus.shurupov.spring.springshell.dao.QuestionDao;
 import ru.otus.shurupov.spring.springshell.domain.Question;
+import ru.otus.shurupov.spring.springshell.utils.QuizState;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,6 +25,8 @@ public class QuizServiceImpl implements QuizService {
     private String firstName;
     private String lastName;
 
+    private QuizState state = QuizState.ENTERING_NAME;
+
     public QuizServiceImpl(QuestionDao questionDao,
                            InteractiveService interactiveService,
                            MessageSource messageSource, QuizProps quizProps) {
@@ -35,22 +38,37 @@ public class QuizServiceImpl implements QuizService {
         this.scoresToRating = quizProps.getScores();
     }
 
+    public QuizState getState() {
+        return state;
+    }
+
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
         if (lastName == null) {
             System.out.println("Enter also last name");
         } else {
-            System.out.println("Hello, " + this.firstName + " " + this.lastName + "!");
+            this.firstName = firstName;
+            nameEntered();
         }
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
         if (this.firstName == null) {
             System.out.println("Enter also first name");
         } else {
-            System.out.println("Hello, " + this.firstName + " " + this.lastName + "!");
+            this.lastName = lastName;
+            nameEntered();
         }
+    }
+
+    public void setFullName(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        nameEntered();
+    }
+
+    private void nameEntered() {
+        state = QuizState.QUESTIONS;
+        System.out.println("Hello, " + this.firstName + " " + this.lastName + "!");
     }
 
     @QuizLogging
