@@ -9,7 +9,6 @@ import ru.otus.shurupov.spring.springshell.config.QuizProps;
 import ru.otus.shurupov.spring.springshell.dao.QuestionDao;
 import ru.otus.shurupov.spring.springshell.domain.Question;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,12 +20,12 @@ import static org.mockito.Mockito.*;
 class QuizServiceImplTest {
     private QuizServiceImpl quizService;
     private QuestionDao questionDao;
-    private InteractiveService interactiveService;
+    private OutputService outputService;
 
     @BeforeEach
     private void setup() {
         questionDao = mock(QuestionDao.class);
-        interactiveService = mock(InteractiveService.class);
+        outputService = mock(OutputService.class);
         QuizProps props = new QuizProps();
         QuizProps.Questions questionsProps = new QuizProps.Questions();
         questionsProps.setCount(3);
@@ -34,7 +33,7 @@ class QuizServiceImplTest {
         props.setLocale(Locale.ENGLISH);
         props.setScores("1,0.8,0.6");
 
-        quizService = new QuizServiceImpl(questionDao, interactiveService, messageSource(), props);
+        quizService = new QuizServiceImpl(questionDao, outputService, messageSource(), props);
     }
 
     @Test
@@ -46,7 +45,7 @@ class QuizServiceImplTest {
                 2
         );
         quizService.printQuestion(question);
-        verify(interactiveService, times(1)).println(eq("Question: What?\nAnswers: 1) Yes; 2) No; 3) Maybe"));
+        verify(outputService, times(1)).println(eq("Question: What?\nAnswers: 1) Yes; 2) No; 3) Maybe"));
     }
 
     @Test

@@ -15,7 +15,7 @@ public class QuizServiceImpl implements QuizService {
     private final Random random = new Random();
 
     private final QuestionDao questionDao;
-    private final InteractiveService interactiveService;
+    private final OutputService outputService;
     private final MessageSource messageSource;
     private final int quizQuestionCount;
     private final Locale locale;
@@ -33,9 +33,9 @@ public class QuizServiceImpl implements QuizService {
     private int correctAnswers = 0;
 
     public QuizServiceImpl(QuestionDao questionDao,
-                           InteractiveService interactiveService,
+                           OutputService outputService,
                            MessageSource messageSource, QuizProps quizProps) {
-        this.interactiveService = interactiveService;
+        this.outputService = outputService;
         this.messageSource = messageSource;
         this.questionDao = questionDao;
         this.quizQuestionCount = quizProps.getQuestions().getCount();
@@ -93,8 +93,8 @@ public class QuizServiceImpl implements QuizService {
     }
 
     public void answer(int answerNumber) {
-        interactiveService.println(messageSource.getMessage("Your answer is", new String[] { question.getAnswers().get(answerNumber) }, locale));
-        interactiveService.println();
+        outputService.println(messageSource.getMessage("Your answer is", new String[] { question.getAnswers().get(answerNumber) }, locale));
+        outputService.println();
         if (answerNumber == question.getCorrectAnswerNumber()) {
             correctAnswers++;
         }
@@ -104,8 +104,8 @@ public class QuizServiceImpl implements QuizService {
         } else {
             float result = (float) correctAnswers / askedQuestions;
             int rating = getRating(result);
-            interactiveService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
-            quit(0);
+            outputService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
+            quit();
         }
     }
 
@@ -118,7 +118,7 @@ public class QuizServiceImpl implements QuizService {
             }
         }
         String textQuestion = messageSource.getMessage("Question", new Object[] { question.getQuestion(), answersText }, locale);
-        interactiveService.println(textQuestion);
+        outputService.println(textQuestion);
     }
 
     protected int getRating(float currentScore) {
@@ -130,7 +130,7 @@ public class QuizServiceImpl implements QuizService {
         return 2;
     }
 
-    protected void quit(int code) {
-        System.exit(code);
+    protected void quit() {
+        System.exit(0);
     }
 }

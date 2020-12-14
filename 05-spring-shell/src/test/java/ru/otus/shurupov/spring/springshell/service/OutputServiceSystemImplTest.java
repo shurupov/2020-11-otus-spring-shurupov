@@ -11,16 +11,16 @@ import java.io.PrintStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("InteractiveServiceSystemImpl")
-class InteractiveServiceSystemImplTest {
+class OutputServiceSystemImplTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
-    private InteractiveService interactiveService;
+    private OutputService outputService;
 
     @BeforeEach
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
-        interactiveService = new InteractiveServiceSystemImpl();
+        outputService = new OutputServiceSystemImpl();
     }
 
     @AfterEach
@@ -31,14 +31,14 @@ class InteractiveServiceSystemImplTest {
     @Test
     @DisplayName("Performed println correctly")
     public void shouldPerformPrintln() {
-        interactiveService.println("hello");
+        outputService.println("hello");
         assertThat(outContent.toString()).isEqualTo("hello\n");
     }
 
     @Test
     @DisplayName("Performed empty println correctly")
     public void shouldPerformEmptyPrintln() {
-        interactiveService.println();
+        outputService.println();
         assertThat(outContent.toString()).isEqualTo("\n");
     }
 }
