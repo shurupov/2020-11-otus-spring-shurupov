@@ -1,6 +1,5 @@
 package ru.otus.shurupov.spring.springshell.service;
 
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.otus.shurupov.spring.springshell.config.QuizProps;
 import ru.otus.shurupov.spring.springshell.dao.QuestionDao;
@@ -16,9 +15,7 @@ public class QuizServiceImpl implements QuizService {
 
     private final QuestionDao questionDao;
     private final OutputService outputService;
-    private final MessageSource messageSource;
     private final int quizQuestionCount;
-    private final Locale locale;
     private final Map<Double, Integer> scoresToRating;
 
     private String firstName;
@@ -34,12 +31,10 @@ public class QuizServiceImpl implements QuizService {
 
     public QuizServiceImpl(QuestionDao questionDao,
                            OutputService outputService,
-                           MessageSource messageSource, QuizProps quizProps) {
+                           QuizProps quizProps) {
         this.outputService = outputService;
-        this.messageSource = messageSource;
         this.questionDao = questionDao;
         this.quizQuestionCount = quizProps.getQuestions().getCount();
-        this.locale = quizProps.getLocale();
         this.scoresToRating = quizProps.getScores();
     }
 
@@ -50,7 +45,7 @@ public class QuizServiceImpl implements QuizService {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
         if (lastName == null) {
-            System.out.println("Enter also last name");
+            outputService.printMessage("Enter also last name");
         } else {
             nameEntered();
         }
@@ -59,7 +54,7 @@ public class QuizServiceImpl implements QuizService {
     public void setLastName(String lastName) {
         this.lastName = lastName;
         if (this.firstName == null) {
-            System.out.println("Enter also first name");
+            outputService.printMessage("Enter also first name");
         } else {
             nameEntered();
         }
@@ -73,7 +68,7 @@ public class QuizServiceImpl implements QuizService {
 
     private void nameEntered() {
         state = QuizState.QUESTIONS;
-        System.out.println("Hello, " + this.firstName + " " + this.lastName + "!");
+        outputService.printMessage("Hello", this.firstName, this.lastName);
         startQuiz();
     }
 
@@ -93,7 +88,7 @@ public class QuizServiceImpl implements QuizService {
     }
 
     public void answer(int answerNumber) {
-        outputService.println(messageSource.getMessage("Your answer is", new String[] { question.getAnswers().get(answerNumber) }, locale));
+        outputService.printMessage("Your answer is", question.getAnswers().get(answerNumber));
         outputService.println();
         if (answerNumber == question.getCorrectAnswerNumber()) {
             correctAnswers++;
@@ -104,7 +99,7 @@ public class QuizServiceImpl implements QuizService {
         } else {
             float result = (float) correctAnswers / askedQuestions;
             int rating = getRating(result);
-            outputService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
+            outputService.printMessage("your rating is", firstName, lastName, rating);
             quit();
         }
     }
@@ -117,8 +112,7 @@ public class QuizServiceImpl implements QuizService {
                 answersText.append("; ");
             }
         }
-        String textQuestion = messageSource.getMessage("Question", new Object[] { question.getQuestion(), answersText }, locale);
-        outputService.println(textQuestion);
+        outputService.printMessage("Question", question.getQuestion(), answersText.toString());
     }
 
     protected int getRating(float currentScore) {

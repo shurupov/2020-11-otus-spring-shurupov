@@ -33,7 +33,7 @@ class QuizServiceImplTest {
         props.setLocale(Locale.ENGLISH);
         props.setScores("1,0.8,0.6");
 
-        quizService = new QuizServiceImpl(questionDao, outputService, messageSource(), props);
+        quizService = new QuizServiceImpl(questionDao, outputService, props);
     }
 
     @Test
@@ -45,7 +45,7 @@ class QuizServiceImplTest {
                 2
         );
         quizService.printQuestion(question);
-        verify(outputService, times(1)).println(eq("Question: What?\nAnswers: 1) Yes; 2) No; 3) Maybe"));
+        verify(outputService, times(1)).printMessage(eq("Question"), eq("What?"), eq("1) Yes; 2) No; 3) Maybe"));
     }
 
     @Test

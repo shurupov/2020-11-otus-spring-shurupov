@@ -20,7 +20,7 @@ class OutputServiceSystemImplTest {
     @BeforeEach
     public void setUpStreams() {
         System.setOut(new PrintStream(outContent));
-        outputService = new OutputServiceSystemImpl();
+        //outputService = new OutputServiceSystemImpl(messageSource);
     }
 
     @AfterEach
@@ -31,7 +31,7 @@ class OutputServiceSystemImplTest {
     @Test
     @DisplayName("Performed println correctly")
     public void shouldPerformPrintln() {
-        outputService.println("hello");
+        outputService.printMessage("hello");
         assertThat(outContent.toString()).isEqualTo("hello\n");
     }
 
