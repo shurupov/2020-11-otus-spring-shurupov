@@ -3,7 +3,7 @@
 ## Task
 Need to move the previous application to Spring Shell, Events. 
 
-###Used
+### Used
 - Spring boot
 - Java- based configuration
 - Annotation-based configuration
