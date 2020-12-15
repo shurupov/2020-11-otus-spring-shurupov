@@ -51,7 +51,6 @@ class QuestionDaoImplTest {
                                 .contains("3", atIndex(2)),
                         () -> assertThat(questions.get(1).getCorrectAnswerNumber()).isEqualTo(2)
                 )
-
         );
     }
 }
