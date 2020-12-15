@@ -21,13 +21,13 @@ public class QuizServiceImpl implements QuizService {
     private String firstName;
     private String lastName;
 
-    private QuizState state = QuizState.ENTERING_NAME;
+    private QuizState state;
 
     private List<Question> questions;
     private Question question;
 
-    private int askedQuestions = 0;
-    private int correctAnswers = 0;
+    private int askedQuestions;
+    private int correctAnswers;
 
     public QuizServiceImpl(QuestionDao questionDao,
                            OutputService outputService,
@@ -36,6 +36,7 @@ public class QuizServiceImpl implements QuizService {
         this.questionDao = questionDao;
         this.quizQuestionCount = quizProps.getQuestions().getCount();
         this.scoresToRating = quizProps.getScores();
+        startIntroduction();
     }
 
     public QuizState getState() {
@@ -47,7 +48,7 @@ public class QuizServiceImpl implements QuizService {
         if (lastName == null) {
             outputService.println("Enter also last name");
         } else {
-            nameEntered();
+            startQuiz();
         }
     }
 
@@ -56,24 +57,22 @@ public class QuizServiceImpl implements QuizService {
         if (this.firstName == null) {
             outputService.println("Enter also first name");
         } else {
-            nameEntered();
+            startQuiz();
         }
     }
 
     public void setFullName(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        nameEntered();
-    }
-
-    protected void nameEntered() {
-        state = QuizState.QUESTIONS;
-        outputService.println("Hello", this.firstName, this.lastName);
         startQuiz();
     }
 
     protected void startQuiz() {
         try {
+            state = QuizState.QUESTIONS;
+            outputService.println("Hello", this.firstName, this.lastName);
+            askedQuestions = 0;
+            correctAnswers = 0;
             questions = new LinkedList<>(questionDao.readQuestions());
             askQuestion();
         } catch (IOException e) {
@@ -100,7 +99,7 @@ public class QuizServiceImpl implements QuizService {
             float result = (float) correctAnswers / askedQuestions;
             int rating = getRating(result);
             outputService.println("your rating is", firstName, lastName, rating);
-            quit();
+            startIntroduction();
         }
     }
 
@@ -124,7 +123,7 @@ public class QuizServiceImpl implements QuizService {
         return 2;
     }
 
-    protected void quit() {
-        System.exit(0);
+    protected void startIntroduction() {
+        state = QuizState.ENTERING_NAME;
     }
 }

@@ -3,8 +3,6 @@ package ru.otus.shurupov.spring.springshell.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import ru.otus.shurupov.spring.springshell.config.QuizProps;
 import ru.otus.shurupov.spring.springshell.dao.QuestionDao;
 import ru.otus.shurupov.spring.springshell.domain.Question;
@@ -24,16 +22,15 @@ class QuizServiceImplTest {
     private QuizServiceImpl quizService;
     private QuestionDao questionDao;
     private OutputService outputService;
-    private QuizProps props;
 
-    private Question question1 = new Question("What?", List.of("Yes", "No", "Maybe"), 0);
+    private final Question question1 = new Question("What?", List.of("Yes", "No", "Maybe"), 0);
 
     @BeforeEach
     private void setup() throws IOException {
         questionDao = mock(QuestionDao.class);
         when(questionDao.readQuestions()).thenReturn(List.of(question1));
         outputService = mock(OutputService.class);
-        props = new QuizProps();
+        QuizProps props = new QuizProps();
         QuizProps.Questions questionsProps = new QuizProps.Questions();
         questionsProps.setCount(3);
         props.setQuestions(questionsProps);
@@ -47,47 +44,44 @@ class QuizServiceImplTest {
     @DisplayName("Entered name gradually")
     public void shouldEnterFirstNameAndLastName() {
         quizService.setFirstName("Bob");
-        verify(outputService, times(1)).println(eq("Enter also last name"));
         quizService.setFirstName("Evgeny");
-        verify(outputService, times(2)).println(eq("Enter also last name"));
         quizService.setLastName("Shurupov");
-        verify(quizService, times(1)).nameEntered();
+        assertAll(
+                () -> verify(outputService, times(2)).println(eq("Enter also last name")),
+                () -> verify(quizService, times(1)).startQuiz()
+        );
     }
 
     @Test
     @DisplayName("Entered name gradually in another order")
     public void shouldEnterLastNameAndFirstName() {
         quizService.setLastName("Smith");
-        verify(outputService, times(1)).println(eq("Enter also first name"));
         quizService.setLastName("Shurupov");
-        verify(outputService, times(2)).println(eq("Enter also first name"));
         quizService.setFirstName("Evgeny");
-        verify(quizService, times(1)).nameEntered();
+        assertAll(
+                () -> verify(outputService, times(2)).println(eq("Enter also first name")),
+                () -> verify(quizService, times(1)).startQuiz()
+        );
     }
 
     @Test
     @DisplayName("Entered full name")
     public void shouldEnterFullName() {
         quizService.setFullName("Evgeny", "Shurupov");
-        verify(quizService, times(1)).nameEntered();
-    }
-
-    @Test
-    @DisplayName("Entered name")
-    public void shouldCompleteEnteringName() {
-        assertEquals(QuizState.ENTERING_NAME, quizService.getState());
-        quizService.nameEntered();
-        verify(outputService, times(1)).println(eq("Hello"), eq(null), eq(null));
-        assertEquals(QuizState.QUESTIONS, quizService.getState());
         verify(quizService, times(1)).startQuiz();
     }
 
     @Test
     @DisplayName("Started quiz")
-    public void shouldStartQuiz() throws IOException {
+    public void shouldCompleteEnteringName() throws IOException {
         quizService.startQuiz();
-        verify(questionDao, times(1)).readQuestions();
-        verify(quizService, times(1)).askQuestion();
+        assertAll(
+                () -> verify(outputService, times(1)).println(eq("Hello"), eq(null), eq(null)),
+                () -> verify(questionDao, times(1)).readQuestions(),
+                () -> verify(quizService, times(1)).askQuestion(),
+                () -> assertEquals(QuizState.QUESTIONS, quizService.getState()),
+                () -> verify(quizService, times(1)).startQuiz()
+        );
     }
 
     @Test
@@ -100,34 +94,24 @@ class QuizServiceImplTest {
     @Test
     @DisplayName("Answered question and completed")
     public void shouldAnswerAndComplete() {
-        quizService = spy(new QuizServiceImpl(questionDao, outputService, props) {
-            @Override
-            protected void quit() {
-                //do nothing
-            }
-        });
         quizService.startQuiz();
         quizService.answer(0);
-        verify(outputService, times(1)).println(eq("Your answer is"), eq(question1.getAnswers().get(0)));
-        verify(outputService, times(1)).println(eq("your rating is"), eq(null), eq(null), eq(5));
-        verify(quizService, times(1)).quit();
+        assertAll(
+                () -> verify(outputService, times(1)).println(eq("Your answer is"), eq(question1.getAnswers().get(0))),
+                () -> verify(outputService, times(1)).println(eq("your rating is"), eq(null), eq(null), eq(5)),
+                () -> verify(quizService, times(1)).startIntroduction()
+        );
     }
 
     @Test
     @DisplayName("Answered question and continued")
     public void shouldAnswerAndContinue() throws IOException {
         when(questionDao.readQuestions()).thenReturn(List.of(question1, question1));
-        quizService = spy(new QuizServiceImpl(questionDao, outputService, props) {
-            @Override
-            protected void quit() {
-                //do nothing
-            }
-        });
         quizService.startQuiz();
         quizService.answer(0);
         verify(outputService, times(1)).println(eq("Your answer is"), eq(question1.getAnswers().get(0)));
         verify(outputService, times(0)).println(eq("your rating is"), eq(null), eq(null), any());
-        verify(quizService, times(0)).quit();
+        verify(quizService, times(0)).startIntroduction();
         verify(quizService, times(2)).askQuestion();
     }
 
