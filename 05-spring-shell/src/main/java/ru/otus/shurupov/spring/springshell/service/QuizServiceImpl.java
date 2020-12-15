@@ -66,13 +66,13 @@ public class QuizServiceImpl implements QuizService {
         nameEntered();
     }
 
-    private void nameEntered() {
+    protected void nameEntered() {
         state = QuizState.QUESTIONS;
         outputService.println("Hello", this.firstName, this.lastName);
         startQuiz();
     }
 
-    private void startQuiz() {
+    protected void startQuiz() {
         try {
             questions = new LinkedList<>(questionDao.readQuestions());
             askQuestion();
@@ -81,7 +81,7 @@ public class QuizServiceImpl implements QuizService {
         }
     }
 
-    private void askQuestion() {
+    protected void askQuestion() {
         int questionNumber = random.nextInt(questions.size());
         question = questions.remove(questionNumber);
         printQuestion(question);
