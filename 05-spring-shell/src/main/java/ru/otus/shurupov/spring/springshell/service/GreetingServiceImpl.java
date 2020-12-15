@@ -9,7 +9,7 @@ import javax.annotation.PostConstruct;
 @Service
 @ConditionalOnProperty(name = "quiz.greeting", havingValue = "true")
 @RequiredArgsConstructor
-public class GreetingImpl implements Greeting {
+public class GreetingServiceImpl implements GreetingService {
 
     private final OutputService outputService;
 

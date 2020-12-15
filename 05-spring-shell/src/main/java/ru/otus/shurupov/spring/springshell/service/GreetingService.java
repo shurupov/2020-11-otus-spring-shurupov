@@ -1,5 +1,5 @@
 package ru.otus.shurupov.spring.springshell.service;
 
-public interface Greeting {
+public interface GreetingService {
     void sayHello();
 }
