@@ -1,15 +1,15 @@
-# Spring Shell
+# Spring Shell, Events, Conditional, Test Context Configuration
 
-## Task
-Need to move the previous application to Spring Shell, Events. 
+## What's done
+Moved the previous application to Spring Shell, Events. Added Conditional
 
-### Used
+## Used
 - Spring boot
-- Java- based configuration
+- Java-based configuration
 - Annotation-based configuration
 - ConfigurationProperties annotation
 - Lombok
-- YML Properties
+- YML application configuration
 - Spring Shell
 - Spring Events
 - Conditional
@@ -17,7 +17,10 @@ Need to move the previous application to Spring Shell, Events.
 - JUnit 5
 - Mockito
 - AssertJ
+- Context custom configuration for integration tests
 
-To build project to jar use command `maven package`
+## How to build
+`maven package`
 
-To start application use command `java -jar target/03-spring-shell-0.0.1-SNAPSHOT.jar`
+## How to start
+`java -jar target/03-spring-shell-0.0.1-SNAPSHOT.jar`
