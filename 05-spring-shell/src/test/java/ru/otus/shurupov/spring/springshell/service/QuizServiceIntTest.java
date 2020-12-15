@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import ru.otus.shurupov.spring.springshell.dao.QuestionDao;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import ru.otus.shurupov.spring.springshell.shell.QuizShell;
 
 import static org.mockito.ArgumentMatchers.eq;
@@ -15,12 +17,23 @@ import static org.mockito.Mockito.verify;
 @DisplayName("QuizService integration test")
 @SpringBootTest
 public class QuizServiceIntTest {
-    /*
-     * This mock is not used but declared here to exclude it from context
-     * to avoid usage of configuration that doesn't exist
-     */
-    @MockBean
-    private QuestionDao questionDao;
+
+    @Configuration
+    public static class TestContextConfiguration {
+        @Bean
+        public QuizEventListener quizEventListener(QuizService quizService) {
+            return new QuizEventListener(quizService);
+        }
+        @Bean
+        public QuizEventPublisher quizEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+            return new QuizEventPublisherImpl(applicationEventPublisher);
+        }
+        @Bean
+        public QuizShell quizShell(QuizEventPublisher quizEventPublisher, QuizService quizService) {
+            return new QuizShell(quizEventPublisher, quizService);
+        }
+    }
+
     @MockBean
     private QuizService quizService;
     @Autowired
