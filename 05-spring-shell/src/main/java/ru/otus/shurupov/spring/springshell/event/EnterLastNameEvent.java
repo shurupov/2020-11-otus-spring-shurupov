@@ -16,9 +16,14 @@ public class EnterLastNameEvent extends ApplicationEvent {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(this.source, this.lastName);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof EnterLastNameEvent)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         EnterLastNameEvent that = (EnterLastNameEvent) o;
         if (this.source != that.source) return false;
         return Objects.equals(lastName, that.lastName);
