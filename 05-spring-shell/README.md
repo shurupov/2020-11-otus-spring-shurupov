@@ -1,8 +1,26 @@
-# Spring Boot
+# Spring Shell, Events, Conditional, Test Context Configuration
 
-## Task
-Need to move the previous application to Spring Boot, implement internationalization, use application.yml, create load banner, use spring-boot-starter-test. 
+## What's done
+Moved the previous application to Spring Shell, Events. Added Conditional
 
-To build project to jar use command `maven package`
+## Used
+- Spring boot
+- Java-based configuration
+- Annotation-based configuration
+- ConfigurationProperties annotation
+- Lombok
+- YML application configuration
+- Spring Shell
+- Spring Events
+- Conditional
+- Java Internationalization
+- JUnit 5
+- Mockito
+- AssertJ
+- Context custom configuration for integration tests
 
-To start application use command `java -jar target/03-spring-boot-0.0.1-SNAPSHOT.jar`
+## How to build
+`maven package`
+
+## How to start
+`java -jar target/03-spring-shell-0.0.1-SNAPSHOT.jar`

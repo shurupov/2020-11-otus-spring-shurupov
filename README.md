@@ -10,4 +10,6 @@
 
 ### [Spring Boot](03-spring-boot)
 
+### [Spring Shell, Events, Conditional, Test Context Configuration](05-spring-shell)
+
 

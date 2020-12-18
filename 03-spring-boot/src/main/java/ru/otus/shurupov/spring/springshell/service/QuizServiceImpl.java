@@ -1,49 +1,46 @@
-package ru.otus.shurupov.spring.introdutionxmlconfig.service;
+package ru.otus.shurupov.spring.springshell.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
-import ru.otus.shurupov.spring.introdutionxmlconfig.dao.QuestionDao;
-import ru.otus.shurupov.spring.introdutionxmlconfig.domain.Question;
+import ru.otus.shurupov.spring.springshell.aop.QuizLogging;
+import ru.otus.shurupov.spring.springshell.config.QuizProps;
+import ru.otus.shurupov.spring.springshell.dao.QuestionDao;
+import ru.otus.shurupov.spring.springshell.domain.Question;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
-public class QuizService {
+public class QuizServiceImpl implements QuizService {
     private final Random random = new Random();
 
     private final QuestionDao questionDao;
     private final InteractiveService outputService;
+    private final MessageSource messageSource;
     private final int quizQuestionCount;
-    private final Map<Double, Integer> scoresToRating = new LinkedHashMap<>();
+    private final Locale locale;
+    private final Map<Double, Integer> scoresToRating;
 
-    public QuizService(QuestionDao questionDao,
-                       InteractiveService outputService,
-                       @Value("${quiz.questionCount}") int quizQuestionCount,
-                       @Value("${quiz.scores}") String scores) {
+    public QuizServiceImpl(QuestionDao questionDao,
+                           InteractiveService outputService,
+                           MessageSource messageSource, QuizProps quizProps) {
         this.outputService = outputService;
-        this.quizQuestionCount = quizQuestionCount;
+        this.messageSource = messageSource;
         this.questionDao = questionDao;
-        initScores(scores);
+        this.quizQuestionCount = quizProps.getQuestions().getCount();
+        this.locale = quizProps.getLocale();
+        this.scoresToRating = quizProps.getScores();
     }
 
-    private void initScores(String scores) {
-        List<Double> scoresList = Stream.of(scores.split(",")).map(Double::parseDouble).collect(Collectors.toList());
-        for (int i = 0; i < scoresList.size(); i++) {
-            scoresToRating.put(scoresList.get(i), 5 - i);
-        }
-    }
-
+    @QuizLogging
     public void quiz() throws IOException {
         List<Question> questions = new LinkedList<>(questionDao.readQuestions());
         int askedQuestions = 0;
         int correctAnswers = 0;
 
-        outputService.println("Enter your first name");
+        outputService.println(messageSource.getMessage("Enter your first name", new String[] {}, locale));
         String firstName = outputService.readString();
-        outputService.println("Enter your last name");
+        outputService.println(messageSource.getMessage("Enter your last name", new String[] {}, locale));
         String lastName = outputService.readString();
 
         do {
@@ -51,7 +48,7 @@ public class QuizService {
             Question question = questions.remove(questionNumber);
             printQuestion(question);
             int answer = outputService.readInt();
-            outputService.println("Your answer is " + question.getAnswers().get(answer));
+            outputService.println(messageSource.getMessage("Your answer is", new String[] { question.getAnswers().get(answer) }, locale));
             outputService.println();
             if (answer == question.getCorrectAnswerNumber()) {
                 correctAnswers++;
@@ -60,7 +57,7 @@ public class QuizService {
         } while (askedQuestions < quizQuestionCount && !questions.isEmpty());
         float result = (float) correctAnswers / askedQuestions;
         int rating = getRating(result);
-        outputService.println(firstName + " " + lastName +", your rating is " + rating);
+        outputService.println(messageSource.getMessage("your rating is", new Object[] {firstName, lastName, rating }, locale));
     }
 
     protected void printQuestion(Question question) {
@@ -71,8 +68,7 @@ public class QuizService {
                 answersText.append("; ");
             }
         }
-        String textQuestion = "Question: " + question.getQuestion() + "\n" +
-                "Answers: " + answersText;
+        String textQuestion = messageSource.getMessage("Question", new Object[] { question.getQuestion(), answersText }, locale);
         outputService.println(textQuestion);
     }
 
