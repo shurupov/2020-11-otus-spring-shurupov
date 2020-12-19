@@ -1,7 +1,8 @@
 # Spring Shell, Events, Conditional, Test Context Configuration
 
-## What's done
-Moved the previous application to Spring Shell, Events. Added Conditional
+## Task
+Implement application that gets user name, then asks questions with answer options and get answer numbers and calculates user's rating.
+Use Spring Shell, Spring Events.
 
 ## Used
 - Spring boot
