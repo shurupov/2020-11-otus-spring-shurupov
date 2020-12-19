@@ -13,10 +13,10 @@ import java.util.Map;
 
 @SuppressWarnings({"SqlNoDataSourceInspection", "ConstantConditions", "SqlDialectInspection"})
 @Repository
-public class BookDaoImpl implements BookDao {
+public class BookDaoJdbc implements BookDao {
     private final NamedParameterJdbcOperations jdbc;
 
-    public BookDaoImpl(NamedParameterJdbcOperations jdbc) {
+    public BookDaoJdbc(NamedParameterJdbcOperations jdbc) {
         this.jdbc = jdbc;
     }
 
