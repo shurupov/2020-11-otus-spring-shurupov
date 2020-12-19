@@ -24,8 +24,10 @@ public class BookShell {
     public void bookList() {
         List<Book> books = bookService.getAll();
         System.out.println("Library books");
+        int longestNameLength = books.stream().map(b -> b.getName().length()).max(Integer::compare).get();
+        System.out.printf("|  id | %-" + longestNameLength + "s |\n", "Name");
         for (Book book : books) {
-            System.out.println(book);
+            System.out.printf("| %3d | %-" + longestNameLength + "s |\n", book.getId(), book.getName());
         }
     }
 
