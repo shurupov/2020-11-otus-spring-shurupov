@@ -7,6 +7,8 @@ import ru.otus.shurupov.spring.jdbc.domain.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings({"SqlNoDataSourceInspection", "ConstantConditions", "SqlDialectInspection"})
@@ -35,11 +37,20 @@ public class BookDaoImpl implements BookDao {
     @Override
     public void insert(Book book) {
         jdbc.update(
-                "insert into book (id, `name`) values (:id, :name);",
+                "insert into book (id, `name`) values (:id, :name)",
                 Map.of(
                         "id", book.getId(),
                         "name", book.getName()
                 )
+        );
+    }
+
+    @Override
+    public List<Book> getAll() {
+        return jdbc.query(
+                "select id, name from book",
+                Collections.emptyMap(),
+                new BookMapper()
         );
     }
 

@@ -11,7 +11,6 @@ Implement CRUD Shell application of book library with entities: Book, Author, Ge
 - Lombok
 - YML application configuration
 - Spring Shell
-- Spring Events
 - H2 Embedded database
 - Spring JDBC
 - JUnit 5
