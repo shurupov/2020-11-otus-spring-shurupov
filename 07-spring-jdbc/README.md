@@ -12,8 +12,8 @@ Implement CRUD Shell application of book library with entities: Book, Author, Ge
 - YML application configuration
 - Spring Shell
 - Spring Events
-- Conditional
-- Java Internationalization
+- H2 Embedded database
+- Spring JDBC
 - JUnit 5
 - Mockito
 - AssertJ
