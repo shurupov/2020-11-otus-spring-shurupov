@@ -37,9 +37,8 @@ public class BookDaoImpl implements BookDao {
     @Override
     public void insert(Book book) {
         jdbc.update(
-                "insert into book (id, `name`) values (:id, :name)",
+                "insert into book (`name`) values (:name)",
                 Map.of(
-                        "id", book.getId(),
                         "name", book.getName()
                 )
         );

@@ -24,8 +24,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void insert(Long id, String name) {
-        bookDao.insert(new Book(id, name));
+    public void insert(String name) {
+        bookDao.insert(new Book(name));
     }
 
     @Override

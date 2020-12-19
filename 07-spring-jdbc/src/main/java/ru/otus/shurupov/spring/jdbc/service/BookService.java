@@ -7,6 +7,6 @@ import java.util.List;
 public interface BookService {
     int count();
     Book getById(Long id);
-    void insert(Long id, String name);
+    void insert(String name);
     List<Book> getAll();
 }

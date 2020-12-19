@@ -32,8 +32,8 @@ public class BookShell {
     }
 
     @ShellMethod(value = "Add book", key = {"ba", "book-add"})
-    public void addBook(@ShellOption Long id, @ShellOption String name) {
-        bookService.insert(id, name);
+    public void addBook(@ShellOption String name) {
+        bookService.insert(name);
         System.out.println("Book successfully added to the library");
     }
 
