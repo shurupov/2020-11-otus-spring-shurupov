@@ -1,9 +1,9 @@
 # Spring Context Introduction. XML Configuration
 
 ## Task
-Implement application that reads questions and answers from an CSV-file in a classpath and outputs them in terminal.
+Implement application that reads questions and answers from a CSV-file in a classpath and outputs them in terminal.
 
-##Used
+## Used
 * Spring context
 * XML-based configuration
 * spring-boot-maven-plugin

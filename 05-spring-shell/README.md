@@ -1,7 +1,7 @@
 # Spring Shell, Events, Conditional, Test Context Configuration
 
 ## Task
-Implement application that gets user name, then asks questions with answer options and get answer numbers and calculates user's rating.
+Implement application that gets user name, then asks questions with answer options, gets answer numbers and calculates user's rating.
 Use Spring Shell, Spring Events.
 
 ## Used
@@ -24,4 +24,4 @@ Use Spring Shell, Spring Events.
 `maven package`
 
 ## How to start
-`java -jar target/03-spring-shell-0.0.1-SNAPSHOT.jar`
+`java -jar target/05-spring-shell-0.0.1-SNAPSHOT.jar`
