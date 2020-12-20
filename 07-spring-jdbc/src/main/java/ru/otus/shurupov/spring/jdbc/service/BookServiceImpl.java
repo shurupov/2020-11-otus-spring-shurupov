@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.otus.shurupov.spring.jdbc.dao.AuthorDao;
 import ru.otus.shurupov.spring.jdbc.dao.BookDao;
 import ru.otus.shurupov.spring.jdbc.dao.GenreDao;
-import ru.otus.shurupov.spring.jdbc.domain.Author;
 import ru.otus.shurupov.spring.jdbc.domain.Book;
 import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
 

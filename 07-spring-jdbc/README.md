@@ -7,7 +7,6 @@ Implement CRUD Shell application of book library with entities: Book, Author, Ge
 - Spring boot
 - Java-based configuration
 - Annotation-based configuration
-- ConfigurationProperties annotation
 - Lombok
 - YML application configuration
 - Spring Shell
@@ -16,7 +15,7 @@ Implement CRUD Shell application of book library with entities: Book, Author, Ge
 - JUnit 5
 - Mockito
 - AssertJ
-- Context custom configuration for integration tests
+- @JdbcTest, @DirtiesContext annotation in tests
 
 ## How to build
 `maven package`

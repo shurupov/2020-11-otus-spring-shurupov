@@ -12,4 +12,6 @@
 
 ### [Spring Shell, Events, Conditional, Test Context Configuration](05-spring-shell)
 
+### [Spring JDBC](07-spring-jdbc)
+
 
