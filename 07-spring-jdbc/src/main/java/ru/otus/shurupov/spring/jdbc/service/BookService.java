@@ -9,4 +9,6 @@ public interface BookService {
     BookDto getById(Long id);
     void insert(String name, Long authorId, Long genreId);
     List<BookDto> getAll();
+    void removeById(Long id);
+    void update(Long id, String name, Long authorId, Long genreId);
 }

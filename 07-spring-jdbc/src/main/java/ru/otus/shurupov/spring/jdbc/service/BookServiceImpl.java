@@ -40,10 +40,17 @@ public class BookServiceImpl implements BookService {
         return bookDao.getAll().stream().map(this::map).collect(Collectors.toList());
     }
 
+    @Override
+    public void removeById(Long id) {
+        bookDao.removeById(id);
+    }
+
+    @Override
+    public void update(Long id, String name, Long authorId, Long genreId) {
+        bookDao.update(new Book(id, authorId, genreId ,name));
+    }
+
     private BookDto map(Book book) {
-        Author author = authorDao.getById(book.getAuthorId());
-        String authorName = author.getFirstName() + " " + author.getLastName();
-        String genreName = genreDao.getById(book.getGenreId()).getName();
-        return new BookDto(book, authorName, genreName);
+        return new BookDto(book, authorDao.getById(book.getAuthorId()), genreDao.getById(book.getGenreId()));
     }
 }

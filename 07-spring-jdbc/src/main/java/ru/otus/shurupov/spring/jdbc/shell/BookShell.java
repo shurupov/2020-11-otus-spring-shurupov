@@ -54,4 +54,16 @@ public class BookShell {
         );
     }
 
+    @ShellMethod(value = "Remove book", key = {"br", "book-remove"})
+    public void removeById(@ShellOption Long id) {
+        bookService.removeById(id);
+        System.out.println("Book successfully removed");
+    }
+
+    @ShellMethod(value = "Update book", key = {"bu", "book-update"})
+    public void updateById(@ShellOption Long id, @ShellOption String name, @ShellOption Long authorId, @ShellOption Long genreId) {
+        bookService.update(id, name, authorId, genreId);
+        System.out.println("Book successfully updated");
+    }
+
 }

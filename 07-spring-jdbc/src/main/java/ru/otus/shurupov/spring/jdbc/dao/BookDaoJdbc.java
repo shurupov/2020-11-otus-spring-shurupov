@@ -55,6 +55,24 @@ public class BookDaoJdbc implements BookDao {
         );
     }
 
+    @Override
+    public void removeById(Long id) {
+        jdbc.update("delete from book where id = :id", Map.of("id", id));
+    }
+
+    @Override
+    public void update(Book book) {
+        jdbc.update(
+                "update book set name = :name, author_id = :author_id, genre_id = :genre_id where id = :id",
+                Map.of(
+                        "id", book.getId(),
+                        "author_id", book.getAuthorId(),
+                        "genre_id", book.getGenreId(),
+                        "name", book.getName()
+                )
+        );
+    }
+
     private static class BookMapper implements RowMapper<Book> {
 
         @Override
