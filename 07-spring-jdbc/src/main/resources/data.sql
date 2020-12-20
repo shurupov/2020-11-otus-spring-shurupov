@@ -18,7 +18,7 @@ insert into book (id, author_id, genre_id, name) values
     (1, 1, 2, 'Sherlock Holmes. A Study in Scarlet'),
     (2, 1, 6, 'The lost world'),
     (3, 2, 2, 'Hercule Poirot. The Mysterious Affair at Styles'),
-    (4, 3, 4, 'The Tale about a Fisherman and a Fish'),
-    (5, 3, 4, 'Ruslan and Ludmila'),
+    (4, 3, 3, 'The Tale about a Fisherman and a Fish'),
+    (5, 3, 3, 'Ruslan and Ludmila'),
     (6, 4, 8, 'Crime and Punishment'),
     (7, 4, 8, 'Player');

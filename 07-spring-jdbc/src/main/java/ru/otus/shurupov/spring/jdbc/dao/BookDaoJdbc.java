@@ -28,7 +28,7 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public Book getById(Long id) {
         return jdbc.queryForObject(
-                "select id, name from book where id = :id",
+                "select id, author_id, genre_id, name from book where id = :id",
                 Map.of("id", id),
                 new BookMapper()
         );
@@ -37,9 +37,11 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public void insert(Book book) {
         jdbc.update(
-                "insert into book (`name`) values (:name)",
+                "insert into book (name, author_id, genre_id) values (:name, :author_id, :genre_id)",
                 Map.of(
-                        "name", book.getName()
+                        "name", book.getName(),
+                        "author_id", book.getAuthorId(),
+                        "genre_id", book.getGenreId()
                 )
         );
     }
@@ -47,7 +49,7 @@ public class BookDaoJdbc implements BookDao {
     @Override
     public List<Book> getAll() {
         return jdbc.query(
-                "select id, name from book",
+                "select id, author_id, genre_id, name from book",
                 Collections.emptyMap(),
                 new BookMapper()
         );
@@ -57,7 +59,12 @@ public class BookDaoJdbc implements BookDao {
 
         @Override
         public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Book(resultSet.getLong("id"), resultSet.getString("name"));
+            return new Book(
+                    resultSet.getLong("id"),
+                    resultSet.getLong("author_id"),
+                    resultSet.getLong("genre_id"),
+                    resultSet.getString("name")
+            );
         }
     }
 }
