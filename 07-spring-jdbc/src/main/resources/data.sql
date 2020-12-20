@@ -4,7 +4,7 @@ insert into genre (id, name) values
     (3, 'Fairy Tale'),
     (4, 'Fantasy'),
     (5, 'Satire'),
-    (6, 'Science Fiction (Sci-Fi)'),
+    (6, 'Science Fiction'),
     (7, 'Poem'),
     (8, 'Drama');
 

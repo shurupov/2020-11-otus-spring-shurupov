@@ -5,9 +5,10 @@ import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.shurupov.spring.jdbc.domain.Author;
-import ru.otus.shurupov.spring.jdbc.domain.Genre;
 import ru.otus.shurupov.spring.jdbc.service.AuthorService;
+import ru.otus.shurupov.spring.jdbc.service.TableRenderer;
 
+import java.util.Arrays;
 import java.util.List;
 
 @ShellComponent
@@ -15,6 +16,7 @@ import java.util.List;
 public class AuthorShell {
 
     private final AuthorService authorService;
+    private final TableRenderer tableRenderer;
 
     @ShellMethod(value = "Get authors count", key = {"ac", "author-count"})
     public void authorsCount() {
@@ -24,14 +26,14 @@ public class AuthorShell {
     @ShellMethod(value = "Get author list", key = {"al", "author-list"})
     public void authorList() {
         List<Author> authors = authorService.getAll();
-        System.out.println("Authors list");
-        int longestFirstNameLength = authors.stream().map(b -> b.getFirstName().length()).max(Integer::compare).get();
-        int longestLastNameLength = authors.stream().map(b -> b.getLastName().length()).max(Integer::compare).get();
-        System.out.printf("|  id | %-" + longestFirstNameLength + "s |\n", "Name");
-        for (Author author : authors) {
-            System.out.printf("| %3d | %-" + longestFirstNameLength + "s | %-" + longestLastNameLength + "s |\n",
-                    author.getId(), author.getFirstName(), author.getLastName());
-        }
+        System.out.println(
+                tableRenderer.render(
+                        "Authors list",
+                        Arrays.asList("id", "First Name", "Last Name"),
+                        (author) -> Arrays.asList(author.getId().toString(), author.getFirstName(), author.getLastName()),
+                        authors
+                )
+        );
     }
 
     @ShellMethod(value = "Add author", key = {"aa", "author-add"})
@@ -42,6 +44,13 @@ public class AuthorShell {
 
     @ShellMethod(value = "Get author", key = {"ag", "author-get"})
     public void getById(@ShellOption Long id) {
-        System.out.println(authorService.getById(id));
+        System.out.println(
+                tableRenderer.singleRowRender(
+                        "Author",
+                        Arrays.asList("id", "First Name", "Last Name"),
+                        (author) -> Arrays.asList(author.getId().toString(), author.getFirstName(), author.getLastName()),
+                        authorService.getById(id)
+                )
+        );
     }
 }

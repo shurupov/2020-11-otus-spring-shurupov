@@ -6,7 +6,9 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.shurupov.spring.jdbc.domain.Genre;
 import ru.otus.shurupov.spring.jdbc.service.GenreService;
+import ru.otus.shurupov.spring.jdbc.service.TableRenderer;
 
+import java.util.Arrays;
 import java.util.List;
 
 @ShellComponent
@@ -14,6 +16,7 @@ import java.util.List;
 public class GenreShell {
 
     private final GenreService genreService;
+    private final TableRenderer tableRenderer;
 
     @ShellMethod(value = "Get genres count", key = {"gc", "genre-count"})
     public void genresCount() {
@@ -23,12 +26,14 @@ public class GenreShell {
     @ShellMethod(value = "Get genre list", key = {"gl", "genre-list"})
     public void genreList() {
         List<Genre> genres = genreService.getAll();
-        System.out.println("Genres list");
-        int longestNameLength = genres.stream().map(b -> b.getName().length()).max(Integer::compare).get();
-        System.out.printf("|  id | %-" + longestNameLength + "s |\n", "Name");
-        for (Genre genre : genres) {
-            System.out.printf("| %3d | %-" + longestNameLength + "s |\n", genre.getId(), genre.getName());
-        }
+        System.out.println(
+                tableRenderer.render(
+                        "Genres list",
+                        Arrays.asList("id", "Genre name"),
+                        (genre) -> Arrays.asList(genre.getId().toString(), genre.getName()),
+                        genres
+                )
+        );
     }
 
     @ShellMethod(value = "Add genre", key = {"ga", "genre-add"})
@@ -39,6 +44,13 @@ public class GenreShell {
 
     @ShellMethod(value = "Get genre", key = {"gg", "genre-get"})
     public void getById(@ShellOption Long id) {
-        System.out.println(genreService.getById(id));
+        System.out.println(
+                tableRenderer.singleRowRender(
+                        "Genre",
+                        Arrays.asList("id", "Genre name"),
+                        (genre) -> Arrays.asList(genre.getId().toString(), genre.getName()),
+                        genreService.getById(id)
+                )
+        );
     }
 }
