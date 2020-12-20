@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:h2:mem:library;MODE=postgresql
-    schema: schema.sql
-    data: data.sql
+    schema: test-schema.sql
+    data: test-data.sql
 
   h2:
     console:
