@@ -35,4 +35,4 @@ Implement CRUD Shell application of book library with entities: Book, Author, Ge
 `maven clean package`
 
 ## Command to start the application
-`java -jar target/05-spring-shell-0.0.1-SNAPSHOT.jar`
+`java -jar target/07-spring-jdbc-0.0.1-SNAPSHOT.jar`
