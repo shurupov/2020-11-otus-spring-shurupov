@@ -1,0 +1,50 @@
+package ru.otus.shurupov.spring.jdbc.service;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.otus.shurupov.spring.jdbc.dao.AuthorDao;
+import ru.otus.shurupov.spring.jdbc.domain.Author;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@DisplayName("AuthorServiceImplImpl")
+@ExtendWith(MockitoExtension.class)
+class AuthorServiceImplTest {
+
+    @Mock
+    private AuthorDao authorDao;
+
+    private AuthorService authorService;
+
+    @BeforeEach
+    private void init() {
+        authorService = new AuthorServiceImpl(authorDao);
+    }
+
+    @Test
+    void count() {
+        when(authorDao.count()).thenReturn(5);
+        int actual = authorService.count();
+        assertAll(
+                () -> assertThat(actual).isEqualTo(5),
+                () -> verify(authorDao, times(1)).count()
+        );
+    }
+
+    @Test
+    void getById() {
+        Author expected = new Author(1L, "Evgeny", "Shurupov");
+        when(authorDao.getById(eq(1L))).thenReturn(expected);
+        Author actual = authorService.getById(1L);
+        assertAll(
+                () -> assertThat(actual).isEqualTo(expected),
+                () -> verify(authorDao, times(1)).getById(eq(1L))
+        );
+    }
+}
