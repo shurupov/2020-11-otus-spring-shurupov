@@ -2,5 +2,5 @@ spring:
   datasource:
     url: jdbc:h2:mem:library;MODE=postgresql
 
-  liquibase:
-    enabled: true
+liquibase:
+  enabled: true
