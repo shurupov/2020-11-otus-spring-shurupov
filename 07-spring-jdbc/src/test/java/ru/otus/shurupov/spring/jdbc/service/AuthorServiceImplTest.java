@@ -28,7 +28,8 @@ class AuthorServiceImplTest {
     }
 
     @Test
-    void count() {
+    @DisplayName("returns correct authors count in library")
+    void shouldCount() {
         when(authorDao.count()).thenReturn(5);
         int actual = authorService.count();
         assertAll(
@@ -38,7 +39,8 @@ class AuthorServiceImplTest {
     }
 
     @Test
-    void getById() {
+    @DisplayName("returns correct author by id")
+    void shouldGetById() {
         Author expected = new Author(1L, "Evgeny", "Shurupov");
         when(authorDao.getById(eq(1L))).thenReturn(expected);
         Author actual = authorService.getById(1L);
