@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class GenreDaoJdbc implements GenreDao {
@@ -50,6 +51,15 @@ public class GenreDaoJdbc implements GenreDao {
                 Collections.emptyMap(),
                 new GenreMapper()
         );
+    }
+
+    @Override
+    public Map<Long, Genre> getUsed() {
+        return jdbc.query(
+                "select g.id, g.name from genre g join book b on g.id = b.genre_id group by g.id, g.name",
+                Collections.emptyMap(),
+                new GenreMapper()
+        ).stream().collect(Collectors.toMap(Genre::getId, g -> g));
     }
 
     private static class GenreMapper implements RowMapper<Genre> {

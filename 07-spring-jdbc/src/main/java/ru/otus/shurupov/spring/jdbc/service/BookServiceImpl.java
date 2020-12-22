@@ -5,10 +5,13 @@ import org.springframework.stereotype.Service;
 import ru.otus.shurupov.spring.jdbc.dao.AuthorDao;
 import ru.otus.shurupov.spring.jdbc.dao.BookDao;
 import ru.otus.shurupov.spring.jdbc.dao.GenreDao;
+import ru.otus.shurupov.spring.jdbc.domain.Author;
 import ru.otus.shurupov.spring.jdbc.domain.Book;
+import ru.otus.shurupov.spring.jdbc.domain.Genre;
 import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +29,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto getById(Long id) {
-        return map(bookDao.getById(id));
+        Book book = bookDao.getById(id);
+        return new BookDto(book, authorDao.getById(book.getAuthorId()), genreDao.getById(book.getGenreId()));
     }
 
     @Override
@@ -36,7 +40,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getAll() {
-        return bookDao.getAll().stream().map(this::map).collect(Collectors.toList());
+        Map<Long, Genre> genres = genreDao.getUsed();
+        Map<Long, Author> authors = authorDao.getUsed();
+        return bookDao.getAll().stream()
+                .map(b -> new BookDto(b, authors.get(b.getAuthorId()), genres.get(b.getGenreId())))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -47,9 +55,5 @@ public class BookServiceImpl implements BookService {
     @Override
     public void update(Long id, String name, Long authorId, Long genreId) {
         bookDao.update(new Book(id, authorId, genreId ,name));
-    }
-
-    private BookDto map(Book book) {
-        return new BookDto(book, authorDao.getById(book.getAuthorId()), genreDao.getById(book.getGenreId()));
     }
 }
