@@ -31,7 +31,7 @@ Implement CRUD Shell application of book library with entities: Book, Author, Ge
 `docker rm postgres`
 
 ## Command to build
-`maven clean package`
+`mvn clean package`
 
 ## Command to start the application
 `java -jar target/07-spring-jdbc-0.0.1-SNAPSHOT.jar`
