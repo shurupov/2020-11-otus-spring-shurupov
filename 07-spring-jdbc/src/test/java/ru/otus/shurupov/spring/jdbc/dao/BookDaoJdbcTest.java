@@ -8,7 +8,10 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.shurupov.spring.jdbc.domain.Author;
 import ru.otus.shurupov.spring.jdbc.domain.Book;
+import ru.otus.shurupov.spring.jdbc.domain.Genre;
+import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
 
 import java.util.Arrays;
 
@@ -34,7 +37,13 @@ class BookDaoJdbcTest {
     @Test
     @DisplayName("returns correct book by id")
     void shouldGetById() {
-        assertThat(bookDao.getById(3L)).isEqualTo(new Book(3L, 3L, 2L, "The Tale about a Fisherman and a Fish"));
+        assertThat(bookDao.getById(3L)).isEqualTo(
+                new BookDto(
+                        new Book(3L, 3L, 2L, "The Tale about a Fisherman and a Fish"),
+                        new Author(3L, "Alexander", "Pushkin"),
+                        new Genre(2L, "Fairy Tale")
+                )
+        );
     }
 
     @Test
@@ -44,7 +53,13 @@ class BookDaoJdbcTest {
         bookDao.insert(new Book("Anna Karenina", 4L, 3L));
         assertAll(
                 () -> assertThat(bookDao.count()).isEqualTo(5),
-                () -> assertThat(bookDao.getById(5L)).isEqualTo(new Book(5L, 4L, 3L, "Anna Karenina"))
+                () -> assertThat(bookDao.getById(5L)).isEqualTo(
+                        new BookDto(
+                                new Book(5L, 4L, 3L, "Anna Karenina"),
+                                new Author(4L, "Fedor", "Dostoevsky"),
+                                new Genre(3L, "Drama")
+                        )
+                )
         );
     }
 
@@ -55,10 +70,26 @@ class BookDaoJdbcTest {
                 .hasSize(4)
                 .containsExactlyInAnyOrderElementsOf(
                         Arrays.asList(
-                                new Book(1L, 1L, 1L, "Sherlock Holmes. A Study in Scarlet"),
-                                new Book(2L, 2L, 1L, "Hercule Poirot. The Mysterious Affair at Styles"),
-                                new Book(3L, 3L, 2L, "The Tale about a Fisherman and a Fish"),
-                                new Book(4L, 4L, 3L, "Crime and Punishment")
+                                new BookDto(
+                                        new Book(1L, 1L, 1L, "Sherlock Holmes. A Study in Scarlet"),
+                                        new Author(1L, "Arthur", "Conan Doyle"),
+                                        new Genre(1L, "Crime and Detective")
+                                ),
+                                new BookDto(
+                                        new Book(2L, 2L, 1L, "Hercule Poirot. The Mysterious Affair at Styles"),
+                                        new Author(2L, "Agatha", "Christie"),
+                                        new Genre(1L, "Crime and Detective")
+                                ),
+                                new BookDto(
+                                        new Book(3L, 3L, 2L, "The Tale about a Fisherman and a Fish"),
+                                        new Author(3L, "Alexander", "Pushkin"),
+                                        new Genre(2L, "Fairy Tale")
+                                ),
+                                new BookDto(
+                                        new Book(4L, 4L, 3L, "Crime and Punishment"),
+                                        new Author(4L, "Fedor", "Dostoevsky"),
+                                        new Genre(3L, "Drama")
+                                )
                         )
                 );
     }
@@ -72,9 +103,21 @@ class BookDaoJdbcTest {
                 .hasSize(3)
                 .containsExactlyInAnyOrderElementsOf(
                         Arrays.asList(
-                                new Book(2L, 2L, 1L, "Hercule Poirot. The Mysterious Affair at Styles"),
-                                new Book(3L, 3L, 2L, "The Tale about a Fisherman and a Fish"),
-                                new Book(4L, 4L, 3L, "Crime and Punishment")
+                                new BookDto(
+                                        new Book(2L, 2L, 1L, "Hercule Poirot. The Mysterious Affair at Styles"),
+                                        new Author(2L, "Agatha", "Christie"),
+                                        new Genre(1L, "Crime and Detective")
+                                ),
+                                new BookDto(
+                                        new Book(3L, 3L, 2L, "The Tale about a Fisherman and a Fish"),
+                                        new Author(3L, "Alexander", "Pushkin"),
+                                        new Genre(2L, "Fairy Tale")
+                                ),
+                                new BookDto(
+                                        new Book(4L, 4L, 3L, "Crime and Punishment"),
+                                        new Author(4L, "Fedor", "Dostoevsky"),
+                                        new Genre(3L, "Drama")
+                                )
                         )
                 );
     }
@@ -83,8 +126,12 @@ class BookDaoJdbcTest {
     @DisplayName("updates one book in table")
     @DirtiesContext(methodMode = AFTER_METHOD)
     void update() {
-        Book expected = new Book(3L, 1L, 1L, "Some another book");
-        bookDao.update(expected);
+        BookDto expected = new BookDto(
+                new Book(3L, 1L, 1L, "Some another book"),
+                new Author(1L, "Arthur", "Conan Doyle"),
+                new Genre(1L, "Crime and Detective")
+        );
+        bookDao.update(new Book(3L, 1L, 1L, "Some another book"));
         assertThat(bookDao.getById(3L)).isEqualTo(expected);
     }
 }

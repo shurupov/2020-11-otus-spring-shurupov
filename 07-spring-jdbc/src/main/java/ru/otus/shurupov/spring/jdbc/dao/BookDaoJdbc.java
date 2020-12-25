@@ -3,7 +3,10 @@ package ru.otus.shurupov.spring.jdbc.dao;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
+import ru.otus.shurupov.spring.jdbc.domain.Author;
 import ru.otus.shurupov.spring.jdbc.domain.Book;
+import ru.otus.shurupov.spring.jdbc.domain.Genre;
+import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,11 +29,15 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public Book getById(Long id) {
+    public BookDto getById(Long id) {
         return jdbc.queryForObject(
-                "select id, author_id, genre_id, name from book where id = :id",
+                "select b.id, b.author_id, b.genre_id, b.name, g.name as genre_name, a.first_name, a.last_name\n" +
+                    "from book b\n" +
+                    "join genre g on g.id = b.genre_id\n" +
+                    "join author a on a.id = b.author_id\n" +
+                    "where b.id = :id",
                 Map.of("id", id),
-                new BookMapper()
+                new BookDtoMapper()
         );
     }
 
@@ -47,11 +54,14 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public List<Book> getAll() {
+    public List<BookDto> getAll() {
         return jdbc.query(
-                "select id, author_id, genre_id, name from book",
+                "select b.id, b.author_id, b.genre_id, b.name, g.name as genre_name, a.first_name, a.last_name\n" +
+                    "from book b\n" +
+                    "join genre g on g.id = b.genre_id\n" +
+                    "join author a on a.id = b.author_id",
                 Collections.emptyMap(),
-                new BookMapper()
+                new BookDtoMapper()
         );
     }
 
@@ -73,16 +83,26 @@ public class BookDaoJdbc implements BookDao {
         );
     }
 
-    private static class BookMapper implements RowMapper<Book> {
+    private static class BookDtoMapper implements RowMapper<BookDto> {
 
         @Override
-        public Book mapRow(ResultSet resultSet, int i) throws SQLException {
-            return new Book(
+        public BookDto mapRow(ResultSet resultSet, int i) throws SQLException {
+            Book book = new Book(
                     resultSet.getLong("id"),
                     resultSet.getLong("author_id"),
                     resultSet.getLong("genre_id"),
                     resultSet.getString("name")
             );
+            Genre genre = new Genre(
+                    resultSet.getLong("genre_id"),
+                    resultSet.getString("genre_name")
+            );
+            Author author = new Author(
+                    resultSet.getLong("author_id"),
+                    resultSet.getString("first_name"),
+                    resultSet.getString("last_name")
+            );
+            return new BookDto(book, author, genre);
         }
     }
 }

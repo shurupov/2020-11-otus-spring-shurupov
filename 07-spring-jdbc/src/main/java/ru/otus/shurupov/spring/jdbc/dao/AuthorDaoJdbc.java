@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Repository
 public class AuthorDaoJdbc implements AuthorDao {
@@ -50,14 +49,6 @@ public class AuthorDaoJdbc implements AuthorDao {
                 "select id, first_name, last_name from author",
                 new AuthorMapper()
         );
-    }
-
-    @Override
-    public Map<Long, Author> getUsed() {
-        return jdbc.query(
-                "select a.id, a.first_name, a.last_name from author a join book b ON a.id = b.author_id group by a.id, a.first_name, a.last_name",
-                new AuthorMapper()
-        ).stream().collect(Collectors.toMap(Author::getId, e -> e));
     }
 
     private static class AuthorMapper implements RowMapper<Author> {
