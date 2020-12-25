@@ -15,5 +15,6 @@
         <module>02-introduction-java-annotation-configuration</module>
         <module>03-spring-boot</module>
         <module>05-spring-shell</module>
+        <module>07-spring-jdbc</module>
     </modules>
 </project>
