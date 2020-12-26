@@ -2,39 +2,41 @@ package ru.otus.shurupov.spring.jdbc.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.otus.shurupov.spring.jdbc.dao.AuthorDao;
 import ru.otus.shurupov.spring.jdbc.dao.BookDao;
-import ru.otus.shurupov.spring.jdbc.dao.GenreDao;
+import ru.otus.shurupov.spring.jdbc.domain.Author;
 import ru.otus.shurupov.spring.jdbc.domain.Book;
-import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
+import ru.otus.shurupov.spring.jdbc.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
-//@Service
+@Service
 @RequiredArgsConstructor
-public class BookServiceImpl /*implements BookService*/ {
+public class BookServiceImpl implements BookService {
 
-    /*private final BookDao bookDao;
-    private final AuthorDao authorDao;
-    private final GenreDao genreDao;
+    private final BookDao bookDao;
 
     @Override
-    public int count() {
+    public long count() {
         return bookDao.count();
     }
 
     @Override
-    public BookDto getById(Long id) {
+    public Optional<Book> getById(Long id) {
         return bookDao.getById(id);
     }
 
     @Override
     public void insert(String name, Long authorId, Long genreId) {
-        bookDao.insert(new Book(name, authorId, genreId));
+        Author author = new Author();
+        author.setId(authorId);
+        Genre genre = new Genre();
+        genre.setId(genreId);
+        bookDao.insert(new Book(name, author, genre));
     }
 
     @Override
-    public List<BookDto> getAll() {
+    public List<Book> getAll() {
         return bookDao.getAll();
     }
 
@@ -44,7 +46,7 @@ public class BookServiceImpl /*implements BookService*/ {
     }
 
     @Override
-    public void update(Long id, String name, Long authorId, Long genreId) {
-        bookDao.update(new Book(id, authorId, genreId ,name));
-    }*/
+    public void updateName(Long id, String name) {
+        bookDao.updateNameById(id, name);
+    }
 }

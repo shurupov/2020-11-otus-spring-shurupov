@@ -1,14 +1,15 @@
 package ru.otus.shurupov.spring.jdbc.service;
 
-import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
+import ru.otus.shurupov.spring.jdbc.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
-    int count();
-    BookDto getById(Long id);
+    long count();
+    Optional<Book> getById(Long id);
     void insert(String name, Long authorId, Long genreId);
-    List<BookDto> getAll();
+    List<Book> getAll();
     void removeById(Long id);
-    void update(Long id, String name, Long authorId, Long genreId);
+    void updateName(Long id, String name);
 }

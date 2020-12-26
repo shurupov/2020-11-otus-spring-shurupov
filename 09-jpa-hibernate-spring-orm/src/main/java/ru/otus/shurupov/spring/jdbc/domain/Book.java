@@ -14,18 +14,18 @@ public class Book {
     @Column(name = "id")
     private Long id;
 
-    /*@ManyToOne(targetEntity = Author.class, cascade = {}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id")
+    @ManyToOne(targetEntity = Author.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id", insertable = false, updatable = false)
     private Author author;
 
-    @ManyToOne(targetEntity = Author.class, cascade = {}, fetch = FetchType.EAGER)
-    @JoinColumn(name = "author_id")
-    private Genre genre;*/
+    @ManyToOne(targetEntity = Genre.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id", insertable = false, updatable = false)
+    private Genre genre;
 
     @Column(name = "name")
     private String name;
 
-    /*public Book(String name, Author author, Genre genre) {
+    public Book(String name, Author author, Genre genre) {
         this.id = null;
         this.author = author;
         this.genre = genre;
@@ -37,5 +37,16 @@ public class Book {
         this.author = author;
         this.genre = genre;
         this.name = name;
-    }*/
+    }
+
+    public Book() {
+    }
+
+    public String getAuthorCaption() {
+        return String.format("%s %s (%s)", author.getFirstName(), author.getLastName(), author.getId());
+    }
+
+    public String getGenreCaption() {
+        return String.format("%s (%s)", genre.getName(), genre.getId());
+    }
 }

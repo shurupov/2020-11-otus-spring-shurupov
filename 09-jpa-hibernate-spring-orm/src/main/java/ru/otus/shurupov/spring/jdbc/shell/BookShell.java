@@ -4,14 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
+import ru.otus.shurupov.spring.jdbc.domain.Book;
 import ru.otus.shurupov.spring.jdbc.service.BookService;
 import ru.otus.shurupov.spring.jdbc.service.TableRenderer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
-//@ShellComponent
+@ShellComponent
 @RequiredArgsConstructor
 public class BookShell {
 
@@ -25,12 +26,12 @@ public class BookShell {
 
     @ShellMethod(value = "Get book list", key = {"bl", "book-list"})
     public void bookList() {
-        List<BookDto> books = bookService.getAll();
+        List<Book> books = bookService.getAll();
         System.out.println(
                 tableRenderer.render(
                     "Library book list",
                     Arrays.asList("id", "Name", "Author", "Genre"),
-                    (book) -> Arrays.asList(book.getId().toString(), book.getName(), book.getAuthor(), book.getGenre()),
+                    (book) -> Arrays.asList(book.getId().toString(), book.getName(), book.getAuthorCaption(), book.getGenreCaption()),
                     books
                 )
         );
@@ -44,14 +45,19 @@ public class BookShell {
 
     @ShellMethod(value = "Get book", key = {"bg", "book-get"})
     public void getById(@ShellOption Long id) {
-        System.out.println(
-                tableRenderer.singleRowRender(
-                        "Book",
-                        Arrays.asList("id", "Name", "Author", "Genre"),
-                        (book) -> Arrays.asList(book.getId().toString(), book.getName(), book.getAuthor(), book.getGenre()),
-                        bookService.getById(id)
-                )
-        );
+        Optional<Book> optionalBook = bookService.getById(id);
+        if (optionalBook.isPresent()) {
+            System.out.println(
+                    tableRenderer.singleRowRender(
+                            "Book",
+                            Arrays.asList("id", "Name", "Author", "Genre"),
+                            (book) -> Arrays.asList(book.getId().toString(), book.getName(), book.getAuthorCaption(), book.getGenreCaption()),
+                            optionalBook.get()
+                    )
+            );
+        } else {
+            System.out.println("Book with id " + id + " not found");
+        }
     }
 
     @ShellMethod(value = "Remove book", key = {"br", "book-remove"})
@@ -60,9 +66,9 @@ public class BookShell {
         System.out.println("Book successfully removed");
     }
 
-    @ShellMethod(value = "Update book", key = {"bu", "book-update"})
-    public void updateById(@ShellOption Long id, @ShellOption String name, @ShellOption Long authorId, @ShellOption Long genreId) {
-        bookService.update(id, name, authorId, genreId);
+    @ShellMethod(value = "Update book name", key = {"bnu", "book-name-update"})
+    public void updateById(@ShellOption Long id, @ShellOption String name) {
+        bookService.updateName(id, name);
         System.out.println("Book successfully updated");
     }
 
