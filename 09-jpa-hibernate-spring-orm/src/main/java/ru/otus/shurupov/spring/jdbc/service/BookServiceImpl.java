@@ -10,11 +10,11 @@ import ru.otus.shurupov.spring.jdbc.domain.dto.BookDto;
 
 import java.util.List;
 
-@Service
+//@Service
 @RequiredArgsConstructor
-public class BookServiceImpl implements BookService {
+public class BookServiceImpl /*implements BookService*/ {
 
-    private final BookDao bookDao;
+    /*private final BookDao bookDao;
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
 
@@ -46,5 +46,5 @@ public class BookServiceImpl implements BookService {
     @Override
     public void update(Long id, String name, Long authorId, Long genreId) {
         bookDao.update(new Book(id, authorId, genreId ,name));
-    }
+    }*/
 }

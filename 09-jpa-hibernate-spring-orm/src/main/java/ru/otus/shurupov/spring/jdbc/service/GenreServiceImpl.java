@@ -6,6 +6,7 @@ import ru.otus.shurupov.spring.jdbc.dao.GenreDao;
 import ru.otus.shurupov.spring.jdbc.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,12 +15,12 @@ public class GenreServiceImpl implements GenreService {
     private final GenreDao genreDao;
 
     @Override
-    public int count() {
+    public long count() {
         return genreDao.count();
     }
 
     @Override
-    public Genre getById(Long id) {
+    public Optional<Genre> getById(Long id) {
         return genreDao.getById(id);
     }
 

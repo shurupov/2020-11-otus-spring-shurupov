@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings({"SqlNoDataSourceInspection", "ConstantConditions", "SqlDialectInspection"})
-@Repository
-public class BookDaoJdbc implements BookDao {
-    private final NamedParameterJdbcOperations jdbc;
+//@Repository
+public class BookDaoJdbc /*implements BookDao*/ {
+    /*private final NamedParameterJdbcOperations jdbc;
 
     public BookDaoJdbc(NamedParameterJdbcOperations jdbc) {
         this.jdbc = jdbc;
@@ -104,5 +104,5 @@ public class BookDaoJdbc implements BookDao {
             );
             return new BookDto(book, author, genre);
         }
-    }
+    }*/
 }

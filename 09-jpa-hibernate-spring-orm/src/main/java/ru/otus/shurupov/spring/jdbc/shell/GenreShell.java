@@ -10,6 +10,7 @@ import ru.otus.shurupov.spring.jdbc.service.TableRenderer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @ShellComponent
 @RequiredArgsConstructor
@@ -44,13 +45,18 @@ public class GenreShell {
 
     @ShellMethod(value = "Get genre", key = {"gg", "genre-get"})
     public void getById(@ShellOption Long id) {
-        System.out.println(
-                tableRenderer.singleRowRender(
-                        "Genre",
-                        Arrays.asList("id", "Genre name"),
-                        (genre) -> Arrays.asList(genre.getId().toString(), genre.getName()),
-                        genreService.getById(id)
-                )
-        );
+        Optional<Genre> optionalGenre = genreService.getById(id);
+        if (optionalGenre.isPresent()) {
+            System.out.println(
+                    tableRenderer.singleRowRender(
+                            "Genre",
+                            Arrays.asList("id", "Genre name"),
+                            (genre) -> Arrays.asList(genre.getId().toString(), genre.getName()),
+                            optionalGenre.get()
+                    )
+            );
+        } else {
+            System.out.println("Genre with id " + id + " not found");
+        }
     }
 }

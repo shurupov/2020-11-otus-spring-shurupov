@@ -11,7 +11,7 @@ import ru.otus.shurupov.spring.jdbc.service.TableRenderer;
 import java.util.Arrays;
 import java.util.List;
 
-@ShellComponent
+//@ShellComponent
 @RequiredArgsConstructor
 public class BookShell {
 

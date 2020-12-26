@@ -2,24 +2,40 @@ package ru.otus.shurupov.spring.jdbc.domain;
 
 import lombok.Data;
 
+import javax.persistence.*;
+
 @Data
+@Entity
+@Table(name = "book")
 public class Book {
-    private final Long id;
-    private final Long authorId;
-    private final Long genreId;
-    private final String name;
 
-    public Book(String name, Long authorId, Long genreId) {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    /*@ManyToOne(targetEntity = Author.class, cascade = {}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id")
+    private Author author;
+
+    @ManyToOne(targetEntity = Author.class, cascade = {}, fetch = FetchType.EAGER)
+    @JoinColumn(name = "author_id")
+    private Genre genre;*/
+
+    @Column(name = "name")
+    private String name;
+
+    /*public Book(String name, Author author, Genre genre) {
         this.id = null;
-        this.authorId = authorId;
-        this.genreId = genreId;
+        this.author = author;
+        this.genre = genre;
         this.name = name;
     }
 
-    public Book(Long id, Long authorId, Long genreId, String name) {
+    public Book(Long id, Author author, Genre genre, String name) {
         this.id = id;
-        this.authorId = authorId;
-        this.genreId = genreId;
+        this.author = author;
+        this.genre = genre;
         this.name = name;
-    }
+    }*/
 }

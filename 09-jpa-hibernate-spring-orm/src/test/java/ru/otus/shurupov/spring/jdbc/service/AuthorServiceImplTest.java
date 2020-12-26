@@ -9,6 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.shurupov.spring.jdbc.dao.AuthorDao;
 import ru.otus.shurupov.spring.jdbc.domain.Author;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -30,8 +32,8 @@ class AuthorServiceImplTest {
     @Test
     @DisplayName("returns correct authors count in library")
     void shouldCount() {
-        when(authorDao.count()).thenReturn(5);
-        int actual = authorService.count();
+        when(authorDao.count()).thenReturn(5L);
+        long actual = authorService.count();
         assertAll(
                 () -> assertThat(actual).isEqualTo(5),
                 () -> verify(authorDao, times(1)).count()
@@ -42,8 +44,8 @@ class AuthorServiceImplTest {
     @DisplayName("returns correct author by id")
     void shouldGetById() {
         Author expected = new Author(1L, "Evgeny", "Shurupov");
-        when(authorDao.getById(eq(1L))).thenReturn(expected);
-        Author actual = authorService.getById(1L);
+        when(authorDao.getById(eq(1L))).thenReturn(Optional.of(expected));
+        Author actual = authorService.getById(1L).get();
         assertAll(
                 () -> assertThat(actual).isEqualTo(expected),
                 () -> verify(authorDao, times(1)).getById(eq(1L))

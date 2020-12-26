@@ -10,6 +10,7 @@ import ru.otus.shurupov.spring.jdbc.service.TableRenderer;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @ShellComponent
 @RequiredArgsConstructor
@@ -44,13 +45,18 @@ public class AuthorShell {
 
     @ShellMethod(value = "Get author", key = {"ag", "author-get"})
     public void getById(@ShellOption Long id) {
-        System.out.println(
-                tableRenderer.singleRowRender(
-                        "Author",
-                        Arrays.asList("id", "First Name", "Last Name"),
-                        (author) -> Arrays.asList(author.getId().toString(), author.getFirstName(), author.getLastName()),
-                        authorService.getById(id)
-                )
-        );
+        Optional<Author> optionalAuthor = authorService.getById(id);
+        if (optionalAuthor.isPresent()) {
+            System.out.println(
+                    tableRenderer.singleRowRender(
+                            "Author",
+                            Arrays.asList("id", "First Name", "Last Name"),
+                            (author) -> Arrays.asList(author.getId().toString(), author.getFirstName(), author.getLastName()),
+                            optionalAuthor.get()
+                    )
+            );
+        } else {
+            System.out.println("Author with id " + id + " not found");
+        }
     }
 }
