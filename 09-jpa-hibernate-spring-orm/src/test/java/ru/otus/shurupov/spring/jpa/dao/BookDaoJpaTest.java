@@ -12,6 +12,7 @@ import ru.otus.shurupov.spring.jpa.domain.Book;
 import ru.otus.shurupov.spring.jpa.domain.Genre;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,13 +38,14 @@ class BookDaoJpaTest {
     @Test
     @DisplayName("returns correct book by id")
     void shouldGetById() {
-        assertThat(bookDao.getById(3L).get()).isEqualTo(
-                new Book(
-                        3L,
-                        new Author(3L, "Alexander", "Pushkin"),
-                        new Genre(2L, "Fairy Tale"),
-                        "The Tale about a Fisherman and a Fish"
-                )
+        Book book = bookDao.getById(3L).get();
+        assertAll(
+                () -> assertThat(book.getId()).isEqualTo(3L),
+                () -> assertThat(book.getName()).isEqualTo("The Tale about a Fisherman and a Fish"),
+                () -> assertThat(book.getAuthor()).isEqualTo(new Author(3L, "Alexander", "Pushkin")),
+                () -> assertThat(book.getGenres())
+                        .hasSize(1)
+                        .contains(new Genre(2L, "Fairy Tale"))
         );
     }
 
@@ -52,54 +54,63 @@ class BookDaoJpaTest {
     @DirtiesContext(methodMode = AFTER_METHOD)
     void shouldInsert() {
         Author author = em.find(Author.class, 4L);
-        Genre genre = em.find(Genre.class, 3L);
-        bookDao.insert(new Book("Anna Karenina", author, genre));
+        Genre genre1 = em.find(Genre.class, 3L);
+        Genre genre2 = em.find(Genre.class, 1L);
+        Book book = new Book("Anna Karenina", author, Arrays.asList(genre1, genre2));
+        bookDao.insert(book);
+        Book actualBook = em.find(Book.class, 5L);
         assertAll(
                 () -> assertThat(bookDao.count()).isEqualTo(5),
-                () -> assertThat(em.find(Book.class, 5L)).isEqualTo(
-                        new Book(
-                                5L,
-                                new Author(4L, "Fedor", "Dostoevsky"),
-                                new Genre(3L, "Drama"),
-                                "Anna Karenina"
-                        )
-                )
+                () -> assertThat(actualBook.getId()).isEqualTo(5L),
+                () -> assertThat(actualBook.getName()).isEqualTo("Anna Karenina"),
+                () -> assertThat(actualBook.getAuthor()).isEqualTo(new Author(4L, "Fedor", "Dostoevsky")),
+                () -> assertThat(actualBook.getGenres())
+                    .hasSize(2)
+                    .contains(new Genre(3L, "Drama"))
+                    .contains(new Genre(1L, "Crime and Detective"))
         );
     }
 
     @Test
     @DisplayName("returns list of all books")
     void shouldGetAll() {
-        assertThat(bookDao.getAll())
-                .hasSize(4)
-                .containsExactlyInAnyOrderElementsOf(
-                        Arrays.asList(
-                                new Book(
-                                        1L,
-                                        new Author(1L, "Arthur", "Conan Doyle"),
-                                        new Genre(1L, "Crime and Detective"),
-                                        "Sherlock Holmes. A Study in Scarlet"
-                                ),
-                                new Book(
-                                        2L,
-                                        new Author(2L, "Agatha", "Christie"),
-                                        new Genre(1L, "Crime and Detective"),
-                                        "Hercule Poirot. The Mysterious Affair at Styles"
-                                ),
-                                new Book(
-                                        3L,
-                                        new Author(3L, "Alexander", "Pushkin"),
-                                        new Genre(2L, "Fairy Tale"),
-                                        "The Tale about a Fisherman and a Fish"
-                                ),
-                                new Book(
-                                        4L,
-                                        new Author(4L, "Fedor", "Dostoevsky"),
-                                        new Genre(3L, "Drama"),
-                                        "Crime and Punishment"
-                                )
-                        )
-                );
+        List<Book> books = bookDao.getAll();
+        assertAll(
+                () -> assertThat(books).hasSize(4),
+                () -> assertAll(
+                        () -> assertThat(books.get(0).getId()).isEqualTo(1L),
+                        () -> assertThat(books.get(0).getName()).isEqualTo("Sherlock Holmes. A Study in Scarlet"),
+                        () -> assertThat(books.get(0).getAuthor()).isEqualTo(new Author(1L, "Arthur", "Conan Doyle")),
+                        () -> assertThat(books.get(0).getGenres())
+                                .hasSize(1)
+                                .contains(new Genre(1L, "Crime and Detective"))
+                ),
+                () -> assertAll(
+                        () -> assertThat(books.get(1).getId()).isEqualTo(2L),
+                        () -> assertThat(books.get(1).getName()).isEqualTo("Hercule Poirot. The Mysterious Affair at Styles"),
+                        () -> assertThat(books.get(1).getAuthor()).isEqualTo(new Author(2L, "Agatha", "Christie")),
+                        () -> assertThat(books.get(1).getGenres())
+                                .hasSize(2)
+                                .contains(new Genre(1L, "Crime and Detective"))
+                                .contains(new Genre(2L, "Fairy Tale"))
+                ),
+                () -> assertAll(
+                        () -> assertThat(books.get(2).getId()).isEqualTo(3L),
+                        () -> assertThat(books.get(2).getName()).isEqualTo("The Tale about a Fisherman and a Fish"),
+                        () -> assertThat(books.get(2).getAuthor()).isEqualTo(new Author(3L, "Alexander", "Pushkin")),
+                        () -> assertThat(books.get(2).getGenres())
+                                .hasSize(1)
+                                .contains(new Genre(2L, "Fairy Tale"))
+                ),
+                () -> assertAll(
+                        () -> assertThat(books.get(3).getId()).isEqualTo(4L),
+                        () -> assertThat(books.get(3).getName()).isEqualTo("Crime and Punishment"),
+                        () -> assertThat(books.get(3).getAuthor()).isEqualTo(new Author(4L, "Fedor", "Dostoevsky")),
+                        () -> assertThat(books.get(3).getGenres())
+                                .hasSize(1)
+                                .contains(new Genre(3L, "Drama"))
+                )
+        );
     }
 
     @Test
@@ -107,7 +118,36 @@ class BookDaoJpaTest {
     @DirtiesContext(methodMode = AFTER_METHOD)
     void shouldRemoveById() {
         bookDao.removeById(1L);
-        assertThat(bookDao.getAll())
+        List<Book> books = bookDao.getAll();
+        assertAll(
+                () -> assertThat(books).hasSize(3),
+                () -> assertAll(
+                        () -> assertThat(books.get(0).getId()).isEqualTo(2L),
+                        () -> assertThat(books.get(0).getName()).isEqualTo("Hercule Poirot. The Mysterious Affair at Styles"),
+                        () -> assertThat(books.get(0).getAuthor()).isEqualTo(new Author(2L, "Agatha", "Christie")),
+                        () -> assertThat(books.get(0).getGenres())
+                                .hasSize(2)
+                                .contains(new Genre(1L, "Crime and Detective"))
+                                .contains(new Genre(2L, "Fairy Tale"))
+                ),
+                () -> assertAll(
+                        () -> assertThat(books.get(1).getId()).isEqualTo(3L),
+                        () -> assertThat(books.get(1).getName()).isEqualTo("The Tale about a Fisherman and a Fish"),
+                        () -> assertThat(books.get(1).getAuthor()).isEqualTo(new Author(3L, "Alexander", "Pushkin")),
+                        () -> assertThat(books.get(1).getGenres())
+                                .hasSize(1)
+                                .contains(new Genre(2L, "Fairy Tale"))
+                ),
+                () -> assertAll(
+                        () -> assertThat(books.get(2).getId()).isEqualTo(4L),
+                        () -> assertThat(books.get(2).getName()).isEqualTo("Crime and Punishment"),
+                        () -> assertThat(books.get(2).getAuthor()).isEqualTo(new Author(4L, "Fedor", "Dostoevsky")),
+                        () -> assertThat(books.get(2).getGenres())
+                                .hasSize(1)
+                                .contains(new Genre(3L, "Drama"))
+                )
+        );
+        /*assertThat(bookDao.getAll())
                 .hasSize(3)
                 .containsExactlyInAnyOrderElementsOf(
                         Arrays.asList(
@@ -130,20 +170,15 @@ class BookDaoJpaTest {
                                         "Crime and Punishment"
                                 )
                         )
-                );
+                );*/
     }
 
     @Test
     @DisplayName("updates one book in table")
     @DirtiesContext(methodMode = AFTER_METHOD)
     void update() {
-        Book expected = new Book(
-                3L,
-                new Author(3L, "Alexander", "Pushkin"),
-                new Genre(2L, "Fairy Tale"),
-                "Some another book"
-        );
         bookDao.updateNameById(3L, "Some another book");
-        assertThat(em.find(Book.class, 3L)).isEqualTo(expected);
+        Book updated = em.find(Book.class, 3L);
+        assertThat(updated.getName()).isEqualTo("Some another book");
     }
 }

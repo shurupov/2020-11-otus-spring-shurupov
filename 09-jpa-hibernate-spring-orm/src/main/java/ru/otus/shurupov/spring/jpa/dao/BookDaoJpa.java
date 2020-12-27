@@ -30,7 +30,7 @@ public class BookDaoJpa implements BookDao {
 
     @Override
     public List<Book> getAll() {
-        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.genre", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b", Book.class);
         EntityGraph<?> entityGraph = em.getEntityGraph("book-author-graph");
         query.setHint("javax.persistence.fetchgraph", entityGraph);
         return query.getResultList();

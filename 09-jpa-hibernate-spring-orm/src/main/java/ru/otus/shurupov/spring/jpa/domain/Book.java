@@ -1,8 +1,15 @@
 package ru.otus.shurupov.spring.jpa.domain;
 
 import lombok.Data;
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -19,24 +26,34 @@ public class Book {
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToOne(targetEntity = Genre.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id")
-    private Genre genre;
+    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size = 5)
+    private List<Genre> genres;
 
     @Column(name = "name")
     private String name;
 
     public Book(String name, Author author, Genre genre) {
+        this(name, author, Collections.singletonList(genre));
+    }
+
+    public Book(String name, Author author, List<Genre> genres) {
         this.id = null;
         this.author = author;
-        this.genre = genre;
+        this.genres = new ArrayList<>(genres);
         this.name = name;
     }
 
     public Book(Long id, Author author, Genre genre, String name) {
+        this(id, author, Collections.singletonList(genre), name);
+    }
+
+    public Book(Long id, Author author, List<Genre> genres, String name) {
         this.id = id;
         this.author = author;
-        this.genre = genre;
+        this.genres = new ArrayList<>(genres);
         this.name = name;
     }
 
@@ -48,6 +65,8 @@ public class Book {
     }
 
     public String getGenreCaption() {
-        return String.format("%s (%s)", genre.getName(), genre.getId());
+        return genres.stream()
+                .map(genre -> String.format("%s (%s)", genre.getName(), genre.getId()))
+                .collect(Collectors.joining(", "));
     }
 }
