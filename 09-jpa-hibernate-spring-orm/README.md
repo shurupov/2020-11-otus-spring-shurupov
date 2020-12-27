@@ -11,7 +11,9 @@ Implement CRUD Shell application of book library with entities: Book, Author, Ge
 - Spring Shell
 - Postgresql database for production
 - H2 Embedded database for tests
-- Spring JDBC
+- JPA
+- Hibernate
+- Spring ORM
 - Liquibase
 - JUnit 5
 - Mockito
