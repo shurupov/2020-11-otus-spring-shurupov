@@ -56,7 +56,7 @@ class BookDaoJpaTest {
         bookDao.insert(new Book("Anna Karenina", author, genre));
         assertAll(
                 () -> assertThat(bookDao.count()).isEqualTo(5),
-                () -> assertThat(bookDao.getById(5L).get()).isEqualTo(
+                () -> assertThat(em.find(Book.class, 5L)).isEqualTo(
                         new Book(
                                 5L,
                                 new Author(4L, "Fedor", "Dostoevsky"),
@@ -144,6 +144,6 @@ class BookDaoJpaTest {
                 "Some another book"
         );
         bookDao.updateNameById(3L, "Some another book");
-        assertThat(bookDao.getById(3L).get()).isEqualTo(expected);
+        assertThat(em.find(Book.class, 3L)).isEqualTo(expected);
     }
 }

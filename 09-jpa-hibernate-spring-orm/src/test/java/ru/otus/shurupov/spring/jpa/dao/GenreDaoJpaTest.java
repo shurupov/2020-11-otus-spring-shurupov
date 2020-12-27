@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import ru.otus.shurupov.spring.jpa.domain.Genre;
@@ -21,6 +22,9 @@ class GenreDaoJpaTest {
 
     @Autowired
     private GenreDao genreDao;
+
+    @Autowired
+    private TestEntityManager em;
 
     @Test
     @DisplayName("returns correct genres count in library")
@@ -41,7 +45,7 @@ class GenreDaoJpaTest {
         genreDao.insert(new Genre("Horror"));
         assertAll(
                 () -> assertThat(genreDao.count()).isEqualTo(4),
-                () -> assertThat(genreDao.getById(4L).get()).isEqualTo(new Genre(4L, "Horror"))
+                () -> assertThat(em.find(Genre.class, 4L)).isEqualTo(new Genre(4L, "Horror"))
         );
     }
 

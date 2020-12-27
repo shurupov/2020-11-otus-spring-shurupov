@@ -23,6 +23,9 @@ class AuthorDaoJpaTest {
     @Autowired
     private AuthorDao authorDao;
 
+    @Autowired
+    private TestEntityManager em;
+
     @Test
     @DisplayName("returns correct authors count in library")
     void shouldCount() {
@@ -42,7 +45,7 @@ class AuthorDaoJpaTest {
         authorDao.insert(new Author("Jane", "Austin"));
         assertAll(
                 () -> assertThat(authorDao.count()).isEqualTo(5),
-                () -> assertThat(authorDao.getById(5L).get()).isEqualTo(new Author(5L, "Jane", "Austin"))
+                () -> assertThat(em.find(Author.class, 5L)).isEqualTo(new Author(5L, "Jane", "Austin"))
         );
     }
 
