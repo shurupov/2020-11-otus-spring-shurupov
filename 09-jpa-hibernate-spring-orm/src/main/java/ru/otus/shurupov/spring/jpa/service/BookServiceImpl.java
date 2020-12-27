@@ -7,7 +7,6 @@ import ru.otus.shurupov.spring.jpa.domain.Author;
 import ru.otus.shurupov.spring.jpa.domain.Book;
 import ru.otus.shurupov.spring.jpa.domain.Genre;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +36,6 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public List<Book> getAll() {
         return bookDao.getAll();
     }

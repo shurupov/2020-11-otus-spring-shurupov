@@ -16,11 +16,11 @@ public class Book {
     private Long id;
 
     @ManyToOne(targetEntity = Author.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "author_id", insertable = false, updatable = false)
+    @JoinColumn(name = "author_id")
     private Author author;
 
     @ManyToOne(targetEntity = Genre.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "genre_id", insertable = false, updatable = false)
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @Column(name = "name")
