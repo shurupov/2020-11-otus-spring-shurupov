@@ -23,9 +23,6 @@ class AuthorDaoJpaTest {
     @Autowired
     private AuthorDao authorDao;
 
-    @Autowired
-    private TestEntityManager em;
-
     @Test
     @DisplayName("returns correct authors count in library")
     void shouldCount() {

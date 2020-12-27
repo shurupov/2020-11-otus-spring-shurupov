@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class BookDaoJdbc implements BookDao {
+public class BookDaoJpa implements BookDao {
     @PersistenceContext
     private EntityManager em;
 
