@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.shurupov.spring.jpa.domain.Book;
 import ru.otus.shurupov.spring.jpa.service.BookService;
 import ru.otus.shurupov.spring.jpa.service.TableRenderer;
@@ -25,6 +26,7 @@ public class BookShell {
     }
 
     @ShellMethod(value = "Get book list", key = {"bl", "book-list"})
+    @Transactional
     public void bookList() {
         List<Book> books = bookService.getAll();
         System.out.println(
@@ -44,6 +46,7 @@ public class BookShell {
     }
 
     @ShellMethod(value = "Get book", key = {"bg", "book-get"})
+    @Transactional
     public void getById(@ShellOption Long id) {
         Optional<Book> optionalBook = bookService.getById(id);
         if (optionalBook.isPresent()) {
