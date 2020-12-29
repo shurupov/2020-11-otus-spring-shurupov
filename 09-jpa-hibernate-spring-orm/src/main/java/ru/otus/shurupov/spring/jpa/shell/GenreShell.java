@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.jpa.shell;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -47,12 +48,15 @@ public class GenreShell {
     public void getById(@ShellOption Long id) {
         Optional<Genre> optionalGenre = genreService.getById(id);
         if (optionalGenre.isPresent()) {
+            Genre genre = optionalGenre.get();
             System.out.println(
-                    tableRenderer.singleRowRender(
+                    tableRenderer.render(
                             "Genre",
-                            Arrays.asList("id", "Genre name"),
-                            (genre) -> Arrays.asList(genre.getId().toString(), genre.getName()),
-                            optionalGenre.get()
+                            ImmutableMap.of(
+                                    "id", genre.getId(),
+                                    "Name", genre.getName()
+                            )
+
                     )
             );
         } else {

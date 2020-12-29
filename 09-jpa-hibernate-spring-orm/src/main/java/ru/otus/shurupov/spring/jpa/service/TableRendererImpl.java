@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TableRendererImpl implements TableRenderer {
@@ -26,6 +27,21 @@ public class TableRendererImpl implements TableRenderer {
         for (T row : rows) {
             AT_Row tableRow = table.addRow(rowRenderer.renderRow(row));
             tableRow.getCells().get(0).getContext().setTextAlignment(TextAlignment.RIGHT);
+            table.addRule();
+        }
+        table.getRenderer().setCWC(new CWC_LongestLine());
+        table.setPaddingLeftRight(1);
+        return table.render();
+    }
+
+    @Override
+    public String render(String title, Map<String, Object> data) {
+        AsciiTable table = new AsciiTable();
+        table.addRule();
+        table.addRow(null, title);
+        table.addRule();
+        for (Map.Entry<String, Object> line : data.entrySet()) {
+            table.addRow(line.getKey(), line.getValue().toString());
             table.addRule();
         }
         table.getRenderer().setCWC(new CWC_LongestLine());

@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.jpa.shell;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -47,12 +48,15 @@ public class AuthorShell {
     public void getById(@ShellOption Long id) {
         Optional<Author> optionalAuthor = authorService.getById(id);
         if (optionalAuthor.isPresent()) {
+            Author author = optionalAuthor.get();
             System.out.println(
-                    tableRenderer.singleRowRender(
+                    tableRenderer.render(
                             "Author",
-                            Arrays.asList("id", "First Name", "Last Name"),
-                            (author) -> Arrays.asList(author.getId().toString(), author.getFirstName(), author.getLastName()),
-                            optionalAuthor.get()
+                            ImmutableMap.of(
+                                    "id", author.getId().toString(),
+                                    "First Name", author.getFirstName(),
+                                    "Last Name", author.getLastName()
+                            )
                     )
             );
         } else {

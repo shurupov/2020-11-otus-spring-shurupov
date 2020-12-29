@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.jpa.shell;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
@@ -50,12 +51,24 @@ public class BookShell {
     public void getById(@ShellOption Long id) {
         Optional<Book> optionalBook = bookService.getById(id);
         if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
             System.out.println(
-                    tableRenderer.singleRowRender(
+                    tableRenderer.render(
                             "Book",
-                            Arrays.asList("id", "Name", "Author", "Genre"),
-                            (book) -> Arrays.asList(book.getId().toString(), book.getName(), book.getAuthorCaption(), book.getGenreCaption()),
-                            optionalBook.get()
+                            ImmutableMap.of(
+                                    "id", book.getId(),
+                                    "Name", book.getName(),
+                                    "Author", book.getAuthorCaption(),
+                                    "Genre", book.getGenreCaption()
+                            )
+                    )
+            );
+            System.out.println(
+                    tableRenderer.render(
+                            "Book Comments",
+                            Arrays.asList("id", "Comment"),
+                            (comment) -> Arrays.asList(comment.getId(), comment.getText()),
+                            optionalBook.get().getComments()
                     )
             );
         } else {
