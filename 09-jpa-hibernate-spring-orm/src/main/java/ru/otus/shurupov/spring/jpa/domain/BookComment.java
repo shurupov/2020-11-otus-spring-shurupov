@@ -7,16 +7,21 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "book_comment")
+@NamedEntityGraph(name = "comment-book-graph", attributeNodes = @NamedAttributeNode("book"))
 public class BookComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    /*@ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
-    private Book author;*/
+    private Book book;
 
     @Column(name = "comment_text")
     private String text;
+
+    public String getBookCaption() {
+        return String.format("%s (%s)", book.getName(), book.getId());
+    }
 }

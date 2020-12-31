@@ -2,6 +2,7 @@ package ru.otus.shurupov.spring.jpa.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.otus.shurupov.spring.jpa.dao.BookDao;
 import ru.otus.shurupov.spring.jpa.domain.Author;
 import ru.otus.shurupov.spring.jpa.domain.Book;
@@ -27,6 +28,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void insert(String name, Long authorId, Long genreId) {
         Author author = new Author();
         author.setId(authorId);
