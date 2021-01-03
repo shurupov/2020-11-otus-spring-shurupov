@@ -147,30 +147,6 @@ class BookDaoJpaTest {
                                 .contains(new Genre(3L, "Drama"))
                 )
         );
-        /*assertThat(bookDao.getAll())
-                .hasSize(3)
-                .containsExactlyInAnyOrderElementsOf(
-                        Arrays.asList(
-                                new Book(
-                                        2L,
-                                        new Author(2L, "Agatha", "Christie"),
-                                        new Genre(1L, "Crime and Detective"),
-                                        "Hercule Poirot. The Mysterious Affair at Styles"
-                                ),
-                                new Book(
-                                        3L,
-                                        new Author(3L, "Alexander", "Pushkin"),
-                                        new Genre(2L, "Fairy Tale"),
-                                        "The Tale about a Fisherman and a Fish"
-                                ),
-                                new Book(
-                                        4L,
-                                        new Author(4L, "Fedor", "Dostoevsky"),
-                                        new Genre(3L, "Drama"),
-                                        "Crime and Punishment"
-                                )
-                        )
-                );*/
     }
 
     @Test
