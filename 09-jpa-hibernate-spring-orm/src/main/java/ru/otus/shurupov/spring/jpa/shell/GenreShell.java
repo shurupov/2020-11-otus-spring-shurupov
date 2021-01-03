@@ -1,24 +1,16 @@
 package ru.otus.shurupov.spring.jpa.shell;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.shurupov.spring.jpa.domain.Genre;
 import ru.otus.shurupov.spring.jpa.service.GenreService;
-import ru.otus.shurupov.spring.jpa.service.TableRenderer;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class GenreShell {
 
     private final GenreService genreService;
-    private final TableRenderer tableRenderer;
 
     @ShellMethod(value = "Get genres count", key = {"gc", "genre-count"})
     public void genresCount() {
@@ -27,15 +19,7 @@ public class GenreShell {
 
     @ShellMethod(value = "Get genre list", key = {"gl", "genre-list"})
     public void genreList() {
-        List<Genre> genres = genreService.getAll();
-        System.out.println(
-                tableRenderer.render(
-                        "Genres list",
-                        Arrays.asList("id", "Genre name"),
-                        (genre) -> Arrays.asList(genre.getId().toString(), genre.getName()),
-                        genres
-                )
-        );
+        genreService.displayList();
     }
 
     @ShellMethod(value = "Add genre", key = {"ga", "genre-add"})
@@ -46,21 +30,6 @@ public class GenreShell {
 
     @ShellMethod(value = "Get genre", key = {"gg", "genre-get"})
     public void getById(@ShellOption Long id) {
-        Optional<Genre> optionalGenre = genreService.getById(id);
-        if (optionalGenre.isPresent()) {
-            Genre genre = optionalGenre.get();
-            System.out.println(
-                    tableRenderer.render(
-                            "Genre",
-                            ImmutableMap.of(
-                                    "id", genre.getId(),
-                                    "Name", genre.getName()
-                            )
-
-                    )
-            );
-        } else {
-            System.out.println("Genre with id " + id + " not found");
-        }
+        genreService.displayById(id);
     }
 }

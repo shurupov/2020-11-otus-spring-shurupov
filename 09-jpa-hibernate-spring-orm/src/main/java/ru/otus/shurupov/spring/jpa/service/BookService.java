@@ -12,4 +12,7 @@ public interface BookService {
     List<Book> getAll();
     void removeById(Long id);
     void updateName(Long id, String name);
+
+    void displayList();
+    void displayById(Long id);
 }

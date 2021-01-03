@@ -1,24 +1,16 @@
 package ru.otus.shurupov.spring.jpa.shell;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import ru.otus.shurupov.spring.jpa.domain.Author;
 import ru.otus.shurupov.spring.jpa.service.AuthorService;
-import ru.otus.shurupov.spring.jpa.service.TableRenderer;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class AuthorShell {
 
     private final AuthorService authorService;
-    private final TableRenderer tableRenderer;
 
     @ShellMethod(value = "Get authors count", key = {"ac", "author-count"})
     public void authorsCount() {
@@ -27,15 +19,7 @@ public class AuthorShell {
 
     @ShellMethod(value = "Get author list", key = {"al", "author-list"})
     public void authorList() {
-        List<Author> authors = authorService.getAll();
-        System.out.println(
-                tableRenderer.render(
-                        "Authors list",
-                        Arrays.asList("id", "First Name", "Last Name"),
-                        (author) -> Arrays.asList(author.getId().toString(), author.getFirstName(), author.getLastName()),
-                        authors
-                )
-        );
+        authorService.displayList();
     }
 
     @ShellMethod(value = "Add author", key = {"aa", "author-add"})
@@ -46,21 +30,6 @@ public class AuthorShell {
 
     @ShellMethod(value = "Get author", key = {"ag", "author-get"})
     public void getById(@ShellOption Long id) {
-        Optional<Author> optionalAuthor = authorService.getById(id);
-        if (optionalAuthor.isPresent()) {
-            Author author = optionalAuthor.get();
-            System.out.println(
-                    tableRenderer.render(
-                            "Author",
-                            ImmutableMap.of(
-                                    "id", author.getId().toString(),
-                                    "First Name", author.getFirstName(),
-                                    "Last Name", author.getLastName()
-                            )
-                    )
-            );
-        } else {
-            System.out.println("Author with id " + id + " not found");
-        }
+        authorService.displayById(id);
     }
 }

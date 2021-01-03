@@ -1,25 +1,16 @@
 package ru.otus.shurupov.spring.jpa.shell;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
-import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.jpa.domain.Book;
 import ru.otus.shurupov.spring.jpa.service.BookService;
-import ru.otus.shurupov.spring.jpa.service.TableRenderer;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 @ShellComponent
 @RequiredArgsConstructor
 public class BookShell {
 
     private final BookService bookService;
-    private final TableRenderer tableRenderer;
 
     @ShellMethod(value = "Get books count", key = {"bc", "book-count"})
     public void booksCount() {
@@ -27,17 +18,8 @@ public class BookShell {
     }
 
     @ShellMethod(value = "Get book list", key = {"bl", "book-list"})
-    @Transactional
     public void bookList() {
-        List<Book> books = bookService.getAll();
-        System.out.println(
-                tableRenderer.render(
-                    "Library book list",
-                    Arrays.asList("id", "Name", "Author", "Genre"),
-                    (book) -> Arrays.asList(book.getId().toString(), book.getName(), book.getAuthorCaption(), book.getGenreCaption()),
-                    books
-                )
-        );
+        bookService.displayList();
     }
 
     @ShellMethod(value = "Add book", key = {"ba", "book-add"})
@@ -47,33 +29,8 @@ public class BookShell {
     }
 
     @ShellMethod(value = "Get book", key = {"bg", "book-get"})
-    @Transactional
     public void getById(@ShellOption Long id) {
-        Optional<Book> optionalBook = bookService.getById(id);
-        if (optionalBook.isPresent()) {
-            Book book = optionalBook.get();
-            System.out.println(
-                    tableRenderer.render(
-                            "Book",
-                            ImmutableMap.of(
-                                    "id", book.getId(),
-                                    "Name", book.getName(),
-                                    "Author", book.getAuthorCaption(),
-                                    "Genre", book.getGenreCaption()
-                            )
-                    )
-            );
-            System.out.println(
-                    tableRenderer.render(
-                            "Book Comments",
-                            Arrays.asList("id", "Comment"),
-                            (comment) -> Arrays.asList(comment.getId(), comment.getText()),
-                            optionalBook.get().getComments()
-                    )
-            );
-        } else {
-            System.out.println("Book with id " + id + " not found");
-        }
+        bookService.displayById(id);
     }
 
     @ShellMethod(value = "Remove book", key = {"br", "book-remove"})

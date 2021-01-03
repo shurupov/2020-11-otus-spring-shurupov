@@ -10,4 +10,7 @@ public interface AuthorService {
     Optional<Author> getById(Long id);
     void insert(String firstName, String lastName);
     List<Author> getAll();
+
+    void displayList();
+    void displayById(Long id);
 }

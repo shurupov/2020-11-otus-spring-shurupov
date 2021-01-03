@@ -22,11 +22,14 @@ class AuthorServiceImplTest {
     @Mock
     private AuthorDao authorDao;
 
+    @Mock
+    private TableRenderer tableRenderer;
+
     private AuthorService authorService;
 
     @BeforeEach
     private void init() {
-        authorService = new AuthorServiceImpl(authorDao);
+        authorService = new AuthorServiceImpl(authorDao, tableRenderer);
     }
 
     @Test

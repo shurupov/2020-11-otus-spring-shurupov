@@ -10,4 +10,7 @@ public interface GenreService {
     Optional<Genre> getById(Long id);
     void insert(String name);
     List<Genre> getAll();
+
+    void displayList();
+    void displayById(Long id);
 }
