@@ -63,14 +63,4 @@ public class Book {
 
     public Book() {
     }
-
-    public String getAuthorCaption() {
-        return String.format("%s %s (%s)", author.getFirstName(), author.getLastName(), author.getId());
-    }
-
-    public String getGenreCaption() {
-        return genres.stream()
-                .map(genre -> String.format("%s (%s)", genre.getName(), genre.getId()))
-                .collect(Collectors.joining(", "));
-    }
 }

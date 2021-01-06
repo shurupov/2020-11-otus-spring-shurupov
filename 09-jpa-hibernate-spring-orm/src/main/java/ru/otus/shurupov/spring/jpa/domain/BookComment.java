@@ -14,14 +14,10 @@ public class BookComment {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Book.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "book_id")
     private Book book;
 
     @Column(name = "comment_text")
     private String text;
-
-    public String getBookCaption() {
-        return String.format("%s (%s)", book.getName(), book.getId());
-    }
 }

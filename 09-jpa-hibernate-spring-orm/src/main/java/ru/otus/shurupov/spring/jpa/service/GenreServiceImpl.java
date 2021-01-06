@@ -10,6 +10,7 @@ import ru.otus.shurupov.spring.jpa.domain.Genre;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -72,5 +73,12 @@ public class GenreServiceImpl implements GenreService {
         } else {
             System.out.println("Genre with id " + id + " not found");
         }
+    }
+
+    @Override
+    public String getGenreCaption(List<Genre> genres) {
+        return genres.stream()
+                .map(genre -> String.format("%s (%s)", genre.getName(), genre.getId()))
+                .collect(Collectors.joining(", "));
     }
 }

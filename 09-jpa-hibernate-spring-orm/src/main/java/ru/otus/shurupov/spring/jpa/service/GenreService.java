@@ -13,4 +13,6 @@ public interface GenreService {
 
     void displayList();
     void displayById(Long id);
+
+    String getGenreCaption(List<Genre> genres);
 }

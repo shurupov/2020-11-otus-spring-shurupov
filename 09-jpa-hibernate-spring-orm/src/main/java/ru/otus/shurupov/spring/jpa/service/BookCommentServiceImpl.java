@@ -20,6 +20,7 @@ public class BookCommentServiceImpl implements BookCommentService {
     private final BookCommentDao bookCommentDao;
     private final BookDao bookDao;
     private final TableRenderer tableRenderer;
+    private final BookService bookService;
 
     @Override
     public long count() {
@@ -66,7 +67,7 @@ public class BookCommentServiceImpl implements BookCommentService {
                 tableRenderer.render(
                         "Book comments list",
                         Arrays.asList("id", "Book", "Comment"),
-                        (comment) -> Arrays.asList(comment.getId(), comment.getBookCaption(), comment.getText()),
+                        (comment) -> Arrays.asList(comment.getId(), bookService.getBookCaption(comment.getBook()), comment.getText()),
                         comments
                 )
         );
@@ -83,7 +84,7 @@ public class BookCommentServiceImpl implements BookCommentService {
                             "Comment",
                             ImmutableMap.of(
                                     "id", comment.getId(),
-                                    "Book", comment.getBookCaption(),
+                                    "Book", bookService.getBookCaption(comment.getBook()),
                                     "Comment", comment.getText()
                             )
                     )

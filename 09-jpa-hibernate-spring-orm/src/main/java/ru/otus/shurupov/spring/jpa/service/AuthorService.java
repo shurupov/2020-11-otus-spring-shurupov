@@ -13,4 +13,6 @@ public interface AuthorService {
 
     void displayList();
     void displayById(Long id);
+
+    String getAuthorCaption(Author author);
 }

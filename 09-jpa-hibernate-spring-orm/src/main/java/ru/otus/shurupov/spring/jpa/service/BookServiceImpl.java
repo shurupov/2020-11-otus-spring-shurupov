@@ -23,6 +23,8 @@ public class BookServiceImpl implements BookService {
     private final AuthorDao authorDao;
     private final GenreDao genreDao;
     private final TableRenderer tableRenderer;
+    private final AuthorService authorService;
+    private final GenreService genreService;
 
     @Override
     public long count() {
@@ -67,7 +69,12 @@ public class BookServiceImpl implements BookService {
                 tableRenderer.render(
                         "Library book list",
                         Arrays.asList("id", "Name", "Author", "Genre"),
-                        (book) -> Arrays.asList(book.getId().toString(), book.getName(), book.getAuthorCaption(), book.getGenreCaption()),
+                        (book) -> Arrays.asList(
+                                book.getId().toString(),
+                                book.getName(),
+                                authorService.getAuthorCaption(book.getAuthor()),
+                                genreService.getGenreCaption(book.getGenres())
+                        ),
                         books
                 )
         );
@@ -85,8 +92,8 @@ public class BookServiceImpl implements BookService {
                             ImmutableMap.of(
                                     "id", book.getId(),
                                     "Name", book.getName(),
-                                    "Author", book.getAuthorCaption(),
-                                    "Genre", book.getGenreCaption()
+                                    "Author", authorService.getAuthorCaption(book.getAuthor()),
+                                    "Genre", genreService.getGenreCaption(book.getGenres())
                             )
                     )
             );
@@ -101,5 +108,10 @@ public class BookServiceImpl implements BookService {
         } else {
             System.out.println("Book with id " + id + " not found");
         }
+    }
+
+    @Override
+    public String getBookCaption(Book book) {
+        return String.format("%s (%s)", book.getName(), book.getId());
     }
 }

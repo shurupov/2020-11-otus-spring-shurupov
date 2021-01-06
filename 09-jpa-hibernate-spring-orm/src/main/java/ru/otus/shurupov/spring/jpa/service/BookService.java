@@ -15,4 +15,6 @@ public interface BookService {
 
     void displayList();
     void displayById(Long id);
+
+    String getBookCaption(Book book);
 }

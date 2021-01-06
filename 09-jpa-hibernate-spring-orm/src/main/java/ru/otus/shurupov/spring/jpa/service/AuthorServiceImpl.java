@@ -73,4 +73,9 @@ public class AuthorServiceImpl implements AuthorService {
             System.out.println("Author with id " + id + " not found");
         }
     }
+
+    @Override
+    public String getAuthorCaption(Author author) {
+        return String.format("%s %s (%s)", author.getFirstName(), author.getLastName(), author.getId());
+    }
 }
