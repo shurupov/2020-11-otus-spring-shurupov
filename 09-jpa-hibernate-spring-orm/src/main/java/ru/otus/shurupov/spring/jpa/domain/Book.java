@@ -1,13 +1,12 @@
 package ru.otus.shurupov.spring.jpa.domain;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Data
@@ -38,23 +37,8 @@ public class Book {
     @Column(name = "name")
     private String name;
 
-    public Book(String name, Author author, Genre genre) {
-        this(name, author, Collections.singletonList(genre));
-    }
-
     public Book(String name, Author author, List<Genre> genres) {
         this.id = null;
-        this.author = author;
-        this.genres = new ArrayList<>(genres);
-        this.name = name;
-    }
-
-    public Book(Long id, Author author, Genre genre, String name) {
-        this(id, author, Collections.singletonList(genre), name);
-    }
-
-    public Book(Long id, Author author, List<Genre> genres, String name) {
-        this.id = id;
         this.author = author;
         this.genres = new ArrayList<>(genres);
         this.name = name;

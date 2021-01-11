@@ -12,6 +12,7 @@ import ru.otus.shurupov.spring.jpa.domain.Book;
 import ru.otus.shurupov.spring.jpa.domain.Genre;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,7 +42,7 @@ public class BookServiceImpl implements BookService {
     public void insert(String name, Long authorId, Long genreId) {
         Author author = authorDao.getById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
         Genre genre = genreDao.getById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
-        bookDao.insert(new Book(name, author, genre));
+        bookDao.insert(new Book(name, author, Collections.singletonList(genre)));
     }
 
     @Override

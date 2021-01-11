@@ -31,6 +31,5 @@ public class Author {
         this.lastName = lastName;
     }
     public Author() {
-
     }
 }
