@@ -11,6 +11,7 @@ import ru.otus.shurupov.spring.jpa.domain.Book;
 import ru.otus.shurupov.spring.jpa.domain.BookComment;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -122,7 +123,8 @@ class BookCommentDaoJpaTest {
     @DisplayName("removes comment from table")
     @DirtiesContext(methodMode = AFTER_METHOD)
     void removeById() {
-        bookCommentDao.removeById(6L);
+        BookComment bookCommentToDelete = bookCommentDao.getById(6L).get();
+        bookCommentDao.remove(bookCommentToDelete);
         List<BookComment> comments = bookCommentDao.getAll();
         assertAll(
                 () -> assertThat(comments).hasSize(7),

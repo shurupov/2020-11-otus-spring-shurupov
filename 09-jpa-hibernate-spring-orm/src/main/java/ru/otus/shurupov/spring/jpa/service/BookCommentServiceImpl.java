@@ -50,13 +50,15 @@ public class BookCommentServiceImpl implements BookCommentService {
     @Override
     @Transactional
     public void removeById(long id) {
-        bookCommentDao.removeById(id);
+        Optional<BookComment> optionalBookComment = bookCommentDao.getById(id);
+        bookCommentDao.remove(optionalBookComment.orElseThrow(() -> new RuntimeException("Book not found")));
     }
 
     @Override
     @Transactional
     public void update(long id, String comment) {
-        bookCommentDao.updateById(id, comment);
+        Optional<BookComment> optionalBookComment = bookCommentDao.getById(id);
+        bookCommentDao.remove(optionalBookComment.orElseThrow(() -> new RuntimeException("Book not found")));
     }
 
     @Override

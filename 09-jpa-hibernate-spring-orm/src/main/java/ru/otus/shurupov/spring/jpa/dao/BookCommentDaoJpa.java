@@ -37,17 +37,14 @@ public class BookCommentDaoJpa implements BookCommentDao {
     }
 
     @Override
-    public void removeById(long id) {
-        Query query = em.createQuery("delete from BookComment c where c.id = :id");
-        query.setParameter("id", id);
-        query.executeUpdate();
+    public void remove(BookComment bookComment) {
+        em.remove(bookComment);
     }
 
     @Override
     public void updateById(long id, String comment) {
-        Query query = em.createQuery("update BookComment c set c.text = :text where c.id = :id");
-        query.setParameter("id", id);
-        query.setParameter("text", comment);
-        query.executeUpdate();
+        BookComment bookComment = em.find(BookComment.class, id);
+        bookComment.setText(comment);
+        em.merge(bookComment);
     }
 }

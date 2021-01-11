@@ -10,6 +10,6 @@ public interface BookCommentDao {
     Optional<BookComment> getById(long id);
     void insert(BookComment comment);
     List<BookComment> getAll();
-    void removeById(long id);
+    void remove(BookComment bookComment);
     void updateById(long id, String comment);
 }
