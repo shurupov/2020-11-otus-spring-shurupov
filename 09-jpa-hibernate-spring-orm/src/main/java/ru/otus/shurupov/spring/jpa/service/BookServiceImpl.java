@@ -52,7 +52,8 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void removeById(Long id) {
-        bookDao.removeById(id);
+        Optional<Book> bookOptional = bookDao.getById(id);
+        bookDao.remove(bookOptional.orElseThrow(() -> new RuntimeException("Book not found")));
     }
 
     @Override

@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -22,17 +21,17 @@ public class Book {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(targetEntity = Author.class, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Author.class)
     @JoinColumn(name = "author_id")
     private Author author;
 
-    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
     @JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)
     private List<Genre> genres;
 
-    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private List<BookComment> comments;
 
@@ -62,5 +61,13 @@ public class Book {
     }
 
     public Book() {
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
