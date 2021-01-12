@@ -118,10 +118,7 @@ class BookDaoJpaTest {
     @DirtiesContext(methodMode = AFTER_METHOD)
     void shouldRemoveById() {
         Book bookToRemove = em.find(Book.class, 1L);
-        em.remove(bookToRemove.getComments().get(0));
-        em.flush();
         em.remove(bookToRemove);
-        em.flush();
 
         List<Book> books = bookDao.getAll();
         assertAll(

@@ -30,8 +30,7 @@ public class Book {
     @BatchSize(size = 5)
     private List<Genre> genres;
 
-    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book")
     private List<BookComment> comments;
 
     @Column(name = "name")
