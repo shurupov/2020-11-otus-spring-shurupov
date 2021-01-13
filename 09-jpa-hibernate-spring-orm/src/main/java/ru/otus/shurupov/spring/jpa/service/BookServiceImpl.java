@@ -104,7 +104,7 @@ public class BookServiceImpl implements BookService {
                             "Book Comments",
                             Arrays.asList("id", "Comment"),
                             (comment) -> Arrays.asList(comment.getId(), comment.getText()),
-                            optionalBook.get().getComments()
+                            book.getComments()
                     )
             );
         } else {
