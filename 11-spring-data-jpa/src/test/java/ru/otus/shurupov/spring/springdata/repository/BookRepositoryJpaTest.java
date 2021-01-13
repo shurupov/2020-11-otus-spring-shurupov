@@ -18,9 +18,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.annotation.DirtiesContext.MethodMode.AFTER_METHOD;
 
-@DisplayName("BookDao Repo ")
+@DisplayName("BookRepository ")
 @DataJpaTest
-@Import(BookRepository.class)
 class BookRepositoryTest {
 
     @Autowired
@@ -30,7 +29,7 @@ class BookRepositoryTest {
     private TestEntityManager em;
 
     @Test
-    @DisplayName("updates one book in table")
+    @DisplayName("updates one book in the table")
     @DirtiesContext(methodMode = AFTER_METHOD)
     void update() {
         bookRepository.updateNameById(3L, "Some another book");
