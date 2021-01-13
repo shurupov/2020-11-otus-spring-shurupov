@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
-public class SpringJpaApp {
+public class SpringDataJpaApp {
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(SpringJpaApp.class);
+        ConfigurableApplicationContext context = SpringApplication.run(SpringDataJpaApp.class);
         context.close();
     }
 }
