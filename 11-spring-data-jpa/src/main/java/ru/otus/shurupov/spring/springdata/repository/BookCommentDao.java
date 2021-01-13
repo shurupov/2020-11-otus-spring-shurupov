@@ -1,4 +1,4 @@
-package ru.otus.shurupov.spring.springdata.dao;
+package ru.otus.shurupov.spring.springdata.repository;
 
 import ru.otus.shurupov.spring.springdata.domain.BookComment;
 

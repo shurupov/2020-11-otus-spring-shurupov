@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.springdata.dao.BookCommentDao;
-import ru.otus.shurupov.spring.springdata.dao.BookDao;
+import ru.otus.shurupov.spring.springdata.repository.BookCommentDao;
+import ru.otus.shurupov.spring.springdata.repository.BookDao;
 import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.BookComment;
 

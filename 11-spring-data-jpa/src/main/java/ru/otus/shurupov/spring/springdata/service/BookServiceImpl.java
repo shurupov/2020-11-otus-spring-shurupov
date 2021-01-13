@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.springdata.dao.AuthorDao;
-import ru.otus.shurupov.spring.springdata.dao.BookDao;
-import ru.otus.shurupov.spring.springdata.dao.GenreDao;
+import ru.otus.shurupov.spring.springdata.repository.AuthorRepository;
+import ru.otus.shurupov.spring.springdata.repository.BookDao;
+import ru.otus.shurupov.spring.springdata.repository.GenreDao;
 import ru.otus.shurupov.spring.springdata.domain.Author;
 import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.Genre;
@@ -21,7 +21,7 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
-    private final AuthorDao authorDao;
+    private final AuthorRepository authorRepository;
     private final GenreDao genreDao;
     private final TableRenderer tableRenderer;
     private final AuthorService authorService;
@@ -40,7 +40,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void insert(String name, Long authorId, Long genreId) {
-        Author author = authorDao.getById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
+        Author author = authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
         Genre genre = genreDao.getById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
         bookDao.insert(new Book(name, author, Collections.singletonList(genre)));
     }

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.springdata.dao.AuthorDao;
+import ru.otus.shurupov.spring.springdata.repository.AuthorRepository;
 import ru.otus.shurupov.spring.springdata.domain.Author;
 
 import java.util.Arrays;
@@ -15,28 +15,28 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
-    private final AuthorDao authorDao;
+    private final AuthorRepository authorRepository;
     private final TableRenderer tableRenderer;
 
     @Override
     public long count() {
-        return authorDao.count();
+        return authorRepository.count();
     }
 
     @Override
     public Optional<Author> getById(Long id) {
-        return authorDao.getById(id);
+        return authorRepository.findById(id);
     }
 
     @Override
     @Transactional
     public void insert(String firstName, String lastName) {
-        authorDao.insert(new Author(firstName, lastName));
+        authorRepository.save(new Author(firstName, lastName));
     }
 
     @Override
     public List<Author> getAll() {
-        return authorDao.getAll();
+        return authorRepository.findAll();
     }
 
     @Override

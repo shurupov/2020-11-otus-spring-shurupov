@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.springdata.dao.GenreDao;
+import ru.otus.shurupov.spring.springdata.repository.GenreDao;
 import ru.otus.shurupov.spring.springdata.domain.Genre;
 
 import java.util.Arrays;

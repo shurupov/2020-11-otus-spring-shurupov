@@ -1,4 +1,4 @@
-package ru.otus.shurupov.spring.springdata.dao;
+package ru.otus.shurupov.spring.springdata.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.otus.shurupov.spring.springdata.domain.BookComment;
