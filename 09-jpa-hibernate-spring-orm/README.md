@@ -1,7 +1,7 @@
 # JPA, Hibernate, Spring ORM
 
 ## Task
-Implement CRUD Shell application of book library with entities: Book, Author, Genre. 
+Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
 Use JPA, Hibernate, Spring ORM.
 
 ## Used
