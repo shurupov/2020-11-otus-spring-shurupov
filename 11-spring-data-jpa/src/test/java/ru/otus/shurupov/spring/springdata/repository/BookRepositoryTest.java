@@ -31,9 +31,30 @@ class BookRepositoryTest {
     @Test
     @DisplayName("updates one book in the table")
     @DirtiesContext(methodMode = AFTER_METHOD)
-    void update() {
+    void shouldUpdate() {
         bookRepository.updateNameById(3L, "Some another book");
         Book updated = em.find(Book.class, 3L);
         assertThat(updated.getName()).isEqualTo("Some another book");
+    }
+
+    @Test
+    @DisplayName("filters by name")
+    void shouldFilterByName() {
+        List<Book> books = bookRepository.findByNameContainingIgnoreCase("pun");
+        assertAll(
+                () -> assertThat(books).hasSize(1),
+                () -> assertThat(books.get(0).getName()).isEqualTo("Crime and Punishment")
+        );
+    }
+
+    @Test
+    @DisplayName("filters by author")
+    void shouldFilterByAuthor() {
+        List<Book> books = bookRepository.findByAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCase("lex", "lex");
+        assertAll(
+                () -> assertThat(books).hasSize(1),
+                () -> assertThat(books.get(0).getAuthor().getFirstName()).isEqualTo("Alexander"),
+                () -> assertThat(books.get(0).getName()).isEqualTo("The Tale about a Fisherman and a Fish")
+        );
     }
 }

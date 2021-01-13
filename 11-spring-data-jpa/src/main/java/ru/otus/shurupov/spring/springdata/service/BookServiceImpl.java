@@ -66,19 +66,7 @@ public class BookServiceImpl implements BookService {
     @Transactional(readOnly = true)
     public void displayList() {
         List<Book> books = getAll();
-        System.out.println(
-                tableRenderer.render(
-                        "Library book list",
-                        Arrays.asList("id", "Name", "Author", "Genre"),
-                        (book) -> Arrays.asList(
-                                book.getId().toString(),
-                                book.getName(),
-                                authorService.getAuthorCaption(book.getAuthor()),
-                                genreService.getGenreCaption(book.getGenres())
-                        ),
-                        books
-                )
-        );
+        render(books);
     }
 
     @Override
@@ -114,5 +102,43 @@ public class BookServiceImpl implements BookService {
     @Override
     public String getBookCaption(Book book) {
         return String.format("%s (%s)", book.getName(), book.getId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void displayByAuthorFilteredList(String filter) {
+        List<Book> books = filterByAuthor(filter);
+        render(books);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void displayByNameFilteredList(String filter) {
+        List<Book> books = filterByName(filter);
+        render(books);
+    }
+
+    private List<Book> filterByAuthor(String filter) {
+        return bookRepository.findByAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCase(filter, filter);
+    }
+
+    private List<Book> filterByName(String filter) {
+        return bookRepository.findByNameContainingIgnoreCase(filter);
+    }
+
+    private void render(List<Book> books) {
+        System.out.println(
+                tableRenderer.render(
+                        "Library book list",
+                        Arrays.asList("id", "Name", "Author", "Genre"),
+                        (book) -> Arrays.asList(
+                                book.getId().toString(),
+                                book.getName(),
+                                authorService.getAuthorCaption(book.getAuthor()),
+                                genreService.getGenreCaption(book.getGenres())
+                        ),
+                        books
+                )
+        );
     }
 }

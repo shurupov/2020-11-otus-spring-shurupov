@@ -22,6 +22,16 @@ public class BookShell {
         bookService.displayList();
     }
 
+    @ShellMethod(value = "Filter book list by author", key = {"bfa", "book-filter-by-author"})
+    public void bookListByAuthor(@ShellOption String filter) {
+        bookService.displayByAuthorFilteredList(filter);
+    }
+
+    @ShellMethod(value = "Filter book list by name", key = {"bfn", "book-filter-by-name"})
+    public void bookListByName(@ShellOption String filter) {
+        bookService.displayByNameFilteredList(filter);
+    }
+
     @ShellMethod(value = "Add book", key = {"ba", "book-add"})
     public void addBook(@ShellOption String name, @ShellOption Long authorId, @ShellOption Long genreId) {
         bookService.insert(name, authorId, genreId);
