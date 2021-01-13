@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.shurupov.spring.springdata.repository.BookCommentRepository;
-import ru.otus.shurupov.spring.springdata.repository.BookDao;
+import ru.otus.shurupov.spring.springdata.repository.BookRepository;
 import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.BookComment;
 
@@ -18,7 +18,7 @@ import java.util.Optional;
 public class BookCommentServiceImpl implements BookCommentService {
 
     private final BookCommentRepository bookCommentRepository;
-    private final BookDao bookDao;
+    private final BookRepository bookRepository;
     private final TableRenderer tableRenderer;
     private final BookService bookService;
 
@@ -36,7 +36,7 @@ public class BookCommentServiceImpl implements BookCommentService {
     @Transactional
     public void insert(long bookId, String comment) {
         BookComment bookComment = new BookComment();
-        Book book = bookDao.getById(bookId).orElseThrow(() -> new RuntimeException("Book not found!"));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found!"));
         bookComment.setBook(book);
         bookComment.setText(comment);
         bookCommentRepository.save(bookComment);

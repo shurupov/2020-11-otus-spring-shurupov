@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.shurupov.spring.springdata.repository.AuthorRepository;
-import ru.otus.shurupov.spring.springdata.repository.BookDao;
+import ru.otus.shurupov.spring.springdata.repository.BookRepository;
 import ru.otus.shurupov.spring.springdata.repository.GenreRepository;
 import ru.otus.shurupov.spring.springdata.domain.Author;
 import ru.otus.shurupov.spring.springdata.domain.Book;
@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-    private final BookDao bookDao;
+    private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
     private final TableRenderer tableRenderer;
@@ -29,12 +29,12 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public long count() {
-        return bookDao.count();
+        return bookRepository.count();
     }
 
     @Override
     public Optional<Book> getById(Long id) {
-        return bookDao.getById(id);
+        return bookRepository.findById(id);
     }
 
     @Override
@@ -42,25 +42,24 @@ public class BookServiceImpl implements BookService {
     public void insert(String name, Long authorId, Long genreId) {
         Author author = authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
         Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
-        bookDao.insert(new Book(name, author, Collections.singletonList(genre)));
+        bookRepository.save(new Book(name, author, Collections.singletonList(genre)));
     }
 
     @Override
     public List<Book> getAll() {
-        return bookDao.getAll();
+        return bookRepository.findAll();
     }
 
     @Override
     @Transactional
     public void removeById(Long id) {
-        Optional<Book> bookOptional = bookDao.getById(id);
-        bookDao.remove(bookOptional.orElseThrow(() -> new RuntimeException("Book not found")));
+        bookRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void updateName(Long id, String name) {
-        bookDao.updateNameById(id, name);
+        bookRepository.updateNameById(id, name);
     }
 
     @Override
