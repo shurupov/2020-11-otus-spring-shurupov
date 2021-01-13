@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.shurupov.spring.springdata.repository.AuthorRepository;
 import ru.otus.shurupov.spring.springdata.repository.BookDao;
-import ru.otus.shurupov.spring.springdata.repository.GenreDao;
+import ru.otus.shurupov.spring.springdata.repository.GenreRepository;
 import ru.otus.shurupov.spring.springdata.domain.Author;
 import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.Genre;
@@ -22,7 +22,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookDao bookDao;
     private final AuthorRepository authorRepository;
-    private final GenreDao genreDao;
+    private final GenreRepository genreRepository;
     private final TableRenderer tableRenderer;
     private final AuthorService authorService;
     private final GenreService genreService;
@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void insert(String name, Long authorId, Long genreId) {
         Author author = authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
-        Genre genre = genreDao.getById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
+        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
         bookDao.insert(new Book(name, author, Collections.singletonList(genre)));
     }
 
