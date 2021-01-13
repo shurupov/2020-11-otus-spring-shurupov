@@ -14,4 +14,6 @@
 
 ### [Spring JDBC](07-spring-jdbc)
 
+### [JPA, Hibernate, Spring ORM](09-jpa-hibernate-spring-orm)
+
 
