@@ -20,4 +20,5 @@ public interface BookService {
 
     void displayByAuthorFilteredList(String filter);
     void displayByNameFilteredList(String filter);
+    void setGenres(Long bookId, List<Long> genreIds);
 }

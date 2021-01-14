@@ -118,6 +118,12 @@ public class BookServiceImpl implements BookService {
         render(books);
     }
 
+    @Override
+    @Transactional
+    public void setGenres(Long bookId, List<Long> genreIds) {
+        bookRepository.setGenres(bookId, genreIds);
+    }
+
     private List<Book> filterByAuthor(String filter) {
         return bookRepository.findByAuthorFirstNameContainingIgnoreCaseOrAuthorLastNameContainingIgnoreCase(filter, filter);
     }

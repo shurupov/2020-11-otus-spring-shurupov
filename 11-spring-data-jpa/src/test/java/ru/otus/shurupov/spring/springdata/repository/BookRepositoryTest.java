@@ -29,9 +29,9 @@ class BookRepositoryTest {
     private TestEntityManager em;
 
     @Test
-    @DisplayName("updates one book in the table")
+    @DisplayName("updates the book name")
     @DirtiesContext(methodMode = AFTER_METHOD)
-    void shouldUpdate() {
+    void shouldUpdateName() {
         bookRepository.updateNameById(3L, "Some another book");
         Book updated = em.find(Book.class, 3L);
         assertThat(updated.getName()).isEqualTo("Some another book");
@@ -56,5 +56,19 @@ class BookRepositoryTest {
                 () -> assertThat(books.get(0).getAuthor().getFirstName()).isEqualTo("Alexander"),
                 () -> assertThat(books.get(0).getName()).isEqualTo("The Tale about a Fisherman and a Fish")
         );
+    }
+
+    @Test
+    @DisplayName("updates the book genres")
+    @DirtiesContext(methodMode = AFTER_METHOD)
+    void shouldUpdateGenres() {
+        bookRepository.setGenres(3L, List.of(1L, 3L));
+        Book updated = em.find(Book.class, 3L);
+        assertThat(updated.getGenres())
+                .hasSize(2)
+                .contains(
+                        new Genre(1L, "Crime and Detective"),
+                        new Genre(3L, "Drama")
+                );
     }
 }

@@ -6,6 +6,8 @@ import org.springframework.shell.standard.ShellMethod;
 import org.springframework.shell.standard.ShellOption;
 import ru.otus.shurupov.spring.springdata.service.BookService;
 
+import java.util.List;
+
 @ShellComponent
 @RequiredArgsConstructor
 public class BookShell {
@@ -50,9 +52,14 @@ public class BookShell {
     }
 
     @ShellMethod(value = "Update book name", key = {"bnu", "book-name-update"})
-    public void updateById(@ShellOption Long id, @ShellOption String name) {
+    public void updateBookName(@ShellOption Long id, @ShellOption String name) {
         bookService.updateName(id, name);
         System.out.println("Book successfully updated");
     }
 
+    @ShellMethod(value = "Update book genres", key = {"bgu", "book-genres-update"})
+    public void updateBookGenres(@ShellOption Long id, @ShellOption List<Long> genreIds) {
+        bookService.setGenres(id, genreIds);
+        System.out.println("Book successfully updated");
+    }
 }
