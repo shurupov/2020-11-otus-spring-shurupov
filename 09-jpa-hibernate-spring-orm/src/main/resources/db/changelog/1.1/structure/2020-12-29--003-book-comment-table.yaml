@@ -1,0 +1,40 @@
+databaseChangeLog:
+- changeSet:
+    id: 2020-12-29--003-book-comment-table
+    author: eshurupov
+    createTable:
+      tableName: book_comment
+      columns:
+      - column:
+          name: id
+          type: bigint
+          autoIncrement: true
+          constraints:
+            nullable: false
+            primaryKey: true
+            primaryKeyName: pk_comment
+      - column:
+          name: book_id
+          type: bigint
+          constraints:
+            nullable: false
+      - column:
+          name: comment_text
+          type: varchar(255)
+- changeSet:
+    id: 2020-12-29--009-book-comment-table-book_id-foreign-key
+    author: eshurupov
+    changes:
+      - addForeignKeyConstraint:
+          baseColumnNames: book_id
+          baseTableCatalogName: library
+          baseTableName: book_comment
+          baseTableSchemaName: public
+          constraintName: fk_book_id
+          onDelete: CASCADE
+          onUpdate: RESTRICT
+          referencedColumnNames: id
+          referencedTableCatalogName: library
+          referencedTableName: book
+          referencedTableSchemaName: public
+          validate: true
