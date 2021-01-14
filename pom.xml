@@ -17,5 +17,6 @@
         <module>05-spring-shell</module>
         <module>07-spring-jdbc</module>
         <module>09-jpa-hibernate-spring-orm</module>
+        <module>11-spring-data-jpa</module>
     </modules>
 </project>

@@ -17,3 +17,6 @@
 ### [JPA, Hibernate, Spring ORM](09-jpa-hibernate-spring-orm)
 
 
+### [Spring Data JPS](11-spring-data-jpa)
+
+

@@ -1,4 +1,4 @@
-package ru.otus.shurupov.spring.jpa.domain;
+package ru.otus.shurupov.spring.springdata.domain;
 
 import lombok.Data;
 
@@ -14,7 +14,7 @@ public class BookComment {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(targetEntity = Book.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = Book.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private Book book;
 
