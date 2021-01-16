@@ -17,4 +17,8 @@ public interface BookService {
     void displayById(Long id);
 
     String getBookCaption(Book book);
+
+    void displayByAuthorFilteredList(String filter);
+    void displayByNameFilteredList(String filter);
+    void setGenres(Long bookId, List<Long> genreIds);
 }

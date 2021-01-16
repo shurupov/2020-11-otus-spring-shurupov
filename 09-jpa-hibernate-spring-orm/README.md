@@ -37,4 +37,4 @@ Use JPA, Hibernate, Spring ORM.
 `mvn clean package`
 
 ## Command to start the application
-`java -jar target/07-jpa-hibernate-spring-orm-1.0.jar`
+`java -jar target/09-jpa-hibernate-spring-orm-1.0.jar`

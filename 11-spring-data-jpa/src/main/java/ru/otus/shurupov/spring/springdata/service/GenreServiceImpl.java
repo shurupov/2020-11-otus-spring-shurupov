@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.springdata.dao.GenreDao;
+import ru.otus.shurupov.spring.springdata.repository.GenreRepository;
 import ru.otus.shurupov.spring.springdata.domain.Genre;
 
 import java.util.Arrays;
@@ -16,28 +16,28 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GenreServiceImpl implements GenreService {
 
-    private final GenreDao genreDao;
+    private final GenreRepository genreRepository;
     private final TableRenderer tableRenderer;
 
     @Override
     public long count() {
-        return genreDao.count();
+        return genreRepository.count();
     }
 
     @Override
     public Optional<Genre> getById(Long id) {
-        return genreDao.getById(id);
+        return genreRepository.findById(id);
     }
 
     @Override
     @Transactional
     public void insert(String name) {
-        genreDao.insert(new Genre(name));
+        genreRepository.save(new Genre(name));
     }
 
     @Override
     public List<Genre> getAll() {
-        return genreDao.getAll();
+        return genreRepository.findAll();
     }
 
     @Override

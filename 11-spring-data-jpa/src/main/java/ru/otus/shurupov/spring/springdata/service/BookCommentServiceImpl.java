@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.springdata.dao.BookCommentDao;
-import ru.otus.shurupov.spring.springdata.dao.BookDao;
+import ru.otus.shurupov.spring.springdata.repository.BookCommentRepository;
+import ru.otus.shurupov.spring.springdata.repository.BookRepository;
 import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.BookComment;
 
@@ -17,48 +17,47 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BookCommentServiceImpl implements BookCommentService {
 
-    private final BookCommentDao bookCommentDao;
-    private final BookDao bookDao;
+    private final BookCommentRepository bookCommentRepository;
+    private final BookRepository bookRepository;
     private final TableRenderer tableRenderer;
     private final BookService bookService;
 
     @Override
     public long count() {
-        return bookCommentDao.count();
+        return bookCommentRepository.count();
     }
 
     @Override
     public Optional<BookComment> getById(long id) {
-        return bookCommentDao.getById(id);
+        return bookCommentRepository.findById(id);
     }
 
     @Override
     @Transactional
     public void insert(long bookId, String comment) {
         BookComment bookComment = new BookComment();
-        Book book = bookDao.getById(bookId).orElseThrow(() -> new RuntimeException("Book not found!"));
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found!"));
         bookComment.setBook(book);
         bookComment.setText(comment);
-        bookCommentDao.insert(bookComment);
+        bookCommentRepository.save(bookComment);
     }
 
     @Override
     public List<BookComment> getAll() {
-        return bookCommentDao.getAll();
+        return bookCommentRepository.findAll();
     }
 
     @Override
     @Transactional
     public void removeById(long id) {
-        Optional<BookComment> optionalBookComment = bookCommentDao.getById(id);
-        bookCommentDao.remove(optionalBookComment.orElseThrow(() -> new RuntimeException("Book not found")));
+        bookCommentRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void update(long id, String comment) {
-        Optional<BookComment> optionalBookComment = bookCommentDao.getById(id);
-        bookCommentDao.remove(optionalBookComment.orElseThrow(() -> new RuntimeException("Book not found")));
+        Optional<BookComment> optionalBookComment = bookCommentRepository.findById(id);
+        bookCommentRepository.delete(optionalBookComment.orElseThrow(() -> new RuntimeException("Book not found")));
     }
 
     @Override

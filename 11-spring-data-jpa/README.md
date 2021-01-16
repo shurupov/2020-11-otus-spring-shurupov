@@ -2,7 +2,7 @@
 
 ## Task
 Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
-Use JPA, Hibernate, Spring ORM.
+Use Spring Data JPA.
 
 ## Used
 - Spring boot
@@ -13,8 +13,7 @@ Use JPA, Hibernate, Spring ORM.
 - Postgresql database for production
 - H2 Embedded database for tests
 - JPA
-- Hibernate
-- Spring ORM
+- Spring Data JPA
 - Liquibase
 - JUnit 5
 - Mockito
@@ -37,4 +36,4 @@ Use JPA, Hibernate, Spring ORM.
 `mvn clean package`
 
 ## Command to start the application
-`java -jar target/07-jpa-hibernate-spring-orm-1.0.jar`
+`java -jar target/11-spring-data-jpa-1.0.jar`

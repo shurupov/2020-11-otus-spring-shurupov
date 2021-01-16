@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.otus.shurupov.spring.springdata.dao.AuthorDao;
+import ru.otus.shurupov.spring.springdata.repository.AuthorRepository;
 import ru.otus.shurupov.spring.springdata.domain.Author;
 
 import java.util.Optional;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 class AuthorServiceImplTest {
 
     @Mock
-    private AuthorDao authorDao;
+    private AuthorRepository authorRepository;
 
     @Mock
     private TableRenderer tableRenderer;
@@ -29,17 +29,17 @@ class AuthorServiceImplTest {
 
     @BeforeEach
     private void init() {
-        authorService = new AuthorServiceImpl(authorDao, tableRenderer);
+        authorService = new AuthorServiceImpl(authorRepository, tableRenderer);
     }
 
     @Test
     @DisplayName("returns correct authors count in library")
     void shouldCount() {
-        when(authorDao.count()).thenReturn(5L);
+        when(authorRepository.count()).thenReturn(5L);
         long actual = authorService.count();
         assertAll(
                 () -> assertThat(actual).isEqualTo(5),
-                () -> verify(authorDao, times(1)).count()
+                () -> verify(authorRepository, times(1)).count()
         );
     }
 
@@ -47,11 +47,11 @@ class AuthorServiceImplTest {
     @DisplayName("returns correct author by id")
     void shouldGetById() {
         Author expected = new Author(1L, "Evgeny", "Shurupov");
-        when(authorDao.getById(eq(1L))).thenReturn(Optional.of(expected));
+        when(authorRepository.findById(eq(1L))).thenReturn(Optional.of(expected));
         Author actual = authorService.getById(1L).get();
         assertAll(
                 () -> assertThat(actual).isEqualTo(expected),
-                () -> verify(authorDao, times(1)).getById(eq(1L))
+                () -> verify(authorRepository, times(1)).findById(eq(1L))
         );
     }
 }
