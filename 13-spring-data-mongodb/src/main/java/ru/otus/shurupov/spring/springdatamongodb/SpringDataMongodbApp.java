@@ -25,9 +25,15 @@ public class SpringDataMongodbApp {
 
     @PostConstruct
     public void postConstruct() {
-//        Book book = new Book();
-//        book.setName("Book 2");
-//        bookRepository.save(book);
+        /*Book book1 = new Book();
+        book1.setName("Book 1");
+        bookRepository.save(book1);
+        Book book2 = new Book();
+        book2.setName("Book 2");
+        bookRepository.save(book2);
+        Book book3 = new Book();
+        book3.setName("Book 3");
+        bookRepository.save(book3);*/
         System.out.println(bookRepository.findAll());
     }
 }
