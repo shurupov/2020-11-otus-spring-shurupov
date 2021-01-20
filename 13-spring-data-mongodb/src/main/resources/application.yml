@@ -1,10 +1,10 @@
 spring:
   data:
     mongodb:
-      database: library
+      uri: mongodb://localhost:27017/library
 
 mongock:
   runner-type: "ApplicationRunner" # default
   #runner-type: "InitializingBean"
   change-logs-scan-package:
-    - ru.otus.spring.mongock.changelog
+    - ru.otus.shurupov.spring.springdatamongodb.mongock.changelog

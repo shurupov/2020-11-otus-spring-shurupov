@@ -21,7 +21,7 @@ Use Spring Data JPA.
 - @DataJpaTest, @DirtiesContext annotation in tests
 
 ## Command to init postgres container image and start it (You need to have docker installed)
-`docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=springpassword -e POSTGRES_USER=springuser -e POSTGRES_DB=library postgres`
+`docker run -d -p 127.0.0.1:27017:27017 --name mongo mongo`
 
 ## Command to stop postgres container
 `docker stop postgres`
