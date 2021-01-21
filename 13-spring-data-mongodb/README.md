@@ -15,7 +15,6 @@ Use Spring Data MongoDB.
 - Spring Data MongoDB
 - Mongock
 - JUnit 5
-- Mockito
 - AssertJ
 
 ## Command to init mongo container image and start it (You need to have docker installed)
