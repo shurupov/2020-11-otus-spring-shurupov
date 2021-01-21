@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface BookService {
     List<Book> getAll();
+    List<Book> searchByName(String name);
 
     void displayList();
+    void displayFilteredByName(String name);
 }

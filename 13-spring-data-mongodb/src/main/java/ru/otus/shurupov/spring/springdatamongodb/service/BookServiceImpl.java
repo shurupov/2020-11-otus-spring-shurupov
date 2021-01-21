@@ -21,8 +21,19 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public List<Book> searchByName(String name) {
+        return bookRepository.findByNameContainingIgnoreCase(name);
+    }
+
+    @Override
     public void displayList() {
         List<Book> books = getAll();
+        render(books);
+    }
+
+    @Override
+    public void displayFilteredByName(String name) {
+        List<Book> books = searchByName(name);
         render(books);
     }
 
