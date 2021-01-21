@@ -1,12 +1,15 @@
 package ru.otus.shurupov.spring.springdatamongodb.service;
 
+import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.otus.shurupov.spring.springdatamongodb.domain.Author;
 import ru.otus.shurupov.spring.springdatamongodb.domain.Book;
 import ru.otus.shurupov.spring.springdatamongodb.repository.BookRepository;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -17,13 +20,29 @@ public class BookServiceImpl implements BookService {
     private final TableRenderer tableRenderer;
 
     @Override
+    public long count() {
+        return bookRepository.count();
+    }
+
+    @Override
+    public Optional<Book> getById(String id) {
+        return bookRepository.findById(id);
+    }
+
+    @Override
+    public void insert(String name, String authorId, List<String> genres) {
+        Author author = authorService.getById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
+        bookRepository.save(new Book(author, name, genres));
+    }
+
+    @Override
     public List<Book> getAll() {
         return bookRepository.findAll();
     }
 
     @Override
-    public List<Book> searchByName(String name) {
-        return bookRepository.findByNameContainingIgnoreCase(name);
+    public void removeById(String id) {
+        bookRepository.deleteById(id);
     }
 
     @Override
@@ -33,9 +52,34 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void displayFilteredByName(String name) {
+    public void displayById(String id) {
+        Optional<Book> optionalBook = getById(id);
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            System.out.println(
+                    tableRenderer.render(
+                            "Book",
+                            ImmutableMap.of(
+                                    "id", book.getId(),
+                                    "Name", book.getName(),
+                                    "Author", authorService.getAuthorCaption(book.getAuthor()),
+                                    "Genre", String.join(", ", book.getGenres())
+                            )
+                    )
+            );
+        } else {
+            System.out.println("Book with id " + id + " not found");
+        }
+    }
+
+    @Override
+    public void displayByNameFilteredList(String name) {
         List<Book> books = searchByName(name);
         render(books);
+    }
+
+    public List<Book> searchByName(String name) {
+        return bookRepository.findByNameContainingIgnoreCase(name);
     }
 
     private void render(List<Book> books) {
