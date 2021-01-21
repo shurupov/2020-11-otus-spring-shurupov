@@ -78,6 +78,18 @@ public class BookServiceImpl implements BookService {
         render(books);
     }
 
+    @Override
+    public void updateName(String id, String name) {
+        Optional<Book> optionalBook = getById(id);
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            book.setName(name);
+            bookRepository.save(book);
+        } else {
+            System.out.println("Book with id " + id + " not found");
+        }
+    }
+
     public List<Book> searchByName(String name) {
         return bookRepository.findByNameContainingIgnoreCase(name);
     }

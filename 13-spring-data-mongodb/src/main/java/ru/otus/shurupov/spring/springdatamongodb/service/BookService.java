@@ -16,4 +16,6 @@ public interface BookService {
     void displayById(String id);
 
     void displayByNameFilteredList(String name);
+
+    void updateName(String id, String name);
 }
