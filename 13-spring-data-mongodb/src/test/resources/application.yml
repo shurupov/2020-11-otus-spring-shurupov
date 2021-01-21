@@ -4,6 +4,6 @@ spring:
       database: library
 
 mongock:
-  runner-type: "InitializingBean"
+  runner-type: InitializingBean
   change-logs-scan-package:
     - ru.otus.shurupov.spring.springdatamongodb.mongock.test.changelog
