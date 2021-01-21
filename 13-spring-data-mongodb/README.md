@@ -1,4 +1,4 @@
-# Spring Data Mongodb
+# Spring Data MongoDB
 
 ## Task
 Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
