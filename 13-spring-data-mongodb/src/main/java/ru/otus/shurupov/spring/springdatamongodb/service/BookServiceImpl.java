@@ -30,10 +30,11 @@ public class BookServiceImpl implements BookService {
         System.out.println(
                 tableRenderer.render(
                         "Library book list",
-                        Arrays.asList("id", "Name", "Genres"),
+                        Arrays.asList("id", "Name", "Author", "Genres"),
                         (book) -> Arrays.asList(
                                 book.getId().substring(book.getId().length() - 7),
                                 book.getName(),
+                                book.getAuthor(),
                                 String.join(", ", book.getGenres())
                         ),
                         books
