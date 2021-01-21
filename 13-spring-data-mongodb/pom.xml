@@ -49,13 +49,6 @@
 			<scope>test</scope>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>org.postgresql</groupId>-->
-<!--			<artifactId>postgresql</artifactId>-->
-<!--			<version>${postgresql.version}</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
-
 		<dependency>
 			<groupId>com.github.cloudyrock.mongock</groupId>
 			<artifactId>mongock-spring-v5</artifactId>
