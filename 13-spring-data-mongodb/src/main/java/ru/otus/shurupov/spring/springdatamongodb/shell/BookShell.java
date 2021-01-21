@@ -52,9 +52,9 @@ public class BookShell {
         System.out.println("Book successfully updated");
     }
 
-    /*@ShellMethod(value = "Update book genres", key = {"bgu", "book-genres-update"})
-    public void updateBookGenres(@ShellOption Long id, @ShellOption List<Long> genreIds) {
-        bookService.setGenres(id, genreIds);
+    @ShellMethod(value = "Update book genres", key = {"bgu", "book-genres-update"})
+    public void updateBookGenres(@ShellOption String id, @ShellOption List<String> genres) {
+        bookService.setGenres(id, genres);
         System.out.println("Book successfully updated");
-    }*/
+    }
 }

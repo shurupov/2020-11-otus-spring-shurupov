@@ -18,4 +18,6 @@ public interface BookService {
     void displayByNameFilteredList(String name);
 
     void updateName(String id, String name);
+
+    void setGenres(String id, List<String> genres);
 }

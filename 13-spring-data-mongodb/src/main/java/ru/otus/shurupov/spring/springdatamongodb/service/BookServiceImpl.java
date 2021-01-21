@@ -90,6 +90,18 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
+    public void setGenres(String id, List<String> genres) {
+        Optional<Book> optionalBook = getById(id);
+        if (optionalBook.isPresent()) {
+            Book book = optionalBook.get();
+            book.setGenres(genres);
+            bookRepository.save(book);
+        } else {
+            System.out.println("Book with id " + id + " not found");
+        }
+    }
+
     public List<Book> searchByName(String name) {
         return bookRepository.findByNameContainingIgnoreCase(name);
     }
