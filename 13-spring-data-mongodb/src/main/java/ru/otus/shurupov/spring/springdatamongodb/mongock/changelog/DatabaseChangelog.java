@@ -11,30 +11,64 @@ import java.util.List;
 
 @ChangeLog
 public class DatabaseChangelog {
-    @ChangeSet(order = "002", id = "insertBooks", author = "shurupov")
-    public void insertBooks(BookRepository bookRepository, AuthorRepository authorRepository) {
-        Book book1 = new Book();
-        book1.setName("Book 1");
-        Author author1 = new Author();
-        author1.setFirstName("Alexander");
-        author1.setLastName("Pushkin");
-        author1 = authorRepository.save(author1);
-        book1.setAuthor(author1);
-        book1.setGenres(List.of("Horror", "Comedy"));
-        bookRepository.save(book1);
-        Book book2 = new Book();
-        book2.setAuthor(author1);
-        book2.setGenres(List.of("Drama", "Tragedy"));
-        book2.setName("Book 2");
-        bookRepository.save(book2);
-        Book book3 = new Book();
-        Author author2 = new Author();
-        author2.setFirstName("Haruki");
-        author2.setLastName("Murakami");
-        author2 = authorRepository.save(author2);
-        book3.setAuthor(author2);
-        book3.setGenres(List.of());
-        book3.setName("Book 3");
-        bookRepository.save(book3);
+    @ChangeSet(order = "001", id = "authors", author = "shurupov")
+    public void authors(AuthorRepository authorRepository) {
+        authorRepository.save(new Author("1", "Arthur", "Conan Doyle"));
+        authorRepository.save(new Author("2", "Agatha", "Christie"));
+        authorRepository.save(new Author("3", "Alexander", "Pushkin"));
+        authorRepository.save(new Author("4", "Fedor", "Dostoevsky"));
+    }
+
+    @ChangeSet(order = "002", id = "books", author = "shurupov")
+    public void books(BookRepository bookRepository, AuthorRepository authorRepository) {
+        bookRepository.save(
+                new Book(
+                        authorRepository.findById("1").get(),
+                        "Sherlock Holmes. A Study in Scarlet",
+                        List.of("Crime and Detective")
+                )
+        );
+        bookRepository.save(
+                new Book(
+                        authorRepository.findById("1").get(),
+                        "The lost world",
+                        List.of("Action and Adventure", "Science Fiction")
+                )
+        );
+        bookRepository.save(
+                new Book(
+                        authorRepository.findById("2").get(),
+                        "Hercule Poirot. The Mysterious Affair at Styles",
+                        List.of("Crime and Detective", "Fairy Tale")
+                )
+        );
+        bookRepository.save(
+                new Book(
+                        authorRepository.findById("3").get(),
+                        "The Tale about a Fisherman and a Fish",
+                        List.of("Fairy Tale")
+                )
+        );
+        bookRepository.save(
+                new Book(
+                        authorRepository.findById("3").get(),
+                        "Ruslan and Ludmila",
+                        List.of("Fairy Tale")
+                )
+        );
+        bookRepository.save(
+                new Book(
+                        authorRepository.findById("4").get(),
+                        "Crime and Punishment",
+                        List.of("Drama")
+                )
+        );
+        bookRepository.save(
+                new Book(
+                        authorRepository.findById("4").get(),
+                        "Player",
+                        List.of("Drama")
+                )
+        );
     }
 }

@@ -25,28 +25,28 @@ public class DatabaseChangelog {
                 new Book(
                         authorRepository.findById("1").get(),
                         "Sherlock Holmes. A Study in Scarlet",
-                        List.of()
+                        List.of("Crime and Detective")
                 )
         );
         bookRepository.save(
                 new Book(
                         authorRepository.findById("2").get(),
                         "Hercule Poirot. The Mysterious Affair at Styles",
-                        List.of()
+                        List.of("Crime and Detective", "Fairy Tale")
                 )
         );
         bookRepository.save(
                 new Book(
                         authorRepository.findById("3").get(),
                         "The Tale about a Fisherman and a Fish",
-                        List.of()
+                        List.of("Fairy Tale")
                 )
         );
         bookRepository.save(
                 new Book(
                         authorRepository.findById("4").get(),
                         "Crime and Punishment",
-                        List.of()
+                        List.of("Drama")
                 )
         );
     }
