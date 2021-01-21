@@ -13,6 +13,7 @@ import java.util.List;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorService authorService;
     private final TableRenderer tableRenderer;
 
     @Override
@@ -43,9 +44,9 @@ public class BookServiceImpl implements BookService {
                         "Library book list",
                         Arrays.asList("id", "Name", "Author", "Genres"),
                         (book) -> Arrays.asList(
-                                book.getId().substring(book.getId().length() - 7),
+                                book.getId(),
                                 book.getName(),
-                                book.getAuthor(),
+                                authorService.getAuthorCaption(book.getAuthor()),
                                 String.join(", ", book.getGenres())
                         ),
                         books
