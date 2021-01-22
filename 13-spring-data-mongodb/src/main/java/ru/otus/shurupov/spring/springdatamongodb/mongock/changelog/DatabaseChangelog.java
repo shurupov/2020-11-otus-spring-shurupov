@@ -9,7 +9,7 @@ import ru.otus.shurupov.spring.springdatamongodb.repository.BookRepository;
 
 import java.util.List;
 
-@ChangeLog
+@ChangeLog(order = "001")
 public class DatabaseChangelog {
     @ChangeSet(order = "001", id = "authors", author = "shurupov")
     public void authors(AuthorRepository authorRepository) {
