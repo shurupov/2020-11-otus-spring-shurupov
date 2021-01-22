@@ -14,5 +14,7 @@ public interface AuthorService {
     void displayList();
     void displayById(String id);
 
+    void removeById(String id);
+
     String getAuthorCaption(Author author);
 }

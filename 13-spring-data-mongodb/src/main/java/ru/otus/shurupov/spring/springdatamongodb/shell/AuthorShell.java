@@ -32,4 +32,10 @@ public class AuthorShell {
     public void getById(@ShellOption String id) {
         authorService.displayById(id);
     }
+
+    @ShellMethod(value = "Remove author", key = {"ar", "author-remove"})
+    public void removeById(@ShellOption String id) {
+        authorService.removeById(id);
+        System.out.println("Author successfully removed from the library");
+    }
 }

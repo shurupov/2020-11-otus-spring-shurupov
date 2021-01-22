@@ -75,6 +75,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
+    public void removeById(String id) {
+        authorRepository.deleteById(id);
+    }
+
+    @Override
     public String getAuthorCaption(Author author) {
         return String.format("%s %s", author.getFirstName(), author.getLastName());
     }
