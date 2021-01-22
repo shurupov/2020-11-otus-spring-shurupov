@@ -26,6 +26,5 @@ class BookRepositoryTest {
                 () -> assertThat(books).hasSize(1),
                 () -> assertThat(books.get(0).getName()).isEqualTo("Sherlock Holmes. A Study in Scarlet")
         );
-
     }
 }

@@ -17,6 +17,7 @@ public class DatabaseChangelog {
         authorRepository.save(new Author("2", "Agatha", "Christie"));
         authorRepository.save(new Author("3", "Alexander", "Pushkin"));
         authorRepository.save(new Author("4", "Fedor", "Dostoevsky"));
+        authorRepository.save(new Author("5", "Paulo", "Coelho"));
     }
 
     @ChangeSet(order = "002", id = "books", author = "shurupov")
