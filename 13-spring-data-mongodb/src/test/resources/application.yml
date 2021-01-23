@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      database: library
+      port: 0
+
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package:
+    - ru.otus.shurupov.spring.springdatamongodb.mongock.test.changelog
