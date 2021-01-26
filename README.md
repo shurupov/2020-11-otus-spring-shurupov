@@ -12,9 +12,9 @@
     - #### [Spring Shell, Events, Conditional, Test Context Configuration](05-spring-shell)
 
 - ### Databases (JDBC, JPA, Hibernate, ORM, Spring Data)
-    - #### [Spring JDBC](07-spring-jdbc)
-    - #### [JPA, Hibernate, Spring ORM](09-jpa-hibernate-spring-orm)
-    - #### [Spring Data JPA](11-spring-data-jpa)
-    - #### [Spring Data MongoDB](13-spring-data-mongodb)
+    - ### [Spring JDBC](07-spring-jdbc)
+    - ### [JPA, Hibernate, Spring ORM](09-jpa-hibernate-spring-orm)
+    - ### [Spring Data JPA](11-spring-data-jpa)
+    - ### [Spring Data MongoDB](13-spring-data-mongodb)
 
 
