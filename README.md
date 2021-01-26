@@ -2,7 +2,7 @@
 
 #### Cource: [Otus Spring Framework Developer Course](https://otus.ru/lessons/javaspring/)
 #### Student: Evgeny Shurupov
-#### Ceritficate: (Link will be here)
+#### Certi  ficate: (Link will be here)
 
 ## Modules/Homeworks
 
