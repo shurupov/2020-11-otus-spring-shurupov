@@ -6,6 +6,19 @@ Student: Evgeny Shurupov
 
 Certificate: (Link will be here)
 
+Keywords: `Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation Based Configuration`,
+`Spring Context`, `BeanPostProcessor`, `BeanFactory`, `Spring Boot`,
+`Spring Boot Starter`, `YML application configuration`, `Java Internationalization`,
+`Spring Shell`, `Spring Events`, `Conditional`, `Test Context Configuration`,
+`Spring JDBC`, `JPA`, `Hibernate`, `N+1`, `Spring ORM`, `EntityManager`,
+`Docker`,
+`JPQL`, `Spring Data`, `Spring Data JPA`,
+`Spring Data MongoDB`,
+`DAO`, `Lombok`, `Liquibase`, `Postgres`, `H2`,
+`Mongock`, `Embedded MongoDB`,
+`JUnit5`, `AssertJ`, `Mockito`,
+`@JdbcTest`, `@DataJpaTest`, `@DataMongoTest`, `@DirtiesContext`
+
 ## Modules/Homeworks
 
 - Introduction (Configuration, Context, Spring Boot, Test Configuration)
