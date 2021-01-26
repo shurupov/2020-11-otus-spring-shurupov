@@ -1,8 +1,8 @@
 # Spring Framework Developer Course Repo
 
-### Cource: [Otus Spring Framework Developer Course](https://otus.ru/lessons/javaspring/)
-### Student: Evgeny Shurupov
-### Ceritficate: (Link will be here)
+#### Cource: [Otus Spring Framework Developer Course](https://otus.ru/lessons/javaspring/)
+#### Student: Evgeny Shurupov
+#### Ceritficate: (Link will be here)
 
 ## Modules/Homeworks
 
