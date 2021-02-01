@@ -11,28 +11,31 @@
     <title>Persons:</title>
 </head>
 <body>
+<div class="container">
 
-<h1>Persons:</h1>
+    <h1>Books:</h1>
 
-<table class="persons">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Action</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.id}">1</td>
-        <td th:text="${book.name}">John Doe</td>
-        <td>
-            <a th:href="@{/edit(id=${book.id})}" href="edit.html">Edit</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td scope="row" th:text="${book.id}">1</td>
+            <td th:text="${book.name}">Titanic</td>
+            <td th:text="${book.author}">John Doe</td>
+            <td>
+                <a th:href="@{/edit(id=${book.id})}" href="edit.html">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 <script src="/js/bootstrap.min.js"></script>
 
