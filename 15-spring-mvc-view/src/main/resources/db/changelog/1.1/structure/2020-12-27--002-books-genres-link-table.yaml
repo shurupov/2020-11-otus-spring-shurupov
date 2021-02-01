@@ -1,0 +1,59 @@
+databaseChangeLog:
+- changeSet:
+    id: 2020-12-27--005-books-genres-link-table
+    author: eshurupov
+    createTable:
+      tableName: book_genre
+      columns:
+      - column:
+          name: id
+          type: bigint
+          autoIncrement: true
+          constraints:
+            nullable: false
+            primaryKey: true
+            primaryKeyName: pk_book_genre
+      - column:
+          name: book_id
+          type: bigint
+          constraints:
+            nullable: false
+      - column:
+          name: genre_id
+          type: bigint
+          constraints:
+            nullable: false
+- changeSet:
+    id: 2020-12-27--005-book-genre-table-book_id-foreign-key
+    author: eshurupov
+    changes:
+      - addForeignKeyConstraint:
+          baseColumnNames: book_id
+          baseTableCatalogName: library
+          baseTableName: book_genre
+          baseTableSchemaName: public
+          constraintName: fk_book_genre_book_id
+          onDelete: CASCADE
+          onUpdate: RESTRICT
+          referencedColumnNames: id
+          referencedTableCatalogName: library
+          referencedTableName: book
+          referencedTableSchemaName: public
+          validate: true
+- changeSet:
+    id: 2020-12-27--005-book-genre-table-genre_id-foreign-key
+    author: eshurupov
+    changes:
+      - addForeignKeyConstraint:
+          baseColumnNames: genre_id
+          baseTableCatalogName: library
+          baseTableName: book_genre
+          baseTableSchemaName: public
+          constraintName: fk_book_genre_genre_id
+          onDelete: CASCADE
+          onUpdate: RESTRICT
+          referencedColumnNames: id
+          referencedTableCatalogName: library
+          referencedTableName: genre
+          referencedTableSchemaName: public
+          validate: true
