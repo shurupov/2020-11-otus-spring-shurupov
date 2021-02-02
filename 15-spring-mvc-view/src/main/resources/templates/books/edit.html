@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+
+    <title>Persons:</title>
+</head>
+<body>
+<div class="container">
+
+    <form id="edit-form" th:action="@{/books/{id}(id=${book.id})}" th:method="post" action="edit.html">
+        <h1>Book Info:</h1>
+        <div class="mb-3">
+            <label for="bookId" class="form-label">Book Name</label>
+            <input type="text" class="form-control" id="bookId" aria-describedby="bookIdHelp" th:value="${book.id}" value="1" readonly="readonly" name="id">
+            <div id="bookIdHelp" class="form-text">This is just for info. Don't try to modify.</div>
+        </div>
+        <div class="mb-3">
+            <label for="bookName" class="form-label">Book Name</label>
+            <input type="text" class="form-control" id="bookName" aria-describedby="bookNameHelp" th:value="${book.name}" value="Pride and Prejustice" name="name">
+            <div id="bookNameHelp" class="form-text">Just enter book name here.</div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+</div>
+
+<script src="/js/bootstrap.min.js"></script>
+
+</body>
+</html>
