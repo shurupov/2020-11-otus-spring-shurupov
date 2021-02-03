@@ -1,22 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/webjars/font-awesome/5.15.2/css/all.css" type="text/css" rel="stylesheet">
-
-    <title>Books:</title>
+    <th:block th:insert="~{fragments/head.html}"></th:block>
+    <title>View:</title>
 </head>
 <body>
 <div class="container">
 
     <h1>Books:</h1>
 
-    <table class="table">
+    <table class="table table-striped table-hover">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -41,7 +34,7 @@
     </table>
 </div>
 
-<script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<th:block th:insert="~{fragments/bottomJs.html}"></th:block>
 
 </body>
 </html>

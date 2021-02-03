@@ -1,13 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="/webjars/bootstrap/4.6.0/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/webjars/font-awesome/5.15.2/css/all.css" type="text/css" rel="stylesheet">
+    <th:block th:insert="~{fragments/head.html}"></th:block>
 
     <title>Book:</title>
 </head>
@@ -16,11 +10,7 @@
 
     <form id="edit-form" th:action="@{/books/{id}(id=${book.id})}" th:method="post" action="edit.html">
         <h1>Book Info:</h1>
-        <div class="mb-3">
-            <label for="bookId" class="form-label">Book Name</label>
-            <input type="text" class="form-control" id="bookId" aria-describedby="bookIdHelp" th:value="${book.id}" value="1" readonly="readonly" name="id">
-            <div id="bookIdHelp" class="form-text">This is just for info. Don't try to modify.</div>
-        </div>
+        <input type="hidden" th:value="${book.id}" value="1" readonly="readonly" name="id">
         <div class="mb-3">
             <label for="bookName" class="form-label">Book Name</label>
             <input type="text" class="form-control" id="bookName" aria-describedby="bookNameHelp" th:value="${book.name}" value="Pride and Prejustice" name="name">
@@ -31,7 +21,7 @@
 
 </div>
 
-<script src="/webjars/bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<th:block th:insert="~{fragments/bottomJs.html}"></th:block>
 
 </body>
 </html>
