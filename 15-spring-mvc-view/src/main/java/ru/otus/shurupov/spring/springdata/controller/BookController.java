@@ -8,6 +8,7 @@ import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.Genre;
 import ru.otus.shurupov.spring.springdata.domain.dto.BookDtoForList;
 import ru.otus.shurupov.spring.springdata.domain.dto.BookRequest;
+import ru.otus.shurupov.spring.springdata.domain.dto.BreadCrumb;
 import ru.otus.shurupov.spring.springdata.service.AuthorService;
 import ru.otus.shurupov.spring.springdata.service.BookService;
 import ru.otus.shurupov.spring.springdata.service.GenreService;
@@ -30,6 +31,7 @@ public class BookController {
         List<BookDtoForList> bookDtoForLists = books.stream()
                 .map(this::map).collect(Collectors.toList());
         model.addAttribute("books", bookDtoForLists);
+        model.addAttribute("breadcrumbs", List.of(new BreadCrumb("/books", "Books")));
         return "books/list";
     }
 
@@ -46,6 +48,12 @@ public class BookController {
         model.addAttribute("authors", authorService.getAll());
         model.addAttribute("genres", genreService.getAll());
         model.addAttribute("selectedGenreIds", Collections.emptyList());
+        model.addAttribute("breadcrumbs",
+                List.of(
+                    new BreadCrumb("/books", "Books"),
+                    new BreadCrumb("/books/add", "Add Book")
+                )
+        );
         return "books/add";
     }
 
@@ -55,7 +63,18 @@ public class BookController {
         model.addAttribute("book", book);
         model.addAttribute("authors", authorService.getAll());
         model.addAttribute("genres", genreService.getAll());
-        model.addAttribute("selectedGenreIds", book.getGenres().stream().map(Genre::getId).collect(Collectors.toList()));
+        model.addAttribute("selectedGenreIds",
+                book.getGenres()
+                        .stream()
+                        .map(Genre::getId)
+                        .collect(Collectors.toList())
+        );
+        model.addAttribute("breadcrumbs",
+                List.of(
+                        new BreadCrumb("/books", "Books"),
+                        new BreadCrumb("/books", book.getName())
+                )
+        );
         return "books/edit";
     }
 

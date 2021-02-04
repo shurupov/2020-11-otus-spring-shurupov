@@ -3,10 +3,13 @@
 <head>
     <th:block th:insert="~{fragments/head.html}"></th:block>
 
-    <title>Book:</title>
+    <title>Add Book</title>
 </head>
 <body>
 <div class="container">
+
+    <th:block th:insert="~{fragments/navigation.html :: tabs ('books')}"></th:block>
+    <th:block th:insert="~{fragments/navigation.html :: breadcrumb (${breadcrumbs})}"></th:block>
 
     <th:block th:insert="~{books/bookForm.html :: form ('/books/add', ${book}, ${authors}, ${genres}, ${selectedGenreIds})}"></th:block>
 
