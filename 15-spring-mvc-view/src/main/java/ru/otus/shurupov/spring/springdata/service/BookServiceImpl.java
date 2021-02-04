@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.springdata.service;
 
+import liquibase.pro.packaged.B;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -59,16 +60,25 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public void update(Long id, BookRequest bookRequest) {
         Book book = bookRepository.findById(id).orElseThrow();
+        save(book, bookRequest);
+    }
+
+    @Override
+    public void create(BookRequest bookRequest) {
+        save(new Book(), bookRequest);
+    }
+
+    @Override
+    public String getBookCaption(Book book) {
+        return String.format("%s (%s)", book.getName(), book.getId());
+    }
+
+    private void save(Book book, BookRequest bookRequest) {
         book.setName(bookRequest.getName());
         Author author = authorRepository.findById(bookRequest.getAuthorId()).orElseThrow();
         book.setAuthor(author);
         List<Genre> genres = genreRepository.findAllById(bookRequest.getGenreIds());
         book.setGenres(genres);
         bookRepository.save(book);
-    }
-
-    @Override
-    public String getBookCaption(Book book) {
-        return String.format("%s (%s)", book.getName(), book.getId());
     }
 }

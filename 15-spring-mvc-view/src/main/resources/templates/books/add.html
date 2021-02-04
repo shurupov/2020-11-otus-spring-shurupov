@@ -8,9 +8,7 @@
 <body>
 <div class="container">
 
-    <form id="edit-form" th:action="@{/books}" th:method="post" action="edit.html">
-        <th:block th:insert="~{books/bookForm.html}"></th:block>
-    </form>
+    <th:block th:insert="~{books/bookForm.html :: form ('/books/add', ${book}, ${authors}, ${genres}, ${selectedGenreIds})}"></th:block>
 
 </div>
 

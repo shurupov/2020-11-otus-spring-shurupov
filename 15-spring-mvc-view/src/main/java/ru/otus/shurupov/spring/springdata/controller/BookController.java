@@ -33,6 +33,12 @@ public class BookController {
         return "books/list";
     }
 
+    @PostMapping("/books/add")
+    public String bookAddPost(BookRequest bookRequest) {
+        bookService.create(bookRequest);
+        return "redirect:/books";
+    }
+
     @GetMapping("/books/add")
     public String bookView(Model model) {
         Book book = new Book();
@@ -40,7 +46,7 @@ public class BookController {
         model.addAttribute("authors", authorService.getAll());
         model.addAttribute("genres", genreService.getAll());
         model.addAttribute("selectedGenreIds", Collections.emptyList());
-        return "books/edit";
+        return "books/add";
     }
 
     @GetMapping("/books/{id}")
