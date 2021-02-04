@@ -21,7 +21,10 @@
 
 <nav th:fragment="breadcrumb (items)" aria-label="breadcrumb pb-2">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li th:attr="class=${items.isEmpty() ? 'breadcrumb-item active' : 'breadcrumb-item'}">
+            <a th:unless="${items.isEmpty()}" th:href="'/'">Home</a>
+            <th:block th:if="${items.isEmpty()}">Home</th:block>
+        </li>
         <li th:each="item, iterStat : ${items}" th:attr="class=${iterStat.last ? 'breadcrumb-item active' : 'breadcrumb-item'}">
             <a th:unless="${iterStat.last}" th:href="${item.url}" th:text="${item.caption}">Books</a>
             <th:block th:if="${iterStat.last}" th:text="${item.caption}">Books</th:block>
