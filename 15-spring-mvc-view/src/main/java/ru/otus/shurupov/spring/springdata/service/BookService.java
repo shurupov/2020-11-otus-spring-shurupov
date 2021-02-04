@@ -8,7 +8,6 @@ import java.util.List;
 public interface BookService {
     long count();
     Book getById(Long id);
-    void insert(String name, Long authorId, Long genreId);
     List<Book> getAll();
     void removeById(Long id);
     void update(Long id, BookRequest bookRequest);

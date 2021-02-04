@@ -23,9 +23,6 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
-    private final TableRenderer tableRenderer;
-    private final AuthorService authorService;
-    private final GenreService genreService;
 
     @Override
     public long count() {
@@ -35,14 +32,6 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book getById(Long id) {
         return bookRepository.findById(id).orElseThrow();
-    }
-
-    @Override
-    @Transactional
-    public void insert(String name, Long authorId, Long genreId) {
-        Author author = authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
-        Genre genre = genreRepository.findById(genreId).orElseThrow(() -> new RuntimeException("Genre not found"));
-        bookRepository.save(new Book(name, author, Collections.singletonList(genre)));
     }
 
     @Override
