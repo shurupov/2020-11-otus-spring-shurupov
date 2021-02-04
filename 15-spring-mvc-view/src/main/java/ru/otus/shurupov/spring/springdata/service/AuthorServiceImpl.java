@@ -1,13 +1,12 @@
 package ru.otus.shurupov.spring.springdata.service;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.shurupov.spring.springdata.repository.AuthorRepository;
 import ru.otus.shurupov.spring.springdata.domain.Author;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,6 @@ import java.util.Optional;
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
-    private final TableRenderer tableRenderer;
 
     @Override
     public long count() {
@@ -24,58 +22,23 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Optional<Author> getById(Long id) {
-        return authorRepository.findById(id);
+    public Author getById(Long id) {
+        return authorRepository.findById(id).orElseThrow();
     }
 
     @Override
     @Transactional
-    public void insert(String firstName, String lastName) {
-        authorRepository.save(new Author(firstName, lastName));
+    public void save(Author author) {
+        authorRepository.save(author);
     }
 
     @Override
     public List<Author> getAll() {
-        return authorRepository.findAll();
+        return authorRepository.findAll(Sort.by("id"));
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public void displayList() {
-        List<Author> authors = getAll();
-        System.out.println(
-                tableRenderer.render(
-                        "Authors list",
-                        Arrays.asList("id", "First Name", "Last Name"),
-                        (author) -> Arrays.asList(author.getId().toString(), author.getFirstName(), author.getLastName()),
-                        authors
-                )
-        );
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public void displayById(Long id) {
-        Optional<Author> optionalAuthor = getById(id);
-        if (optionalAuthor.isPresent()) {
-            Author author = optionalAuthor.get();
-            System.out.println(
-                    tableRenderer.render(
-                            "Author",
-                            ImmutableMap.of(
-                                    "id", author.getId().toString(),
-                                    "First Name", author.getFirstName(),
-                                    "Last Name", author.getLastName()
-                            )
-                    )
-            );
-        } else {
-            System.out.println("Author with id " + id + " not found");
-        }
-    }
-
-    @Override
-    public String getAuthorCaption(Author author) {
-        return String.format("%s %s (%s)", author.getFirstName(), author.getLastName(), author.getId());
+    public void removeById(Long id) {
+        authorRepository.deleteById(id);
     }
 }

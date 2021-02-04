@@ -29,7 +29,7 @@ class AuthorServiceImplTest {
 
     @BeforeEach
     private void init() {
-        authorService = new AuthorServiceImpl(authorRepository, tableRenderer);
+        authorService = new AuthorServiceImpl(authorRepository);
     }
 
     @Test
@@ -48,7 +48,7 @@ class AuthorServiceImplTest {
     void shouldGetById() {
         Author expected = new Author(1L, "Evgeny", "Shurupov");
         when(authorRepository.findById(eq(1L))).thenReturn(Optional.of(expected));
-        Author actual = authorService.getById(1L).get();
+        Author actual = authorService.getById(1L);
         assertAll(
                 () -> assertThat(actual).isEqualTo(expected),
                 () -> verify(authorRepository, times(1)).findById(eq(1L))
