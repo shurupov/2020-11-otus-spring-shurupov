@@ -6,9 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.Genre;
-import ru.otus.shurupov.spring.springdata.domain.dto.BookDto;
+import ru.otus.shurupov.spring.springdata.domain.dto.BookDtoForList;
+import ru.otus.shurupov.spring.springdata.domain.dto.BookRequest;
+import ru.otus.shurupov.spring.springdata.service.AuthorService;
 import ru.otus.shurupov.spring.springdata.service.BookService;
+import ru.otus.shurupov.spring.springdata.service.GenreService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,28 +21,42 @@ import java.util.stream.Collectors;
 public class BookController {
 
     private final BookService bookService;
+    private final AuthorService authorService;
+    private final GenreService genreService;
 
     @GetMapping("/books")
     public String bookList(Model model) {
         List<Book> books = bookService.getAll();
-        List<BookDto> bookDtos = books.stream()
+        List<BookDtoForList> bookDtoForLists = books.stream()
                 .map(this::map).collect(Collectors.toList());
-        model.addAttribute("books", bookDtos);
+        model.addAttribute("books", bookDtoForLists);
         return "books/list";
+    }
+
+    @GetMapping("/books/add")
+    public String bookView(Model model) {
+        Book book = new Book();
+        model.addAttribute("book", book);
+        model.addAttribute("authors", authorService.getAll());
+        model.addAttribute("genres", genreService.getAll());
+        model.addAttribute("selectedGenreIds", Collections.emptyList());
+        return "books/edit";
     }
 
     @GetMapping("/books/{id}")
     public String bookView(@PathVariable Long id, Model model) {
-        Book book = bookService.getById(id).get();
-        BookDto bookDto = map(book);
-        model.addAttribute("book", bookDto);
+        Book book = bookService.getById(id);
+        model.addAttribute("book", book);
+        model.addAttribute("authors", authorService.getAll());
+        model.addAttribute("genres", genreService.getAll());
+        model.addAttribute("selectedGenreIds", book.getGenres().stream().map(Genre::getId).collect(Collectors.toList()));
         return "books/edit";
     }
 
     @PostMapping("/books/{id}")
-    public String bookEditPost(@PathVariable Long id, BookDto bookDto) {
-        bookService.updateName(id, bookDto.getName());
-        return "redirect:/books/" + id;
+    public String bookEditPost(@PathVariable Long id, BookRequest bookRequest) {
+        bookService.update(id, bookRequest);
+        return "redirect:/books";
     }
 
     @GetMapping("/books/{id}/remove")
@@ -47,8 +65,8 @@ public class BookController {
         return "redirect:/books";
     }
 
-    private BookDto map(Book book) {
-        return BookDto.builder()
+    private BookDtoForList map(Book book) {
+        return BookDtoForList.builder()
                 .id(book.getId())
                 .name(book.getName())
                 .author(book.getAuthor().getFirstName() + " " + book.getAuthor().getLastName())

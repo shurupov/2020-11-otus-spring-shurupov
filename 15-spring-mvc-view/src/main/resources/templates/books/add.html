@@ -8,7 +8,7 @@
 <body>
 <div class="container">
 
-    <form id="edit-form" th:action="@{/books/{id}(id=${book.id})}" th:method="post" action="edit.html">
+    <form id="edit-form" th:action="@{/books}" th:method="post" action="edit.html">
         <th:block th:insert="~{books/bookForm.html}"></th:block>
     </form>
 
