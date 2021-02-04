@@ -1,0 +1,17 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<form th:fragment="form (uri, comment, books)" id="edit-form" th:action="${uri}" th:method="post" action="edit.html">
+    <h1>Book Info:</h1>
+    <input type="hidden" th:value="${comment.id}" value="1" readonly="readonly" name="id">
+    <div class="mb-3">
+        <label for="bookComment" class="form-label">Comment Text</label>
+        <input type="text" class="form-control" id="bookComment" aria-describedby="bookCommentHelp" th:value="${comment.text}" value="Good" name="text">
+        <div id="bookCommentHelp" class="form-text">Just enter book comment here.</div>
+    </div>
+    <div class="form-group">
+        <label for="bookId">Book</label>
+        <select class="form-control" id="bookId" name="authorId">
+            <option th:each="book : ${books}" th:selected="${comment.book != null && book.id == comment.book.id}" th:value="${book.id}" th:text="${book.name}">Player</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

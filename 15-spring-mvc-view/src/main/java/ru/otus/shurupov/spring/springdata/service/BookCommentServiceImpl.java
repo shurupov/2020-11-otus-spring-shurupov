@@ -1,6 +1,5 @@
 package ru.otus.shurupov.spring.springdata.service;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +8,6 @@ import ru.otus.shurupov.spring.springdata.repository.BookRepository;
 import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.BookComment;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +26,8 @@ public class BookCommentServiceImpl implements BookCommentService {
     }
 
     @Override
-    public Optional<BookComment> getById(long id) {
-        return bookCommentRepository.findById(id);
+    public BookComment getById(long id) {
+        return bookCommentRepository.findById(id).orElseThrow();
     }
 
     @Override
@@ -53,45 +51,4 @@ public class BookCommentServiceImpl implements BookCommentService {
         bookCommentRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public void update(long id, String comment) {
-        Optional<BookComment> optionalBookComment = bookCommentRepository.findById(id);
-        bookCommentRepository.delete(optionalBookComment.orElseThrow(() -> new RuntimeException("Book not found")));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public void displayList() {
-        List<BookComment> comments = getAll();
-        System.out.println(
-                tableRenderer.render(
-                        "Book comments list",
-                        Arrays.asList("id", "Book", "Comment"),
-                        (comment) -> Arrays.asList(comment.getId(), bookService.getBookCaption(comment.getBook()), comment.getText()),
-                        comments
-                )
-        );
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public void displayById(Long id) {
-        Optional<BookComment> optionalAuthor = getById(id);
-        if (optionalAuthor.isPresent()) {
-            BookComment comment = optionalAuthor.get();
-            System.out.println(
-                    tableRenderer.render(
-                            "Comment",
-                            ImmutableMap.of(
-                                    "id", comment.getId(),
-                                    "Book", bookService.getBookCaption(comment.getBook()),
-                                    "Comment", comment.getText()
-                            )
-                    )
-            );
-        } else {
-            System.out.println("Comment with id " + id + " not found");
-        }
-    }
 }

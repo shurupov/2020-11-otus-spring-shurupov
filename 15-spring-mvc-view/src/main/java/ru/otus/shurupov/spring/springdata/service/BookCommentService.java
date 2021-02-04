@@ -7,12 +7,8 @@ import java.util.Optional;
 
 public interface BookCommentService {
     long count();
-    Optional<BookComment> getById(long id);
+    BookComment getById(long id);
     void insert(long bookId, String comment);
     List<BookComment> getAll();
     void removeById(long id);
-    void update(long id, String comment);
-
-    void displayList();
-    void displayById(Long id);
 }
