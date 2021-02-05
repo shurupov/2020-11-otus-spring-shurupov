@@ -33,4 +33,5 @@ Keywords: `Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation 
     - [Spring Data JPA](11-spring-data-jpa)
     - [Spring Data MongoDB](13-spring-data-mongodb)
 
-
+- Web
+    - [Spring MVC View](15-spring-mvc-view)

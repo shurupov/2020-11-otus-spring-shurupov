@@ -19,5 +19,6 @@
         <module>09-jpa-hibernate-spring-orm</module>
         <module>11-spring-data-jpa</module>
         <module>13-spring-data-mongodb</module>
+        <module>15-spring-mvc-view</module>
     </modules>
 </project>
