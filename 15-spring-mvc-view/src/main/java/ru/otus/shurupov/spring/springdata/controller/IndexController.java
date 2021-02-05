@@ -21,7 +21,7 @@ public class IndexController {
     private final BookCommentService bookCommentService;
 
     @GetMapping("/")
-    public String bookList(Model model) {
+    public String index(Model model) {
         model.addAttribute("books", bookService.count());
         model.addAttribute("genres", genreService.count());
         model.addAttribute("authors", authorService.count());
