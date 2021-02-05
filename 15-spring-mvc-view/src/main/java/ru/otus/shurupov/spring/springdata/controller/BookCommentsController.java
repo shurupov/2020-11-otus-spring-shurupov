@@ -6,17 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.otus.shurupov.spring.springdata.domain.Book;
 import ru.otus.shurupov.spring.springdata.domain.BookComment;
-import ru.otus.shurupov.spring.springdata.domain.Genre;
-import ru.otus.shurupov.spring.springdata.domain.dto.BookRequest;
+import ru.otus.shurupov.spring.springdata.domain.dto.BookCommentRequest;
 import ru.otus.shurupov.spring.springdata.domain.dto.BreadCrumb;
 import ru.otus.shurupov.spring.springdata.service.BookCommentService;
 import ru.otus.shurupov.spring.springdata.service.BookService;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,8 +30,8 @@ public class BookCommentsController {
     }
 
     @PostMapping("/comments/add")
-    public String commentAddPost(BookRequest bookRequest) {
-        //bookCommentService.create(bookRequest);
+    public String commentAddPost(BookCommentRequest bookCommentRequest) {
+        bookCommentService.create(bookCommentRequest);
         return "redirect:/comments";
     }
 
@@ -68,8 +64,9 @@ public class BookCommentsController {
     }
 
     @PostMapping("/comments/{id}")
-    public String commentEditPost(@PathVariable Long id, BookRequest bookRequest) {
-        //bookCommentService.update(id, bookRequest);
+    public String commentEditPost(@PathVariable Long id, BookCommentRequest bookCommentRequest) {
+        bookCommentRequest.setId(id);
+        bookCommentService.update(bookCommentRequest);
         return "redirect:/comments";
     }
 
