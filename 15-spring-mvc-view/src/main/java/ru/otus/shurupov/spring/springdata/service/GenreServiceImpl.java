@@ -14,7 +14,6 @@ import java.util.List;
 public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository genreRepository;
-    private final TableRenderer tableRenderer;
 
     @Override
     public long count() {

@@ -7,13 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.otus.shurupov.spring.springdata.domain.Author;
-import ru.otus.shurupov.spring.springdata.domain.Book;
-import ru.otus.shurupov.spring.springdata.domain.Genre;
 import ru.otus.shurupov.spring.springdata.domain.dto.BreadCrumb;
 import ru.otus.shurupov.spring.springdata.service.AuthorService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor

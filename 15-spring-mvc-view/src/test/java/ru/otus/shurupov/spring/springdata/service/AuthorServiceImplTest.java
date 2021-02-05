@@ -22,9 +22,6 @@ class AuthorServiceImplTest {
     @Mock
     private AuthorRepository authorRepository;
 
-    @Mock
-    private TableRenderer tableRenderer;
-
     private AuthorService authorService;
 
     @BeforeEach

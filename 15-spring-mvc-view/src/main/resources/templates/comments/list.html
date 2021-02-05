@@ -10,29 +10,9 @@
     <th:block th:insert="~{fragments/navigation.html :: tabs ('comments')}"></th:block>
     <th:block th:insert="~{fragments/navigation.html :: breadcrumb (${breadcrumbs})}"></th:block>
 
-    <h1>Genres</h1>
+    <h1>Comments</h1>
 
-    <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Book</th>
-            <th scope="col">Text</th>
-            <th scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="comment : ${comments}">
-            <td scope="row" th:text="${comment.id}">1</td>
-            <td th:text="${comment.book.name}">Player</td>
-            <td th:text="${comment.text}">Good</td>
-            <td>
-                <a th:href="@{/comments/{id}(id=${comment.id})}" href="edit.html"><i class="fas fa-edit"></i></a>
-                <a th:href="@{/comments/{id}/remove(id=${comment.id})}" href="remove.html"><i class="fas fa-trash-alt"></i></a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <th:block th:insert="~{comments/listFragment.html :: comments (${comments})}"></th:block>
     <a type="submit" class="btn btn-primary" href="/comments/add">Add comment</a>
 </div>
 

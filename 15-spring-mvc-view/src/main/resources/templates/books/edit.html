@@ -13,6 +13,10 @@
 
     <th:block th:insert="~{books/bookForm.html :: form (@{/books/{id}(id=${book.id})}, ${book}, ${authors}, ${genres}, ${selectedGenreIds})}"></th:block>
 
+    <h2 class="mt-3">Comments</h2>
+
+    <th:block th:insert="~{comments/listFragment.html :: comments (${book.comments})}"></th:block>
+
 </div>
 
 <th:block th:insert="~{fragments/bottomJs.html}"></th:block>

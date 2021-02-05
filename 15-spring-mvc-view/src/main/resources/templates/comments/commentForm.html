@@ -1,6 +1,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <form th:fragment="form (uri, comment, books)" id="edit-form" th:action="${uri}" th:method="post" action="edit.html">
-    <h1>Book Info:</h1>
+    <h1>Comment Info</h1>
     <input type="hidden" th:value="${comment.id}" value="1" readonly="readonly" name="id">
     <div class="mb-3">
         <label for="bookComment" class="form-label">Comment Text</label>
