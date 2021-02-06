@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/head.html}"></th:block>
+    <title>Authors</title>
+</head>
+<body>
+<div class="container">
+
+    <th:block th:insert="~{fragments/navigation.html :: tabs ('authors')}"></th:block>
+    <th:block th:insert="~{fragments/navigation.html :: breadcrumb (${breadcrumbs})}"></th:block>
+
+    <h1>Authors</h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="author : ${authors}">
+            <td scope="row" th:text="${author.id}">1</td>
+            <td th:text="${author.firstName}">John</td>
+            <td th:text="${author.lastName}">Doe</td>
+            <td>
+                <a th:href="@{/authors/{id}(id=${author.id})}" href="edit.html"><i class="fas fa-edit"></i></a>
+                <a th:href="@{/authors/{id}/remove(id=${author.id})}" href="remove.html"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a type="submit" class="btn btn-primary" href="/authors/add">Add Author</a>
+</div>
+
+<th:block th:insert="~{fragments/bottomJs.html}"></th:block>
+
+</body>
+</html>

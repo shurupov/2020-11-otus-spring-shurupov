@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/head.html}"></th:block>
+    <title>Books:</title>
+</head>
+<body>
+<div class="container">
+
+    <th:block th:insert="~{fragments/navigation.html :: tabs ('books')}"></th:block>
+    <th:block th:insert="~{fragments/navigation.html :: breadcrumb (${breadcrumbs})}"></th:block>
+
+    <h1>Books</h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Author</th>
+            <th scope="col">Genres</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td scope="row" th:text="${book.id}">1</td>
+            <td th:text="${book.name}">Titanic</td>
+            <td th:text="${book.author}">John Doe</td>
+            <td th:text="${book.genres}">Horror</td>
+            <td>
+                <a th:href="@{/books/{id}(id=${book.id})}" href="edit.html"><i class="fas fa-edit"></i></a>
+                <a th:href="@{/books/{id}/remove(id=${book.id})}" href="remove.html"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a type="submit" class="btn btn-primary" href="/books/add">Add book</a>
+</div>
+
+<th:block th:insert="~{fragments/bottomJs.html}"></th:block>
+
+</body>
+</html>

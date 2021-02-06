@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/head.html}"></th:block>
+    <title>Comments:</title>
+</head>
+<body>
+<div class="container">
+
+    <th:block th:insert="~{fragments/navigation.html :: tabs ('comments')}"></th:block>
+    <th:block th:insert="~{fragments/navigation.html :: breadcrumb (${breadcrumbs})}"></th:block>
+
+    <h1>Comments</h1>
+
+    <th:block th:insert="~{comments/listFragment.html :: comments (${comments})}"></th:block>
+    <a type="submit" class="btn btn-primary" href="/comments/add">Add comment</a>
+</div>
+
+<th:block th:insert="~{fragments/bottomJs.html}"></th:block>
+
+</body>
+</html>
