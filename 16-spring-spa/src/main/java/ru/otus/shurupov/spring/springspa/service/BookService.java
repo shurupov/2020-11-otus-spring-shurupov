@@ -10,8 +10,8 @@ public interface BookService {
     Book getById(Long id);
     List<Book> getAll();
     void removeById(Long id);
-    void update(Long id, BookRequest bookRequest);
-    void create(BookRequest bookRequest);
+    Book update(Long id, BookRequest bookRequest);
+    Book create(BookRequest bookRequest);
 
     String getBookCaption(Book book);
 }

@@ -45,14 +45,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     @Transactional
-    public void update(Long id, BookRequest bookRequest) {
+    public Book update(Long id, BookRequest bookRequest) {
         Book book = bookRepository.findById(id).orElseThrow();
-        save(book, bookRequest);
+        return save(book, bookRequest);
     }
 
     @Override
-    public void create(BookRequest bookRequest) {
-        save(new Book(), bookRequest);
+    public Book create(BookRequest bookRequest) {
+        return save(new Book(), bookRequest);
     }
 
     @Override
@@ -60,12 +60,12 @@ public class BookServiceImpl implements BookService {
         return String.format("%s (%s)", book.getName(), book.getId());
     }
 
-    private void save(Book book, BookRequest bookRequest) {
+    private Book save(Book book, BookRequest bookRequest) {
         book.setName(bookRequest.getName());
         Author author = authorRepository.findById(bookRequest.getAuthorId()).orElseThrow();
         book.setAuthor(author);
         List<Genre> genres = genreRepository.findAllById(bookRequest.getGenreIds());
         book.setGenres(genres);
-        bookRepository.save(book);
+        return bookRepository.save(book);
     }
 }

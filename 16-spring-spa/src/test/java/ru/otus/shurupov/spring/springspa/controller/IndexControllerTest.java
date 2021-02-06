@@ -11,12 +11,10 @@ import ru.otus.shurupov.spring.springspa.service.BookCommentService;
 import ru.otus.shurupov.spring.springspa.service.BookService;
 import ru.otus.shurupov.spring.springspa.service.GenreService;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.matchesRegex;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(IndexController.class)
 @DisplayName("IndexController ")
@@ -43,10 +41,10 @@ class IndexControllerTest {
         when(genreService.count()).thenReturn(40L);
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("<span class=\"badge bg-primary rounded-pill text-light\">10</span>")))
-                .andExpect(content().string(containsString("<span class=\"badge bg-primary rounded-pill text-light\">20</span>")))
-                .andExpect(content().string(containsString("<span class=\"badge bg-primary rounded-pill text-light\">30</span>")))
-                .andExpect(content().string(containsString("<span class=\"badge bg-primary rounded-pill text-light\">40</span>")))
+                .andExpect(jsonPath("$.books", is(10)))
+                .andExpect(jsonPath("$.authors", is(20)))
+                .andExpect(jsonPath("$.comments", is(30)))
+                .andExpect(jsonPath("$.genres", is(40)))
         ;
     }
 }

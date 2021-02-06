@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.shurupov.spring.springspa.domain.dto.BookCommentRequest;
+import ru.otus.shurupov.spring.springspa.domain.dto.BookCommentDto;
 import ru.otus.shurupov.spring.springspa.repository.BookCommentRepository;
 import ru.otus.shurupov.spring.springspa.repository.BookRepository;
 import ru.otus.shurupov.spring.springspa.domain.Book;
@@ -31,14 +31,14 @@ public class BookCommentServiceImpl implements BookCommentService {
 
     @Override
     @Transactional
-    public void create(BookCommentRequest bookCommentRequest) {
-        save(new BookComment(), bookCommentRequest);
+    public BookComment create(BookCommentDto bookCommentDto) {
+        return save(new BookComment(), bookCommentDto);
     }
 
     @Override
-    public void update(BookCommentRequest bookCommentRequest) {
-        BookComment bookComment = bookCommentRepository.findById(bookCommentRequest.getId()).orElseThrow();
-        save(bookComment, bookCommentRequest);
+    public BookComment update(BookCommentDto bookCommentDto) {
+        BookComment bookComment = bookCommentRepository.findById(bookCommentDto.getId()).orElseThrow();
+        return save(bookComment, bookCommentDto);
     }
 
     @Override
@@ -52,10 +52,10 @@ public class BookCommentServiceImpl implements BookCommentService {
         bookCommentRepository.deleteById(id);
     }
 
-    private void save(BookComment bookComment, BookCommentRequest bookCommentRequest) {
-        bookComment.setText(bookCommentRequest.getText());
-        Book book = bookRepository.findById(bookCommentRequest.getBookId()).orElseThrow();
+    private BookComment save(BookComment bookComment, BookCommentDto bookCommentDto) {
+        bookComment.setText(bookCommentDto.getText());
+        Book book = bookRepository.findById(bookCommentDto.getBookId()).orElseThrow();
         bookComment.setBook(book);
-        bookCommentRepository.save(bookComment);
+        return bookCommentRepository.save(bookComment);
     }
 }

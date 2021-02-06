@@ -1,17 +1,17 @@
 package ru.otus.shurupov.spring.springspa.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.otus.shurupov.spring.springspa.service.AuthorService;
 import ru.otus.shurupov.spring.springspa.service.BookCommentService;
 import ru.otus.shurupov.spring.springspa.service.BookService;
 import ru.otus.shurupov.spring.springspa.service.GenreService;
 
-import java.util.Collections;
+import java.util.Map;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class IndexController {
 
@@ -21,13 +21,13 @@ public class IndexController {
     private final BookCommentService bookCommentService;
 
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("books", bookService.count());
-        model.addAttribute("genres", genreService.count());
-        model.addAttribute("authors", authorService.count());
-        model.addAttribute("comments", bookCommentService.count());
-        model.addAttribute("breadcrumbs", Collections.emptyList());
-        return "index";
+    public Map<String, Long> index(Model model) {
+        return Map.of(
+                "books", bookService.count(),
+                "genres", genreService.count(),
+                "authors", authorService.count(),
+                "comments", bookCommentService.count()
+        );
     }
 
 }

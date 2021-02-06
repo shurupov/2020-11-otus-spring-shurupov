@@ -1,20 +1,15 @@
 package ru.otus.shurupov.spring.springspa.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.springspa.domain.BookComment;
-import ru.otus.shurupov.spring.springspa.domain.dto.BookCommentRequest;
-import ru.otus.shurupov.spring.springspa.domain.dto.BreadCrumb;
+import ru.otus.shurupov.spring.springspa.domain.dto.BookCommentDto;
 import ru.otus.shurupov.spring.springspa.service.BookCommentService;
 import ru.otus.shurupov.spring.springspa.service.BookService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class BookCommentsController {
 
@@ -22,57 +17,39 @@ public class BookCommentsController {
     private final BookService bookService;
 
     @GetMapping("/comments")
-    public String bookList(Model model) {
+    public List<BookComment> bookList() {
         List<BookComment> comments = bookCommentService.getAll();
-        model.addAttribute("comments", comments);
-        model.addAttribute("breadcrumbs", List.of(new BreadCrumb("/comments", "Comments")));
-        return "comments/list";
+        return comments;
     }
 
-    @PostMapping("/comments/add")
-    public String commentAddPost(BookCommentRequest bookCommentRequest) {
-        bookCommentService.create(bookCommentRequest);
-        return "redirect:/comments";
-    }
-
-    @GetMapping("/comments/add")
-    public String commentAddView(Model model) {
-        BookComment bookComment = new BookComment();
-        model.addAttribute("comment", bookComment);
-        model.addAttribute("books", bookService.getAll());
-        model.addAttribute("breadcrumbs",
-                List.of(
-                        new BreadCrumb("/comments", "Comments"),
-                        new BreadCrumb("/comments/add", "Add Comment")
-                )
-        );
-        return "comments/add";
+    @PostMapping("/comments")
+    public BookCommentDto commentAddPost(BookCommentDto bookCommentDto) {
+        BookComment comment = bookCommentService.create(bookCommentDto);
+        BookCommentDto result = map(comment);
+        return result;
     }
 
     @GetMapping("/comments/{id}")
-    public String commentView(@PathVariable Long id, Model model) {
+    public BookCommentDto commentView(@PathVariable Long id) {
         BookComment bookComment = bookCommentService.getById(id);
-        model.addAttribute("comment", bookComment);
-        model.addAttribute("books", bookService.getAll());
-        model.addAttribute("breadcrumbs",
-                List.of(
-                        new BreadCrumb("/comments", "Comments"),
-                        new BreadCrumb("/comments", bookComment.getText())
-                )
-        );
-        return "comments/edit";
+        BookCommentDto bookCommentDto = map(bookComment);
+        return bookCommentDto;
     }
 
-    @PostMapping("/comments/{id}")
-    public String commentEditPost(@PathVariable Long id, BookCommentRequest bookCommentRequest) {
-        bookCommentRequest.setId(id);
-        bookCommentService.update(bookCommentRequest);
+    @PutMapping("/comments/{id}")
+    public String commentEditPost(@PathVariable Long id, BookCommentDto bookCommentDto) {
+        bookCommentDto.setId(id);
+        BookComment bookComment = bookCommentService.update(bookCommentDto);
         return "redirect:/comments";
     }
 
-    @GetMapping("/comments/{id}/remove")
-    public String bookRemove(@PathVariable Long id) {
+    @DeleteMapping("/comments/{id}")
+    public void bookRemove(@PathVariable Long id) {
         bookCommentService.removeById(id);
-        return "redirect:/comments";
+    }
+
+    public BookCommentDto map(BookComment bookComment) {
+        BookCommentDto bookCommentDto = new BookCommentDto(bookComment.getId(), bookComment.getText(), bookComment.getBook().getId());
+        return bookCommentDto;
     }
 }

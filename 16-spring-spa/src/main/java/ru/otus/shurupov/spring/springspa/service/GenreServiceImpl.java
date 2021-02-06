@@ -27,16 +27,16 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
-    public void insert(String name) {
-        genreRepository.save(new Genre(name));
+    public Genre insert(String name) {
+        return genreRepository.save(new Genre(name));
     }
 
     @Override
     @Transactional
-    public void update(Long id, String name) {
+    public Genre update(Long id, String name) {
         Genre genre = genreRepository.findById(id).orElseThrow();
         genre.setName(name);
-        genreRepository.save(genre);
+        return genreRepository.save(genre);
     }
 
     @Override

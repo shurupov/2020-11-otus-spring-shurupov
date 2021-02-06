@@ -1,70 +1,45 @@
 package ru.otus.shurupov.spring.springspa.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.springspa.domain.Genre;
-import ru.otus.shurupov.spring.springspa.domain.dto.BreadCrumb;
 import ru.otus.shurupov.spring.springspa.service.GenreService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class GenreController {
 
     private final GenreService genreService;
 
     @GetMapping("/genres")
-    public String genreList(Model model) {
+    public List<Genre> genreList() {
         List<Genre> genres = genreService.getAll();
-        model.addAttribute("genres", genres);
-        model.addAttribute("breadcrumbs", List.of(new BreadCrumb("/genres", "Genres")));
-        return "genres/list";
+        return genres;
     }
 
-    @PostMapping("/genres/add")
-    public String genreAddPost(String name) {
-        genreService.insert(name);
-        return "redirect:/genres";
-    }
-
-    @GetMapping("/genres/add")
-    public String genreView(Model model) {
-        model.addAttribute("breadcrumbs",
-                List.of(
-                        new BreadCrumb("/genres", "Genres"),
-                        new BreadCrumb("/genres/add", "Add Genre")
-                )
-        );
-        return "genres/add";
+    @PostMapping("/genres")
+    public Genre genreAddPost(String name) {
+        Genre genre = genreService.insert(name);
+        return genre;
     }
 
     @GetMapping("/genres/{id}")
-    public String genreView(@PathVariable Long id, Model model) {
+    public Genre genreView(@PathVariable Long id, Model model) {
         Genre genre = genreService.getById(id);
-        model.addAttribute("genre", genre);
-        model.addAttribute("breadcrumbs",
-                List.of(
-                        new BreadCrumb("/genres", "Genres"),
-                        new BreadCrumb("/genres", genre.getName())
-                )
-        );
-        return "genres/edit";
+        return genre;
     }
 
-    @PostMapping("/genres/{id}")
-    public String genreEditPost(@PathVariable Long id, String name) {
-        genreService.update(id, name);
-        return "redirect:/genres";
+    @PutMapping("/genres/{id}")
+    public Genre genreEditPost(@PathVariable Long id, String name) {
+        Genre genre = genreService.update(id, name);
+        return genre;
     }
 
-    @GetMapping("/genres/{id}/remove")
-    public String genreRemove(@PathVariable Long id) {
+    @DeleteMapping("/genres/{id}/remove")
+    public void genreRemove(@PathVariable Long id) {
         genreService.removeById(id);
-        return "redirect:/genres";
     }
 }

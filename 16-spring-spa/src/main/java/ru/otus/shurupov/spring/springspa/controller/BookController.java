@@ -1,97 +1,57 @@
 package ru.otus.shurupov.spring.springspa.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.springspa.domain.Book;
 import ru.otus.shurupov.spring.springspa.domain.Genre;
-import ru.otus.shurupov.spring.springspa.domain.dto.BookDtoForList;
+import ru.otus.shurupov.spring.springspa.domain.dto.BookResponse;
 import ru.otus.shurupov.spring.springspa.domain.dto.BookRequest;
-import ru.otus.shurupov.spring.springspa.domain.dto.BreadCrumb;
-import ru.otus.shurupov.spring.springspa.service.AuthorService;
 import ru.otus.shurupov.spring.springspa.service.BookService;
-import ru.otus.shurupov.spring.springspa.service.GenreService;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class BookController {
 
     private final BookService bookService;
-    private final AuthorService authorService;
-    private final GenreService genreService;
 
     @GetMapping("/books")
-    public String bookList(Model model) {
+    public List<BookResponse> bookList() {
         List<Book> books = bookService.getAll();
-        List<BookDtoForList> bookDtoForLists = books.stream()
+        List<BookResponse> bookResponses = books.stream()
                 .map(this::map).collect(Collectors.toList());
-        model.addAttribute("books", bookDtoForLists);
-        model.addAttribute("breadcrumbs", List.of(new BreadCrumb("/books", "Books")));
-        return "books/list";
+        return bookResponses;
     }
 
-    @PostMapping("/books/add")
-    public String bookAddPost(BookRequest bookRequest) {
-        bookService.create(bookRequest);
-        return "redirect:/books";
+    @PostMapping("/books")
+    public BookResponse bookAddPost(BookRequest bookRequest) {
+        BookResponse bookResponse = map(bookService.create(bookRequest));
+        return bookResponse;
     }
 
-    @GetMapping("/books/add")
-    public String bookView(Model model) {
-        Book book = new Book();
-        model.addAttribute("book", book);
-        model.addAttribute("authors", authorService.getAll());
-        model.addAttribute("genres", genreService.getAll());
-        model.addAttribute("selectedGenreIds", Collections.emptyList());
-        model.addAttribute("breadcrumbs",
-                List.of(
-                    new BreadCrumb("/books", "Books"),
-                    new BreadCrumb("/books/add", "Add Book")
-                )
-        );
-        return "books/add";
+    @PutMapping("/books/{id}")
+    public BookResponse bookEdit(@PathVariable Long id, BookRequest bookRequest) {
+        Book book = bookService.update(id, bookRequest);
+        BookResponse bookResponse = map(book);
+        return bookResponse;
     }
 
     @GetMapping("/books/{id}")
-    public String bookView(@PathVariable Long id, Model model) {
+    public BookResponse bookView(@PathVariable Long id) {
         Book book = bookService.getById(id);
-        model.addAttribute("book", book);
-        model.addAttribute("authors", authorService.getAll());
-        model.addAttribute("genres", genreService.getAll());
-        model.addAttribute("selectedGenreIds",
-                book.getGenres()
-                        .stream()
-                        .map(Genre::getId)
-                        .collect(Collectors.toList())
-        );
-        model.addAttribute("breadcrumbs",
-                List.of(
-                        new BreadCrumb("/books", "Books"),
-                        new BreadCrumb("/books", book.getName())
-                )
-        );
-        return "books/edit";
+        BookResponse bookResponse = map(book);
+        return bookResponse;
     }
 
-    @PostMapping("/books/{id}")
-    public String bookEditPost(@PathVariable Long id, BookRequest bookRequest) {
-        bookService.update(id, bookRequest);
-        return "redirect:/books";
-    }
-
-    @GetMapping("/books/{id}/remove")
-    public String bookRemove(@PathVariable Long id) {
+    @DeleteMapping("/books/{id}")
+    public void bookRemove(@PathVariable Long id) {
         bookService.removeById(id);
-        return "redirect:/books";
     }
 
-    private BookDtoForList map(Book book) {
-        return BookDtoForList.builder()
+    private BookResponse map(Book book) {
+        return BookResponse.builder()
                 .id(book.getId())
                 .name(book.getName())
                 .author(book.getAuthor().getFirstName() + " " + book.getAuthor().getLastName())
