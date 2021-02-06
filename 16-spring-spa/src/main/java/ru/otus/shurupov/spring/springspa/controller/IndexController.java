@@ -1,7 +1,6 @@
 package ru.otus.shurupov.spring.springspa.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.otus.shurupov.spring.springspa.service.AuthorService;
@@ -21,7 +20,7 @@ public class IndexController {
     private final BookCommentService bookCommentService;
 
     @GetMapping("/")
-    public Map<String, Long> index(Model model) {
+    public Map<String, Long> index() {
         return Map.of(
                 "books", bookService.count(),
                 "genres", genreService.count(),

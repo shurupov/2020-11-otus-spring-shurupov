@@ -1,15 +1,14 @@
-# Spring MVC View
+# Spring REST SPA
 
 ## Task
 Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
-Use Spring Data JPA.
+Use Spring, REST and SPA.
 
 ## Used
 - Spring boot
 - Annotation-based configuration
 - Lombok
 - YML application configuration
-- Thymeleaf
 - Postgresql database for production
 - H2 Embedded database for tests
 - JPA
@@ -37,4 +36,4 @@ Use Spring Data JPA.
 `mvn clean package`
 
 ## Command to start the application
-`java -jar target/15-spring-mvc-view-1.0.jar`
+`java -jar target/16-spring-spa-1.0.jar`
