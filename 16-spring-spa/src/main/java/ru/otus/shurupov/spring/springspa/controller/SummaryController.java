@@ -12,14 +12,14 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-public class IndexController {
+public class SummaryController {
 
     private final BookService bookService;
     private final GenreService genreService;
     private final AuthorService authorService;
     private final BookCommentService bookCommentService;
 
-    @GetMapping("/")
+    @GetMapping("/summary")
     public Map<String, Long> index() {
         return Map.of(
                 "books", bookService.count(),

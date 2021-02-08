@@ -12,7 +12,7 @@ export default class App extends React.Component {
     }
 
     componentDidMount() {
-        fetch('/api/persons')
+        fetch('/books')
             .then(response => response.json())
             .then(persons => this.setState({persons}));
     }
@@ -20,20 +20,24 @@ export default class App extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Header title={'Persons'}/>
+                <Header title={'Books'}/>
                 <table>
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Author</th>
+                        <th>Genres</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        this.state.persons.map((person, i) => (
+                        this.state.persons.map((book, i) => (
                             <tr key={i}>
-                                <td>{person.id}</td>
-                                <td>{person.name}</td>
+                                <td>{book.id}</td>
+                                <td>{book.name}</td>
+                                <td>{book.author}</td>
+                                <td>{book.genres}</td>
                             </tr>
                         ))
                     }

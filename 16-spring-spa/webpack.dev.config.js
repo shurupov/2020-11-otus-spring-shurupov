@@ -17,8 +17,8 @@ module.exports = {
         host: 'localhost',
         open: true,
         before: (app) => {
-            app.get('/api/persons', (req, res) => res.send([
-                {id: '1', name: 'Привяу'}
+            app.get('/books', (req, res) => res.send([
+                {id: '1', name: 'The Tale about Fisherman and a Gold Fish', genres: "Fairy Tale, Drama", author: "Alexander Pushkin"}
             ]));
         }
     },

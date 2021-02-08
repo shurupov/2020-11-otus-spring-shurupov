@@ -16,9 +16,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(IndexController.class)
+@WebMvcTest(SummaryController.class)
 @DisplayName("IndexController ")
-class IndexControllerTest {
+class SummaryControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -39,7 +39,7 @@ class IndexControllerTest {
         when(authorService.count()).thenReturn(20L);
         when(bookCommentService.count()).thenReturn(30L);
         when(genreService.count()).thenReturn(40L);
-        mockMvc.perform(get("/"))
+        mockMvc.perform(get("/summary"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.books", is(10)))
                 .andExpect(jsonPath("$.authors", is(20)))
