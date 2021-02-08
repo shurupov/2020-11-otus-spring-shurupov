@@ -62,6 +62,12 @@ const config: webpack.Configuration = {
                     name: 'The Tale about Fisherman and a Gold Fish',
                     genres: "Fairy Tale, Drama",
                     author: "Alexander Pushkin"
+                },
+                {
+                    id: '2',
+                    name: 'Player',
+                    genres: "Drama",
+                    author: "Fedor Dostoyevsky"
                 }
             ]));
         }
