@@ -14,7 +14,7 @@ const config: webpack.Configuration = {
     output: {
         publicPath: "/",
     },
-    entry: "./src/index.tsx",
+    entry: "./src/ui/index.tsx",
     module: {
         rules: [
             {
@@ -38,7 +38,7 @@ const config: webpack.Configuration = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "src/index.html",
+            template: "src/ui/index.html",
         }),
         new webpack.HotModuleReplacementPlugin(),
         new ForkTsCheckerWebpackPlugin({
