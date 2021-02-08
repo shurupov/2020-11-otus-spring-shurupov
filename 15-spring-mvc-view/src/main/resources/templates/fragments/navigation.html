@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<ul th:fragment="tabs (selected)" class="nav nav-pills pb-2 pt-2">
+    <a class="navbar-brand" href="/">Book library</a>
+    <li class="nav-item">
+        <a th:if="${selected == 'books'}" class="nav-link active" aria-current="page" href="/books">Books</a>
+        <a th:unless="${selected == 'books'}" class="nav-link " href="/books">Books</a>
+    </li>
+    <li class="nav-item">
+        <a th:if="${selected == 'comments'}" class="nav-link active" aria-current="page" href="/comments">Comments</a>
+        <a th:unless="${selected == 'comments'}" class="nav-link " href="/comments">Comments</a>
+    </li>
+    <li class="nav-item">
+        <a th:if="${selected == 'authors'}" class="nav-link active" aria-current="page" href="/authors">Authors</a>
+        <a th:unless="${selected == 'authors'}" class="nav-link " href="/authors">Authors</a>
+    </li>
+    <li class="nav-item">
+        <a th:if="${selected == 'genres'}" class="nav-link active" aria-current="page" href="/genres">Genres</a>
+        <a th:unless="${selected == 'genres'}" class="nav-link " href="/genres">Genres</a>
+    </li>
+</ul>
+
+<nav th:fragment="breadcrumb (items)" aria-label="breadcrumb pb-2">
+    <ol class="breadcrumb">
+        <li th:attr="class=${items.isEmpty() ? 'breadcrumb-item active' : 'breadcrumb-item'}">
+            <a th:unless="${items.isEmpty()}" th:href="'/'">Home</a>
+            <th:block th:if="${items.isEmpty()}">Home</th:block>
+        </li>
+        <li th:each="item, iterStat : ${items}" th:attr="class=${iterStat.last ? 'breadcrumb-item active' : 'breadcrumb-item'}">
+            <a th:unless="${iterStat.last}" th:href="${item.url}" th:text="${item.caption}">Books</a>
+            <th:block th:if="${iterStat.last}" th:text="${item.caption}">Books</th:block>
+        </li>
+    </ol>
+</nav>

@@ -1,0 +1,23 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<form th:fragment="form (uri, book, authors, genres, selectedGenreIds)" id="edit-form" th:action="${uri}" th:method="post" action="edit.html">
+    <h1>Book Info</h1>
+    <input type="hidden" th:value="${book.id}" value="1" readonly="readonly" name="id">
+    <div class="mb-3">
+        <label for="bookName" class="form-label">Book Name</label>
+        <input type="text" class="form-control" id="bookName" aria-describedby="bookNameHelp" th:value="${book.name}" value="Pride and Prejustice" name="name">
+        <div id="bookNameHelp" class="form-text">Just enter book name here.</div>
+    </div>
+    <div class="form-group">
+        <label for="authorId">Author</label>
+        <select class="form-control" id="authorId" name="authorId">
+            <option th:each="author : ${authors}" th:selected="${book.author != null && author.id == book.author.id}" th:value="${author.id}" th:text="${author.firstName + ' ' + author.lastName}">Arthur Conan Doyle</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="genreIds">Genres</label>
+        <select multiple class="form-control" id="genreIds" name="genreIds" size="8">
+            <option th:each="genre : ${genres}" th:selected="${selectedGenreIds.contains(genre.id)}" th:value="${genre.id}" th:text="${genre.name}">Drama</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
