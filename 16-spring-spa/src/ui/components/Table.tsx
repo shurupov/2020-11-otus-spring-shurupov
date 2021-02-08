@@ -1,6 +1,6 @@
 import React from "react";
 
-interface TableProps {
+export interface TableProps {
     header: Array<string>;
     data: Array<Array<any>>;
 }
