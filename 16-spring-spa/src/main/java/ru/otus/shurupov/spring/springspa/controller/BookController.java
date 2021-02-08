@@ -17,7 +17,7 @@ public class BookController {
 
     private final BookService bookService;
 
-    @GetMapping("/books")
+    @GetMapping("/api/books")
     public List<BookResponse> bookList() {
         List<Book> books = bookService.getAll();
         List<BookResponse> bookResponses = books.stream()
@@ -25,27 +25,27 @@ public class BookController {
         return bookResponses;
     }
 
-    @PostMapping("/books")
+    @PostMapping("/api/books")
     public BookResponse bookAddPost(BookRequest bookRequest) {
         BookResponse bookResponse = map(bookService.create(bookRequest));
         return bookResponse;
     }
 
-    @PutMapping("/books/{id}")
+    @PutMapping("/api/books/{id}")
     public BookResponse bookEdit(@PathVariable Long id, BookRequest bookRequest) {
         Book book = bookService.update(id, bookRequest);
         BookResponse bookResponse = map(book);
         return bookResponse;
     }
 
-    @GetMapping("/books/{id}")
+    @GetMapping("/api/books/{id}")
     public BookResponse bookView(@PathVariable Long id) {
         Book book = bookService.getById(id);
         BookResponse bookResponse = map(book);
         return bookResponse;
     }
 
-    @DeleteMapping("/books/{id}")
+    @DeleteMapping("/api/books/{id}")
     public void bookRemove(@PathVariable Long id) {
         bookService.removeById(id);
     }

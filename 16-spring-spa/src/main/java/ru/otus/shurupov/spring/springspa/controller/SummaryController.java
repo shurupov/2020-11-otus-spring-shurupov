@@ -19,7 +19,7 @@ public class SummaryController {
     private final AuthorService authorService;
     private final BookCommentService bookCommentService;
 
-    @GetMapping("/summary")
+    @GetMapping("/api/summary")
     public Map<String, Long> index() {
         return Map.of(
                 "books", bookService.count(),

@@ -56,7 +56,7 @@ const config: webpack.Configuration = {
         open: true,
         hot: true,
         before: (app) => {
-            app.get('/books', (req, res) => res.send([
+            app.get('/api/books', (req, res) => res.send([
                 {
                     id: '1',
                     name: 'The Tale about Fisherman and a Gold Fish',

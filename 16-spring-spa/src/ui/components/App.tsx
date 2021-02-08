@@ -23,7 +23,7 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
     }
 
     componentDidMount() {
-        fetch('/books')
+        fetch('/api/books')
             .then(response => response.json())
             .then(books => this.setState({books}));
     }
