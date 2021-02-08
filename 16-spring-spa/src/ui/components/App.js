@@ -8,13 +8,13 @@ export default class App extends React.Component {
 
     constructor() {
         super();
-        this.state = {persons: []};
+        this.state = {books: []};
     }
 
     componentDidMount() {
         fetch('/books')
             .then(response => response.json())
-            .then(persons => this.setState({persons}));
+            .then(books => this.setState({books}));
     }
 
     render() {
@@ -32,7 +32,7 @@ export default class App extends React.Component {
                     </thead>
                     <tbody>
                     {
-                        this.state.persons.map((book, i) => (
+                        this.state.books.map((book, i) => (
                             <tr key={i}>
                                 <td>{book.id}</td>
                                 <td>{book.name}</td>
