@@ -1,40 +1,32 @@
 import React from "react";
 import {Table} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 export interface TableProps {
-    data: Array<any>;
+    data: Array<{}>;
 }
 
 export class ItemsTable extends React.Component<TableProps> {
     render() {
+        const headers: Array<string> = [];
+        if (this.props.data.length > 0) {
+            for (const key in this.props.data[0]) {
+                headers.push(key);
+            }
+        }
+
         return <Table striped bordered hover>
             <thead>
-            <tr>
-                <th>#</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Username</th>
-            </tr>
+                <tr>
+                    { headers.map(h => <th>{h}</th>) }
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td colSpan={2}>Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
+                { this.props.data.map(
+                    row => <tr>{
+                        // @ts-ignore
+                        headers.map(field => <td>{row[field]}</td>)
+                    }</tr>
+                ) }
             </tbody>
         </Table>
     }
