@@ -1,5 +1,5 @@
 import React from 'react'
-import {Table} from "./Table";
+import {ItemsTable} from "./ItemsTable";
 
 interface Book {
     id: number;
@@ -33,7 +33,8 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
         return (
             <React.Fragment>
                 <Header title={'Books'}/>
-                <Table header={["#", "Name", "Author", "Genres"]} data={this.state.books.map((book) => [book.id, book.name, book.author, book.genres])} />
+                <ItemsTable data={this.state.books} />
+                {/*<Table header={["#", "Name", "Author", "Genres"]} data={this.state.books.map((book) => [book.id, book.name, book.author, book.genres])} />*/}
             </React.Fragment>
         )
     }

@@ -1,24 +1,20 @@
 import {Meta, Story} from "@storybook/react/types-6-0";
 import React from "react";
-import {Table, TableProps} from "../ui/components/Table";
+import {ItemsTable, TableProps} from "../ui/components/ItemsTable";
 
 export default {
     title: 'Table',
-    component: Table,
+    component: ItemsTable,
     argTypes: {
-        header: {
-            header1: 'string'
-        }
     },
 } as Meta;
 
-const Template: Story<TableProps> = (args) => <Table {...args} />;
+const Template: Story<TableProps> = (args) => <ItemsTable {...args} />;
 
 export const Table1 = Template.bind({});
 Table1.args = {
-    header: ["Title1", "Title2", "Title3"],
     data: [
-        ["Value11","Value12","Value13",],
-        ["Value21","Value22","Value23",],
+        { id: "value11", col2: "value12", col3: "value13", col4: "value14",  },
+        { id: "value21", col2: "value22", col3: "value23", col4: "value24",  },
     ]
 };
