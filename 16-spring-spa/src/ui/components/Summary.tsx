@@ -2,6 +2,7 @@ import React from "react";
 import {Avatar, List, ListItem, ListItemAvatar, ListItemText} from "@material-ui/core";
 import {MenuBook, Comment, PermIdentity, Movie} from "@material-ui/icons";
 import * as _ from "lodash";
+import {Link} from "react-router-dom";
 
 export interface SummaryProps {
     counts: {[key: string]: number;}
@@ -19,14 +20,18 @@ export default class Summary extends React.Component<SummaryProps> {
         return (
             <List component="nav">
                 { Object.keys(this.props.counts).map((key) => (
-                    <ListItem button component="a" href={"/" + key}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                {icons[key]}
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={_.startCase(key)} secondary={this.props.counts[key] + " pieces"}/>
-                    </ListItem>
+                    <Link key={key} to={"/" + key} style={{ textDecoration: "none", color: "inherit" }}>
+                        <ListItem key={key} button>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    {icons[key]}
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText secondary={this.props.counts[key] + " pieces"}>
+                                {_.startCase(key)}
+                            </ListItemText>
+                        </ListItem>
+                    </Link>
                 )) }
 
             </List>

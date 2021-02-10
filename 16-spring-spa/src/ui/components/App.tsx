@@ -2,6 +2,8 @@ import React from 'react'
 import {Container} from "@material-ui/core";
 import 'fontsource-roboto';
 import BookList from "./book/BookList";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import Summary from "./Summary";
 
 interface Book {
     id: number;
@@ -26,7 +28,21 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
     render() {
         return (
             <Container maxWidth="md">
-                <BookList books={this.state.books} />
+                <BrowserRouter>
+                    <Switch>
+                        <Route path="/books">
+                            <BookList books={this.state.books} />
+                        </Route>
+                        <Route path="/" exact>
+                            <Summary counts={{
+                                books: 5,
+                                comments: 4,
+                                authors: 6,
+                                genres: 8
+                            }} />
+                        </Route>
+                    </Switch>
+                </BrowserRouter >
             </Container>
         )
     }
