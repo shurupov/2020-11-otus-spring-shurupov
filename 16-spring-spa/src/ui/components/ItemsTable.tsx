@@ -1,8 +1,8 @@
 import React from "react";
-import {Table} from "react-bootstrap";
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from "@material-ui/core";
 
 export interface TableProps {
-    data: Array<{}>;
+    data: Array<object>;
 }
 
 export class ItemsTable extends React.Component<TableProps> {
@@ -14,20 +14,31 @@ export class ItemsTable extends React.Component<TableProps> {
             }
         }
 
-        return <Table striped bordered hover>
-            <thead>
-                <tr>
-                    { headers.map(h => <th>{h}</th>) }
-                </tr>
-            </thead>
-            <tbody>
-                { this.props.data.map(
-                    row => <tr>{
-                        // @ts-ignore
-                        headers.map(field => <td>{row[field]}</td>)
-                    }</tr>
-                ) }
-            </tbody>
-        </Table>
+        return (
+            <TableContainer component={Paper}>
+                <Table style={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>#</TableCell>
+                            <TableCell>Name</TableCell>
+                            <TableCell>Author</TableCell>
+                            <TableCell>Genres</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.props.data.map((row) => (
+                            <TableRow key={row.id}>
+                                <TableCell component="th" scope="row">
+                                    {row.id}
+                                </TableCell>
+                                <TableCell>{row.name}</TableCell>
+                                <TableCell>{row.author}</TableCell>
+                                <TableCell>{row.genres}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        );
     }
 }
