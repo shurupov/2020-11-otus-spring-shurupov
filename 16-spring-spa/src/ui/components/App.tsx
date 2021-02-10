@@ -1,5 +1,7 @@
 import React from 'react'
-import {ItemsTable} from "./ItemsTable";
+import {Container} from "@material-ui/core";
+import 'fontsource-roboto';
+import BookList from "./book/BookList";
 
 interface Book {
     id: number;
@@ -7,14 +9,6 @@ interface Book {
     author: string;
     genres: string
 }
-
-interface HeaderProps {
-    title: string;
-}
-
-const Header = (props: HeaderProps) => (
-    <h1>{props.title}</h1>
-);
 
 export default class App extends React.Component<any, { books: Array<Book> }> {
 
@@ -31,11 +25,9 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
 
     render() {
         return (
-            <React.Fragment>
-                <Header title={'Books'}/>
-                <ItemsTable data={this.state.books} />
-                {/*<Table header={["#", "Name", "Author", "Genres"]} data={this.state.books.map((book) => [book.id, book.name, book.author, book.genres])} />*/}
-            </React.Fragment>
+            <Container maxWidth="md">
+                <BookList books={this.state.books} />
+            </Container>
         )
     }
 }
