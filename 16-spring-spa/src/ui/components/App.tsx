@@ -4,6 +4,7 @@ import 'fontsource-roboto';
 import BookList from "./book/BookList";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Summary from "./Summary";
+import NavigationPanel from "./common/NavigationPanel";
 
 interface Book {
     id: number;
@@ -29,6 +30,7 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
         return (
             <Container maxWidth="md">
                 <BrowserRouter>
+                    <NavigationPanel />
                     <Switch>
                         <Route path="/books">
                             <BookList books={this.state.books} />

@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SummaryController.class)
-@DisplayName("IndexController ")
+@DisplayName("SummaryController ")
 class SummaryControllerTest {
 
     @Autowired
@@ -39,7 +39,7 @@ class SummaryControllerTest {
         when(authorService.count()).thenReturn(20L);
         when(bookCommentService.count()).thenReturn(30L);
         when(genreService.count()).thenReturn(40L);
-        mockMvc.perform(get("/summary"))
+        mockMvc.perform(get("/api/summary"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.books", is(10)))
                 .andExpect(jsonPath("$.authors", is(20)))
