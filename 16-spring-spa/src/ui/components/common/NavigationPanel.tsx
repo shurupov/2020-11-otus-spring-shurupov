@@ -1,18 +1,18 @@
 import React from "react";
-import {AppBar, Button, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Link, Toolbar, Typography} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
 
 const menuItem = (name: string, uri: string, exact = false) => {
     return (
         <Typography variant="h6">
-            <NavLink
-                to={uri}
-                style={{ color: "inherit", textDecoration: "inherit" }}
-                activeStyle={{ color: "lightblue" }}
-                exact={exact}
+            <Link component={NavLink}
+                  to={uri}
+                  style={{ color: "inherit" }}
+                  activeStyle={{ color: "lightblue" }}
+                  exact={exact}
             >
                 {name}
-            </NavLink>&nbsp;
+            </Link>&nbsp;
         </Typography>
     );
 };

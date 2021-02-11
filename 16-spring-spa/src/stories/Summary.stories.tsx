@@ -1,6 +1,7 @@
 import {Meta, Story} from "@storybook/react/types-6-0";
 import React from "react";
 import Summary, {SummaryProps} from "../ui/components/Summary";
+import {BrowserRouter} from "react-router-dom";
 
 export default {
     title: 'Summary',
@@ -9,7 +10,11 @@ export default {
     },
 } as Meta;
 
-const Template: Story<SummaryProps> = (args) => <Summary {...args} />;
+const Template: Story<SummaryProps> = (args) => (
+    <BrowserRouter>
+        <Summary {...args} />
+    </BrowserRouter>
+);
 
 export const SummaryExample = Template.bind({});
 SummaryExample.args = {
