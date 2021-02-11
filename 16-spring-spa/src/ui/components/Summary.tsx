@@ -20,7 +20,13 @@ export default class Summary extends React.Component<SummaryProps> {
         return (
             <List component="nav">
                 { Object.keys(this.props.counts).map((key) => (
-                    <ListItem key={key} component={Link} button to={"/" + key} style={{ textDecoration: "none", color: "inherit" }}>
+                    <ListItem
+                        key={key}
+                        component={Link}
+                        button
+                        to={"/" + key}
+                        style={{ textDecoration: "none", color: "inherit" }}
+                    >
                         <ListItemAvatar>
                             <Avatar>
                                 {icons[key]}

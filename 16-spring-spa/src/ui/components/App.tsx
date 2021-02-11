@@ -5,6 +5,7 @@ import BookList from "./book/BookList";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import Summary from "./Summary";
 import NavigationPanel from "./common/NavigationPanel";
+import Crumbs from "./common/Crumbs";
 
 interface Book {
     id: number;
@@ -33,9 +34,11 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
                     <NavigationPanel />
                     <Switch>
                         <Route path="/books">
+                            <Crumbs />
                             <BookList books={this.state.books} />
                         </Route>
                         <Route path="/" exact>
+                            <Crumbs />
                             <Summary counts={{
                                 books: 5,
                                 comments: 4,
