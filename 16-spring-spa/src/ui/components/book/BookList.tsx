@@ -1,5 +1,5 @@
 import React from "react";
-import {DataList} from "../DataList";
+import {DataList} from "../common/DataList";
 
 export interface Book {
     id: number;

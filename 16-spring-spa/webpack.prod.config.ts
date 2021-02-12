@@ -46,6 +46,9 @@ const config: webpack.Configuration = {
     },
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
+        alias: {
+            components: path.resolve(__dirname, "src/ui/components"),
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({

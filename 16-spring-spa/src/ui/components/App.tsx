@@ -47,7 +47,7 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
                             }} />
                         </Route>
                     </Switch>
-                </BrowserRouter >
+                </BrowserRouter>
             </Container>
         )
     }
