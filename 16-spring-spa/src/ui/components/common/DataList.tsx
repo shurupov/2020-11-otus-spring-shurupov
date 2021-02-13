@@ -9,45 +9,45 @@ export interface DataListProps {
     data: Array<any>;
 }
 
-export class DataList extends React.Component<DataListProps> {
-    render() {
+export function DataList(props: DataListProps) {
 
-        let headers: {[key: string]: string;};
-        if (this.props.headers) {
-            headers = {...this.props.headers};
-        } else {
-            headers = {};
-            this.props.columns.forEach(column => { headers[column] = _.startCase(column); });
-        }
+    let headers: { [key: string]: string; };
+    if (props.headers) {
+        headers = {...props.headers};
+    } else {
+        headers = {};
+        props.columns.forEach(column => {
+            headers[column] = _.startCase(column);
+        });
+    }
 
-        return (
-            <>
-                <Typography variant="h3" component="h3">{this.props.title}</Typography>
-                <TableContainer component={Paper}>
-                    <Table style={{ minWidth: 650 }} size="medium">
-                        <TableHead>
-                            <TableRow>
-                                {this.props.columns.map((column) => (
+    return (
+        <>
+            <Typography variant="h3" component="h3">{props.title}</Typography>
+            <TableContainer component={Paper}>
+                <Table style={{minWidth: 650}} size="medium">
+                    <TableHead>
+                        <TableRow>
+                            {props.columns.map((column) => (
+                                <TableCell key={column}>
+                                    {headers[column]}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {props.data.map((row) => (
+                            <TableRow key={row.id}>
+                                {props.columns.map((column) => (
                                     <TableCell key={column}>
-                                        {headers[column]}
+                                        {row[column]}
                                     </TableCell>
                                 ))}
                             </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {this.props.data.map((row) => (
-                                <TableRow key={row.id}>
-                                    {this.props.columns.map((column) => (
-                                        <TableCell key={column}>
-                                            {row[column]}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </>
-        );
-    }
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </>
+    );
 }

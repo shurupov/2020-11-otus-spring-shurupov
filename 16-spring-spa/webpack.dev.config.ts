@@ -55,6 +55,8 @@ const config: webpack.Configuration = {
         extensions: [".tsx", ".ts", ".js"],
         alias: {
             components: path.resolve(__dirname, "src/ui/components"),
+            store: path.resolve(__dirname, "src/ui/store"),
+            smart: path.resolve(__dirname, "src/ui/smart"),
         },
     },
     plugins: [

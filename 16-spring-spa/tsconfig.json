@@ -14,7 +14,9 @@
     "jsx": "react",
     "baseUrl": ".",
     "paths": {
-      "components/*": ["src/ui/components/*"]
+      "components/*": ["src/ui/components/*"],
+      "store/*": ["src/ui/store/*"],
+      "smart/*": ["src/ui/smart/*"],
     }
   },
   "include": ["src"]
