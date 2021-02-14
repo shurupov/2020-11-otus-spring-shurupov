@@ -13,7 +13,6 @@ export const bookSlice = createSlice({
     },
     reducers: {
         list: (state, action) => {
-            console.log("list", action);
             return {
                 ...state,
                 list: action.payload

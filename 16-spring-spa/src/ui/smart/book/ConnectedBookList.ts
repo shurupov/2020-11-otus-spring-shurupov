@@ -1,9 +1,7 @@
 import {connect} from "react-redux";
 import BookList from "components/book/BookList";
-import {StoreState} from "store/reducer";
 
-const mapStateToProps = (storeState: StoreState) => {
-    console.log("mapStateToProps", storeState);
+const mapStateToProps = (storeState: any) => {
     return {
         books: storeState.book.list
     }

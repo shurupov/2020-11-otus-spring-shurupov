@@ -40,8 +40,8 @@ export default class Crumbs extends React.Component<CrumbsProps> {
             <Breadcrumbs aria-label="breadcrumb">
                 { items.map((item, i) => (
                     i < items.length - 1
-                        ? <RouterLink to={item.url} style={{ color: "inherit", textDecoration: "inherit" }}>{item.caption}</RouterLink>
-                        : <Typography color="textPrimary">{item.caption}</Typography>
+                        ? <RouterLink key={i} to={item.url} style={{ color: "inherit", textDecoration: "inherit" }}>{item.caption}</RouterLink>
+                        : <Typography key={i} color="textPrimary">{item.caption}</Typography>
                 )) }
             </Breadcrumbs>
             </Paper>

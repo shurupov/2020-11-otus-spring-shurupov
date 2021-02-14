@@ -1,3 +1,3 @@
 export const sagaActionTypes = {
-    BOOK_LIST: "saga/book/list",
+    DISPLAY_BOOK_LIST: "saga/book/list",
 };

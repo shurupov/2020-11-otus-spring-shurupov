@@ -2,13 +2,13 @@ import React from 'react'
 import { Provider } from "react-redux";
 import {Container} from "@material-ui/core";
 import 'fontsource-roboto';
-import BookList from "./book/BookList";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import Summary from "./Summary";
 import NavigationPanel from "./common/NavigationPanel";
 import Crumbs from "./common/Crumbs";
-import {store} from "store/store";
+import {store, history} from "store/store";
 import { ConnectedBookList } from 'smart/book/ConnectedBookList';
+import {ConnectedRouter} from "connected-react-router";
 
 interface Book {
     id: number;
@@ -17,24 +17,13 @@ interface Book {
     genres: string
 }
 
-export default class App extends React.Component<any, { books: Array<Book> }> {
-
-    constructor(props: any) {
-        super(props);
-        this.state = {books: []};
-    }
-
-    componentDidMount() {
-        fetch('/api/books')
-            .then(response => response.json())
-            .then(books => this.setState({books}));
-    }
+export default class App extends React.Component {
 
     render() {
         return (
             <Provider store={store}>
                 <Container maxWidth="md">
-                    <BrowserRouter>
+                    <ConnectedRouter history={history}>
                         <NavigationPanel />
                         <Switch>
                             <Route path="/books">
@@ -51,7 +40,7 @@ export default class App extends React.Component<any, { books: Array<Book> }> {
                                 }} />
                             </Route>
                         </Switch>
-                    </BrowserRouter>
+                    </ConnectedRouter>
                 </Container>
             </Provider>
         )
