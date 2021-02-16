@@ -1,10 +1,10 @@
-import { call, put, takeEvery, select } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import {sagaActionTypes} from "store/sagaActionTypes";
 import {bookSlice} from "smart/book/slice";
 
 export const displayBookListAction = () => {
     return {
-        type: sagaActionTypes.DISPLAY_BOOK_LIST,
+        type: sagaActionTypes.BOOK_LIST_DISPLAY,
     };
 };
 
@@ -15,5 +15,5 @@ export function* workerDisplayList() {
 }
 
 export function* watchDisplayList() {
-    yield takeEvery(sagaActionTypes.DISPLAY_BOOK_LIST, workerDisplayList);
+    yield takeEvery(sagaActionTypes.BOOK_LIST_DISPLAY, workerDisplayList);
 }

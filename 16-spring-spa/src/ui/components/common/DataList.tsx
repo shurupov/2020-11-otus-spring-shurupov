@@ -1,6 +1,8 @@
 import React from "react";
 import * as _ from "lodash";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@material-ui/core";
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 export interface DataListProps {
     title: string;
@@ -33,6 +35,8 @@ export function DataList(props: DataListProps) {
                                     {headers[column]}
                                 </TableCell>
                             ))}
+                            <TableCell key="actions">
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -43,6 +47,10 @@ export function DataList(props: DataListProps) {
                                         {row[column]}
                                     </TableCell>
                                 ))}
+                                <TableCell key={row.id}>
+                                    <EditIcon />
+                                    <DeleteForeverIcon />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

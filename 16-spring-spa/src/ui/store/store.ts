@@ -2,9 +2,10 @@ import {applyMiddleware, compose, createStore, PreloadedState, Store} from "redu
 import {composeWithDevTools} from "redux-devtools-extension";
 import createSagaMiddleware from "redux-saga";
 import {createRootReducer} from "./reducer";
-import {displayBookListAction, watchDisplayList} from "smart/book/saga";
 import {createBrowserHistory} from "history";
 import {routerMiddleware} from "connected-react-router";
+import {watchLocationChange} from "../routing/saga";
+import {watchDisplayList} from "smart/book/saga";
 
 export const history = createBrowserHistory();
 
@@ -29,5 +30,5 @@ export default function configureStore(preloadedState: PreloadedState<any>) {
 
 export const store: Store = configureStore({});
 
+sagaMiddleware.run(watchLocationChange);
 sagaMiddleware.run(watchDisplayList);
-store.dispatch(displayBookListAction());

@@ -4,7 +4,7 @@ import {bookSlice} from "smart/book/slice";
 
 export const createRootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
-    book: bookSlice.reducer
+    book: bookSlice.reducer,
 });
 
 export type StoreState = ReturnType<typeof createRootReducer>;
