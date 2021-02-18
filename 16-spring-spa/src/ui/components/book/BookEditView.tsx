@@ -1,10 +1,11 @@
 import React, {FormEvent} from "react";
 import {
+    Button,
     Checkbox,
     FormControl,
     FormControlLabel, FormGroup,
     InputLabel,
-    MenuItem,
+    MenuItem, Paper,
     Select,
     TextField, Typography
 } from "@material-ui/core";
@@ -22,7 +23,8 @@ interface Genre {
 
 interface Author {
     id: number;
-    name: string;
+    firstName: string;
+    lastName: string;
 }
 
 export interface BookEditProps {
@@ -30,6 +32,7 @@ export interface BookEditProps {
     genres: Array<Genre>;
     authors: Array<Author>;
     updateView: Function;
+    update: Function;
 }
 
 export default class BookEditView extends React.Component<BookEditProps, Book> {
@@ -37,10 +40,12 @@ export default class BookEditView extends React.Component<BookEditProps, Book> {
     constructor(props: BookEditProps) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleSubmit(event: FormEvent) {
         event.preventDefault();
+        this.props.update();
     }
 
     handleChange(event: FormEvent<any>) {
@@ -94,27 +99,32 @@ export default class BookEditView extends React.Component<BookEditProps, Book> {
                     </Select>
                 </FormControl>
 
-                <Typography>Genres</Typography>
-                <FormGroup row>
-                    {
-                        this.props.genres.map((genre:any) => (
-                            <FormControlLabel
-                                key={genre.id}
-                                control={
-                                    <Checkbox
-                                        key={genre.id}
-                                        id={"genre" + genre.id}
-                                        checked={this.props.book.genres.includes(genre.id)}
-                                        onChange={this.handleChange}
-                                        name="genres"
-                                        color="primary"
-                                    />
-                                }
-                                label={genre.name}
-                            />
-                        ))
-                    }
-                </FormGroup>
+                <Paper variant="outlined" style={{ padding: 10, marginTop: 10 }}>
+                    <Typography>Genres</Typography>
+                    <FormGroup row>
+                        {
+                            this.props.genres.map((genre:any) => (
+                                <FormControlLabel
+                                    key={genre.id}
+                                    control={
+                                        <Checkbox
+                                            key={genre.id}
+                                            id={"genre" + genre.id}
+                                            checked={this.props.book.genres.includes(genre.id)}
+                                            onChange={this.handleChange}
+                                            name="genres"
+                                            color="primary"
+                                        />
+                                    }
+                                    label={genre.name}
+                                />
+                            ))
+                        }
+                    </FormGroup>
+                </Paper>
+                <Button variant="contained" color="primary" type="submit" style={{ marginTop: 10, float: "right" }}>
+                    Save
+                </Button>
             </form>
         );
     }

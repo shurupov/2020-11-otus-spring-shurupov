@@ -1,6 +1,7 @@
 import {Meta, Story} from "@storybook/react/types-6-0";
 import React from "react";
 import {DataList, DataListProps} from "../ui/components/common/DataList";
+import {BrowserRouter} from "react-router-dom";
 
 export default {
     title: 'Table',
@@ -9,7 +10,11 @@ export default {
     },
 } as Meta;
 
-const Template: Story<DataListProps> = (args) => <DataList {...args} />;
+const Template: Story<DataListProps> = (args) => (
+    <BrowserRouter>
+        <DataList {...args} />
+    </BrowserRouter>
+);
 
 export const TableWithoutHeaders = Template.bind({});
 TableWithoutHeaders.args = {

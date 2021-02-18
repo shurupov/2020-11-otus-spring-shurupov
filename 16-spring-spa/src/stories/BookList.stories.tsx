@@ -1,6 +1,7 @@
 import {Meta, Story} from "@storybook/react/types-6-0";
 import React from "react";
 import BookList, {BookListProps} from "../ui/components/book/BookList";
+import {BrowserRouter} from "react-router-dom";
 
 export default {
     title: 'BookList',
@@ -9,7 +10,11 @@ export default {
     },
 } as Meta;
 
-const Template: Story<BookListProps> = (args) => <BookList {...args} />;
+const Template: Story<BookListProps> = (args) => (
+    <BrowserRouter>
+        <BookList {...args} />
+    </BrowserRouter>
+);
 
 export const BookListExample = Template.bind({});
 BookListExample.args = {

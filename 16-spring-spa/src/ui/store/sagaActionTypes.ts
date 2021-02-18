@@ -1,6 +1,7 @@
 export const sagaActionTypes = {
     BOOK_LIST_DISPLAY: "saga/book/list",
-    BOOK_GET_DISPLAY:  "saga/book/get",
+    BOOK_ELEMENT_DISPLAY:  "saga/book/element",
+    BOOK_ELEMENT_UPDATE:  "saga/book/update",
 
     AUTHOR_LIST_DISPLAY: "saga/author/list",
     AUTHOR_GET_DISPLAY:  "saga/author/get",

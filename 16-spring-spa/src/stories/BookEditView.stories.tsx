@@ -24,8 +24,8 @@ BookEditExample.args = {
         {id: 3, name: "Comedy"},
     ],
     authors: [
-        {id: 1, name: "Alexander Pushkin"},
-        {id: 2, name: "Fedor Dostoevsky"},
-        {id: 3, name: "Haruki Murakami"},
+        {id: 1, firstName: "Alexander", lastName: "Pushkin"},
+        {id: 2, firstName: "Fedor", lastName: "Dostoevsky"},
+        {id: 3, firstName: "Haruki", lastName: "Murakami"},
     ]
 };

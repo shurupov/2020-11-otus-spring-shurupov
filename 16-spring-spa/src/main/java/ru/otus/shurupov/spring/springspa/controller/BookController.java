@@ -34,7 +34,9 @@ public class BookController {
 
     @PutMapping("/api/books/{id}")
     public BookResponse bookEdit(@PathVariable Long id, BookRequest bookRequest) {
+        System.out.println(bookRequest);
         Book book = bookService.update(id, bookRequest);
+        System.out.println(bookRequest);
         BookResponse bookResponse = map(book);
         return bookResponse;
     }

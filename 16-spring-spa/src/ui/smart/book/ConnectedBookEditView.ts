@@ -3,9 +3,9 @@ import BookEditView from "components/book/BookEditView";
 import {Dispatch} from "redux";
 import {bookSlice} from "smart/book/slice";
 import {Book} from "components/book/BookList";
+import {updateBookAction} from "smart/book/saga";
 
 const mapStateToProps = (storeState: any) => {
-    console.log("ConnectedBookEditView", storeState);
     return {
         book: storeState.book.element,
         genres: storeState.genre.list,
@@ -18,6 +18,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         updateView: (book: Book) => {
             dispatch(bookSlice.actions.updateElementView(book));
         },
+        update: () => {
+            dispatch(updateBookAction());
+        }
     };
 };
 

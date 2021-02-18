@@ -9,9 +9,16 @@ export const displayBookListAction = () => {
         type: sagaActionTypes.BOOK_LIST_DISPLAY,
     };
 };
+
 export const getBookAction = () => {
     return {
-        type: sagaActionTypes.BOOK_GET_DISPLAY,
+        type: sagaActionTypes.BOOK_ELEMENT_DISPLAY,
+    };
+};
+
+export const updateBookAction = () => {
+    return {
+        type: sagaActionTypes.BOOK_ELEMENT_UPDATE,
     };
 };
 
@@ -27,6 +34,8 @@ const bookIdSelector = (state: any) => {
     return parseFloat(result[1]);
 };
 
+const bookSelector = (state: any) => state.book.element;
+
 export function* workerGetBook() {
     yield put(displayAuthorListAction());
     yield put(displayGenreListAction());
@@ -41,5 +50,17 @@ export function* watchDisplayBooksList() {
 }
 
 export function* watchGetBook() {
-    yield takeEvery(sagaActionTypes.BOOK_GET_DISPLAY, workerGetBook);
+    yield takeEvery(sagaActionTypes.BOOK_ELEMENT_DISPLAY, workerGetBook);
+}
+
+export function* workerUpdateBook() {
+    const book = yield select(bookSelector);
+    yield call(fetch, "/api/books/" + book.id, {
+        method: "PUT",
+        body: JSON.stringify(book)
+    });
+}
+
+export function* watchUpdateBook() {
+    yield takeEvery(sagaActionTypes.BOOK_ELEMENT_UPDATE, workerUpdateBook);
 }

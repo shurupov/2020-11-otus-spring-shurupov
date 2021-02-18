@@ -64,7 +64,7 @@ public class BookServiceImpl implements BookService {
         book.setName(bookRequest.getName());
         Author author = authorRepository.findById(bookRequest.getAuthorId()).orElseThrow();
         book.setAuthor(author);
-        List<Genre> genres = genreRepository.findAllById(bookRequest.getGenreIds());
+        List<Genre> genres = genreRepository.findAllById(bookRequest.getGenres());
         book.setGenres(genres);
         return bookRepository.save(book);
     }
