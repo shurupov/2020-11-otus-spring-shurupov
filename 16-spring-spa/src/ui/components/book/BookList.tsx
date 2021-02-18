@@ -18,6 +18,7 @@ const headers = {id: "#", name: "Name", author: "Author", genres: "Genres"};
 export default function BookList(props: BookListProps) {
     return <DataList
         title={"Books"}
+        uriPrefix="/books/"
         columns={columns}
         headers={headers}
         data={props.books}

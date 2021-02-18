@@ -7,7 +7,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 // @ts-ignore
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
-import ESLintPlugin from "eslint-webpack-plugin";
+//import ESLintPlugin from "eslint-webpack-plugin";
 
 const config: webpack.Configuration = {
     mode: "development",
@@ -67,9 +67,9 @@ const config: webpack.Configuration = {
         new ForkTsCheckerWebpackPlugin({
             async: false
         }),
-        new ESLintPlugin({
+        /*new ESLintPlugin({
             extensions: ["js", "jsx", "ts", "tsx"],
-        }),
+        }),*/
     ],
     devtool: "inline-source-map",
     devServer: {
@@ -79,20 +79,50 @@ const config: webpack.Configuration = {
         open: true,
         hot: true,
         before: (app) => {
+            app.get('/api/genres', (req, res) => res.send([
+                {
+                    id: 1,
+                    name: 'Horror',
+                },
+                {
+                    id: 2,
+                    name: 'Drama',
+                }
+            ]));
+            app.get('/api/authors', (req, res) => res.send([
+                {
+                    id: 1,
+                    firstName: 'Alexander',
+                    lastName: 'Pushkin',
+                    name: 'Alexander Pushkin',
+                },
+                {
+                    id: 2,
+                    name: 'Fedor Dostoevsky',
+                    firstName: 'Fedor',
+                    lastName: 'Dostoevsky',
+                }
+            ]));
             app.get('/api/books', (req, res) => res.send([
                 {
-                    id: '1',
+                    id: 1,
                     name: 'The Tale about Fisherman and a Gold Fish',
                     genres: "Fairy Tale, Drama",
                     author: "Alexander Pushkin"
                 },
                 {
-                    id: '2',
+                    id: 2,
                     name: 'Player',
                     genres: "Drama",
                     author: "Fedor Dostoyevsky"
                 }
             ]));
+            app.get('/api/books/1', (req, res) => res.send({
+                id: '1',
+                name: 'The Tale about Fisherman and a Gold Fish',
+                genres: [1,2,3],
+                authorId: 1
+            }));
         }
     },
 };

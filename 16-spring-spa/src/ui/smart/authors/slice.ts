@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const bookSlice = createSlice({
-    name: "book",
+export const authorSlice = createSlice({
+    name: "author",
     initialState: {
         list: [],
         element: {
-            id: 0,
+            id: '1',
             name: "",
-            genres: [],
-            authorId: 0
+            firstName: "",
+            lastName: "",
         },
     },
     reducers: {

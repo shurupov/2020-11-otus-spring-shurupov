@@ -1,16 +1,15 @@
-import React, {ChangeEvent, FormEvent} from "react";
+import React, {FormEvent} from "react";
 import {
-    Checkbox, Chip,
+    Checkbox,
     FormControl,
     FormControlLabel, FormGroup,
-    Input,
     InputLabel,
     MenuItem,
     Select,
     TextField, Typography
 } from "@material-ui/core";
 
-interface BookEditState {
+interface Book {
     name: string;
     authorId: number;
     genres: Array<number>;
@@ -18,7 +17,7 @@ interface BookEditState {
 
 interface Genre {
     id: number;
-    title: string;
+    name: string;
 }
 
 interface Author {
@@ -27,33 +26,40 @@ interface Author {
 }
 
 export interface BookEditProps {
+    book: Book;
     genres: Array<Genre>;
     authors: Array<Author>;
-    defaultState: BookEditState;
 }
 
-export default class BookEdit extends React.Component<BookEditProps, BookEditState> {
+export default class BookEditView extends React.Component<BookEditProps, Book> {
 
-    state = this.props.defaultState;
+    constructor(props: BookEditProps) {
+        super(props);
+        this.state = this.props.book;
+        this.handleChange = this.handleChange.bind(this);
+    }
 
     handleSubmit(event: FormEvent) {
         console.log(event);
         event.preventDefault();
     }
 
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<BookEditState>, snapshot?: any) {
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<Book>, snapshot?: any) {
         console.log(this.state);
     }
 
-    handleChange = (event: FormEvent<{ value: unknown }>) => {
+    handleChange(event: FormEvent<any>) {
         const element = event.target as HTMLFormElement;
 
         if (element.name == "genres") {
             const genreId = parseFloat(element.id.substr(5));
+            console.log(genreId);
             this.setState((state) => {
                 if (element.checked && !state.genres.includes(genreId)) {
                     const genres = state.genres.slice();
+                    console.log(genres);
                     genres.push(genreId);
+                    console.log(genres);
                     return {
                         ...state,
                         genres
@@ -77,10 +83,12 @@ export default class BookEdit extends React.Component<BookEditProps, BookEditSta
 
     render() {
 
+        console.log(this.state.genres);
+        console.log(this.props.genres);
+
         return (
             <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
                 <TextField
-                    id="outlined-basic"
                     label="Name"
                     name="name"
                     variant="outlined"
@@ -93,38 +101,36 @@ export default class BookEdit extends React.Component<BookEditProps, BookEditSta
                 <FormControl variant="outlined" fullWidth margin={"normal"}>
                     <InputLabel id="demo-simple-select-outlined-label">Author</InputLabel>
                     <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
                         value={this.state.authorId}
                         name="authorId"
                         onChange={this.handleChange}
                         label="Author"
                     >
-                        {this.props.authors.map((author) => <MenuItem value={author.id}>{author.name}</MenuItem>)}
+                        {this.props.authors.map((author:any) => <MenuItem key={author.id} value={author.id}>{author.firstName + " " + author.lastName}</MenuItem>)}
                     </Select>
                 </FormControl>
 
                 <Typography>Genres</Typography>
                 <FormGroup row>
                     {
-                        this.props.genres.map((genre) => (
+                        this.props.genres.map((genre:any) => (
                             <FormControlLabel
+                                key={genre.id}
                                 control={
                                     <Checkbox
+                                        key={genre.id}
                                         id={"genre" + genre.id}
-                                        // @ts-ignore
                                         checked={this.state.genres.includes(genre.id)}
                                         onChange={this.handleChange}
                                         name="genres"
                                         color="primary"
                                     />
                                 }
-                                label={genre.title}
+                                label={genre.name}
                             />
                         ))
                     }
                 </FormGroup>
-
             </form>
         );
     }

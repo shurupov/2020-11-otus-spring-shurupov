@@ -9,6 +9,7 @@ import Crumbs from "components/common/Crumbs";
 import {store, history} from "store/store";
 import { ConnectedBookList } from 'smart/book/ConnectedBookList';
 import {ConnectedRouter} from "connected-react-router";
+import { ConnectedBookEditView } from 'smart/book/ConnectedBookEditView';
 
 interface Book {
     id: number;
@@ -26,9 +27,13 @@ export default class App extends React.Component {
                     <ConnectedRouter history={history}>
                         <NavigationPanel />
                         <Switch>
-                            <Route path="/books">
+                            <Route path="/books" exact>
                                 <Crumbs />
                                 <ConnectedBookList />
+                            </Route>
+                            <Route path="/books/:id" exact>
+                                <Crumbs />
+                                <ConnectedBookEditView />
                             </Route>
                             <Route path="/" exact>
                                 <Crumbs />

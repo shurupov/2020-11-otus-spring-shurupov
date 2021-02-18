@@ -1,11 +1,14 @@
 import React from "react";
 import * as _ from "lodash";
 import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@material-ui/core";
+import {Link} from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
+
 export interface DataListProps {
     title: string;
+    uriPrefix: string;
     columns: Array<string>;
     headers?: {[key: string]: string;};
     data: Array<any>;
@@ -48,8 +51,8 @@ export function DataList(props: DataListProps) {
                                     </TableCell>
                                 ))}
                                 <TableCell key={row.id}>
-                                    <EditIcon />
-                                    <DeleteForeverIcon />
+                                    <Link to={props.uriPrefix + row.id} style={{ color: "inherit" }}><EditIcon /></Link>
+                                    <Link to={props.uriPrefix + row.id + "/delete"} style={{ color: "inherit" }}><DeleteForeverIcon /></Link>
                                 </TableCell>
                             </TableRow>
                         ))}

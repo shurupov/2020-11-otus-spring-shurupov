@@ -5,7 +5,9 @@ import {createRootReducer} from "./reducer";
 import {createBrowserHistory} from "history";
 import {routerMiddleware} from "connected-react-router";
 import {watchLocationChange} from "../routing/saga";
-import {watchDisplayList} from "smart/book/saga";
+import {watchDisplayBooksList, watchGetBook} from "smart/book/saga";
+import {watchDisplayAuthorList} from "smart/authors/saga";
+import {watchDisplayGenreList} from "smart/genres/saga";
 
 export const history = createBrowserHistory();
 
@@ -31,4 +33,7 @@ export default function configureStore(preloadedState: PreloadedState<any>) {
 export const store: Store = configureStore({});
 
 sagaMiddleware.run(watchLocationChange);
-sagaMiddleware.run(watchDisplayList);
+sagaMiddleware.run(watchDisplayBooksList);
+sagaMiddleware.run(watchGetBook);
+sagaMiddleware.run(watchDisplayAuthorList);
+sagaMiddleware.run(watchDisplayGenreList);
