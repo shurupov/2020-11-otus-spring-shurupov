@@ -18,7 +18,7 @@ export const bookSlice = createSlice({
                 list: action.payload
             }
         },
-        get: (state, action) => {
+        updateElementView: (state, action) => {
             return {
                 ...state,
                 element: action.payload

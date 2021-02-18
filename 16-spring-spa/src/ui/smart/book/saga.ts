@@ -10,7 +10,6 @@ export const displayBookListAction = () => {
     };
 };
 export const getBookAction = () => {
-    console.log("getBookAction");
     return {
         type: sagaActionTypes.BOOK_GET_DISPLAY,
     };
@@ -34,7 +33,7 @@ export function* workerGetBook() {
     const id = yield select(bookIdSelector);
     const response = yield call(fetch, "/api/books/" + id);
     const book = yield call([response, 'json']);
-    yield put(bookSlice.actions.get(book));
+    yield put(bookSlice.actions.updateElementView(book));
 }
 
 export function* watchDisplayBooksList() {
@@ -42,6 +41,5 @@ export function* watchDisplayBooksList() {
 }
 
 export function* watchGetBook() {
-    console.log("watchGetBook");
     yield takeEvery(sagaActionTypes.BOOK_GET_DISPLAY, workerGetBook);
 }

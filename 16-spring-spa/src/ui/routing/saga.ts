@@ -10,11 +10,9 @@ export function* workerLocationChange() {
         yield put(displayBookListAction());
     } else if (/^\/books\/\d+$/.test(url)) {
         const result = url.match(/^\/books\/(\d+)$/);
-        console.log("go to book id", result[1]);
         yield put(getBookAction());
     } else if (/^\/books\/(\d+)\/delete$/.test(url)) {
         const result = url.match(/^\/books\/(\d+)\/delete$/);
-        console.log("remove book id", result[1]);
     }
 }
 

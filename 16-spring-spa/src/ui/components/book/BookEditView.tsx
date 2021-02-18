@@ -29,23 +29,18 @@ export interface BookEditProps {
     book: Book;
     genres: Array<Genre>;
     authors: Array<Author>;
+    updateView: Function;
 }
 
 export default class BookEditView extends React.Component<BookEditProps, Book> {
 
     constructor(props: BookEditProps) {
         super(props);
-        this.state = this.props.book;
         this.handleChange = this.handleChange.bind(this);
     }
 
     handleSubmit(event: FormEvent) {
-        console.log(event);
         event.preventDefault();
-    }
-
-    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<Book>, snapshot?: any) {
-        console.log(this.state);
     }
 
     handleChange(event: FormEvent<any>) {
@@ -53,39 +48,28 @@ export default class BookEditView extends React.Component<BookEditProps, Book> {
 
         if (element.name == "genres") {
             const genreId = parseFloat(element.id.substr(5));
-            console.log(genreId);
-            this.setState((state) => {
-                if (element.checked && !state.genres.includes(genreId)) {
-                    const genres = state.genres.slice();
-                    console.log(genres);
-                    genres.push(genreId);
-                    console.log(genres);
-                    return {
-                        ...state,
-                        genres
-                    }
-                }
-                if (!element.checked && state.genres.includes(genreId)) {
-                    return {
-                        ...state,
-                        genres: state.genres.filter(id => id != genreId)
-                    }
-                }
-                return {...state}
-            });
+            if (element.checked && !this.props.book.genres.includes(genreId)) {
+                const genres = this.props.book.genres.slice();
+                genres.push(genreId);
+                this.props.updateView({
+                    ...this.props.book,
+                    genres
+                });
+            } else if (!element.checked && this.props.book.genres.includes(genreId)) {
+                this.props.updateView({
+                    ...this.props.book,
+                    genres: this.props.book.genres.filter(id => id != genreId)
+                });
+            }
         } else {
-            this.setState((state) => ({
-                ...state,
+            this.props.updateView({
+                ...this.props.book,
                 [element.name]: element.value
-            }));
+            });
         }
     }
 
     render() {
-
-        console.log(this.state.genres);
-        console.log(this.props.genres);
-
         return (
             <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
                 <TextField
@@ -94,14 +78,14 @@ export default class BookEditView extends React.Component<BookEditProps, Book> {
                     variant="outlined"
                     fullWidth
                     onChange={this.handleChange}
-                    value={this.state.name}
+                    value={this.props.book.name}
                     margin={"normal"}
                 />
 
                 <FormControl variant="outlined" fullWidth margin={"normal"}>
                     <InputLabel id="demo-simple-select-outlined-label">Author</InputLabel>
                     <Select
-                        value={this.state.authorId}
+                        value={this.props.book.authorId}
                         name="authorId"
                         onChange={this.handleChange}
                         label="Author"
@@ -120,7 +104,7 @@ export default class BookEditView extends React.Component<BookEditProps, Book> {
                                     <Checkbox
                                         key={genre.id}
                                         id={"genre" + genre.id}
-                                        checked={this.state.genres.includes(genre.id)}
+                                        checked={this.props.book.genres.includes(genre.id)}
                                         onChange={this.handleChange}
                                         name="genres"
                                         color="primary"

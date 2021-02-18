@@ -6,6 +6,7 @@ import ru.otus.shurupov.spring.springspa.domain.Book;
 import ru.otus.shurupov.spring.springspa.domain.Genre;
 import ru.otus.shurupov.spring.springspa.domain.dto.BookResponse;
 import ru.otus.shurupov.spring.springspa.domain.dto.BookRequest;
+import ru.otus.shurupov.spring.springspa.domain.dto.PoorBookResponse;
 import ru.otus.shurupov.spring.springspa.service.BookService;
 
 import java.util.List;
@@ -39,9 +40,9 @@ public class BookController {
     }
 
     @GetMapping("/api/books/{id}")
-    public BookResponse bookView(@PathVariable Long id) {
+    public PoorBookResponse bookView(@PathVariable Long id) {
         Book book = bookService.getById(id);
-        BookResponse bookResponse = map(book);
+        PoorBookResponse bookResponse = poorMap(book);
         return bookResponse;
     }
 
@@ -56,6 +57,15 @@ public class BookController {
                 .name(book.getName())
                 .author(book.getAuthor().getFirstName() + " " + book.getAuthor().getLastName())
                 .genres(book.getGenres().stream().map(Genre::getName).collect(Collectors.joining(", ")))
+                .build();
+    }
+
+    private PoorBookResponse poorMap(Book book) {
+        return PoorBookResponse.builder()
+                .id(book.getId())
+                .name(book.getName())
+                .authorId(book.getAuthor().getId())
+                .genres(book.getGenres().stream().map(Genre::getId).collect(Collectors.toList()))
                 .build();
     }
 }
