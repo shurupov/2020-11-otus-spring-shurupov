@@ -57,6 +57,10 @@ export function* workerUpdateBook() {
     const book = yield select(bookSelector);
     yield call(fetch, "/api/books/" + book.id, {
         method: "PUT",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         body: JSON.stringify(book)
     });
 }
