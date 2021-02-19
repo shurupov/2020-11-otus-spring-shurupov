@@ -23,6 +23,12 @@ export const updateBookAction = () => {
     };
 };
 
+export const removeBookAction = () => {
+    return {
+        type: sagaActionTypes.BOOK_ELEMENT_REMOVE,
+    };
+};
+
 export function* workerDisplayList() {
     const response = yield call(fetch, "/api/books");
     const books = yield call([response, 'json']);
@@ -36,6 +42,7 @@ const bookIdSelector = (state: any) => {
 };
 
 const bookSelector = (state: any) => state.book.element;
+const bookToDeleteIdSelector = (state: any) => state.book.elementToDeleteId;
 
 export function* workerGetBook() {
     yield put(displayAuthorListAction());
@@ -59,8 +66,8 @@ export function* workerUpdateBook() {
     yield call(fetch, "/api/books/" + book.id, {
         method: "PUT",
         headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            "Accept": "application/json",
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(book)
     });
@@ -69,4 +76,16 @@ export function* workerUpdateBook() {
 
 export function* watchUpdateBook() {
     yield takeEvery(sagaActionTypes.BOOK_ELEMENT_UPDATE, workerUpdateBook);
+}
+
+export function* workerRemoveBook() {
+    const id = yield select(bookToDeleteIdSelector);
+    yield call(fetch, "/api/books/" + id, {
+        method: "DELETE",
+    });
+    yield put(push("/books"));
+}
+
+export function* watchRemoveBook() {
+    yield takeEvery(sagaActionTypes.BOOK_ELEMENT_REMOVE, workerRemoveBook);
 }

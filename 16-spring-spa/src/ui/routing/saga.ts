@@ -1,6 +1,7 @@
 import {put, takeEvery, select} from "redux-saga/effects";
 import {sagaActionTypes} from "store/sagaActionTypes";
-import {displayBookListAction, getBookAction} from "smart/book/saga";
+import {displayBookListAction, getBookAction, removeBookAction} from "smart/book/saga";
+import {bookSlice} from "smart/book/slice";
 
 export const pathSelector = (state: any) => state.router.location.pathname;
 
@@ -13,6 +14,9 @@ export function* workerLocationChange() {
         yield put(getBookAction());
     } else if (/^\/books\/(\d+)\/delete$/.test(url)) {
         const result = url.match(/^\/books\/(\d+)\/delete$/);
+        const id = result[1];
+        yield put(bookSlice.actions.deleteElement(id));
+        yield put(removeBookAction());
     }
 }
 

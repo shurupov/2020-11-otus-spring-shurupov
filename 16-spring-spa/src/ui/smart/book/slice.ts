@@ -10,6 +10,7 @@ export const bookSlice = createSlice({
             genres: [],
             authorId: 0
         },
+        elementToDeleteId: null
     },
     reducers: {
         list: (state, action) => {
@@ -22,6 +23,12 @@ export const bookSlice = createSlice({
             return {
                 ...state,
                 element: action.payload
+            }
+        },
+        deleteElement: (state, action) => {
+            return {
+                ...state,
+                elementToDeleteId: action.payload
             }
         },
     },

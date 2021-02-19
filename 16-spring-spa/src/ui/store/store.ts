@@ -5,7 +5,7 @@ import {createRootReducer} from "./reducer";
 import {createBrowserHistory} from "history";
 import {routerMiddleware} from "connected-react-router";
 import {watchLocationChange} from "../routing/saga";
-import {watchDisplayBooksList, watchGetBook, watchUpdateBook} from "smart/book/saga";
+import {watchDisplayBooksList, watchGetBook, watchRemoveBook, watchUpdateBook} from "smart/book/saga";
 import {watchDisplayAuthorList} from "smart/authors/saga";
 import {watchDisplayGenreList} from "smart/genres/saga";
 
@@ -38,3 +38,4 @@ sagaMiddleware.run(watchGetBook);
 sagaMiddleware.run(watchDisplayAuthorList);
 sagaMiddleware.run(watchDisplayGenreList);
 sagaMiddleware.run(watchUpdateBook);
+sagaMiddleware.run(watchRemoveBook);
