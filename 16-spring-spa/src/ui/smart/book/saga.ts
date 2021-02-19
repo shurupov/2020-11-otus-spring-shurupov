@@ -3,6 +3,7 @@ import {sagaActionTypes} from "store/sagaActionTypes";
 import {bookSlice} from "smart/book/slice";
 import {displayAuthorListAction} from "smart/authors/saga";
 import {displayGenreListAction} from "smart/genres/saga";
+import {push} from "connected-react-router";
 
 export const displayBookListAction = () => {
     return {
@@ -63,6 +64,7 @@ export function* workerUpdateBook() {
         },
         body: JSON.stringify(book)
     });
+    yield put(push("/books"));
 }
 
 export function* watchUpdateBook() {
