@@ -9,6 +9,7 @@ import {
     Select,
     TextField, Typography
 } from "@material-ui/core";
+import {EditorType} from "../../utils/EditorType";
 
 interface Book {
     name: string;
@@ -25,11 +26,6 @@ interface Author {
     id: number;
     firstName: string;
     lastName: string;
-}
-
-export enum EditorType {
-    ADD,
-    EDIT
 }
 
 export interface BookEditorProps {

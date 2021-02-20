@@ -1,9 +1,10 @@
 import {connect} from "react-redux";
-import BookEditor, {EditorType} from "components/book/BookEditor";
+import BookEditor from "components/book/BookEditor";
 import {Dispatch} from "redux";
 import {bookSlice} from "smart/book/slice";
 import {Book} from "components/book/BookList";
 import {addBookAction, updateBookAction} from "smart/book/saga";
+import {EditorType} from "../../utils/EditorType";
 
 const mapStateToProps = (storeState: any) => {
     return {

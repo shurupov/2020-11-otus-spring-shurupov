@@ -21,24 +21,24 @@ public class GenreController {
     }
 
     @PostMapping("/api/genres")
-    public Genre genreAddPost(String name) {
-        Genre genre = genreService.insert(name);
+    public Genre genreAddPost(@RequestBody Genre genre) {
+        genre = genreService.insert(genre);
         return genre;
     }
 
     @GetMapping("/api/genres/{id}")
-    public Genre genreView(@PathVariable Long id, Model model) {
+    public Genre genreView(@PathVariable Long id) {
         Genre genre = genreService.getById(id);
         return genre;
     }
 
     @PutMapping("/api/genres/{id}")
-    public Genre genreEditPost(@PathVariable Long id, String name) {
-        Genre genre = genreService.update(id, name);
+    public Genre genreEditPost(@PathVariable Long id, @RequestBody Genre genre) {
+        genre = genreService.update(id, genre);
         return genre;
     }
 
-    @DeleteMapping("/api/genres/{id}/remove")
+    @DeleteMapping("/api/genres/{id}")
     public void genreRemove(@PathVariable Long id) {
         genreService.removeById(id);
     }

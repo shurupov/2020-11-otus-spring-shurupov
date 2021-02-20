@@ -3,9 +3,9 @@ import {sagaActionTypes} from "store/sagaActionTypes";
 import {bookSlice} from "smart/book/slice";
 import {displayAuthorListAction} from "smart/authors/saga";
 import {push} from "connected-react-router";
-import {EditorType} from "components/book/BookEditor";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {openGenreListAction} from "smart/genres/saga";
+import {EditorType} from "../../utils/EditorType";
 
 export const openBookListAction = () => {
     return {

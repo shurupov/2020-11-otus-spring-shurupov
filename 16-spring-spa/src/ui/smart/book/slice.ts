@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {EditorType} from "components/book/BookEditor";
+import {EditorType} from "../../utils/EditorType";
 
 export const bookSlice = createSlice({
     name: "book",
