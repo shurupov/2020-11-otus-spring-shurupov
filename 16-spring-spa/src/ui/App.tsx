@@ -10,6 +10,7 @@ import {store, history} from "store/store";
 import { ConnectedBookList } from 'smart/book/ConnectedBookList';
 import {ConnectedRouter} from "connected-react-router";
 import { ConnectedBookEditView } from 'smart/book/ConnectedBookEditView';
+import { ConnectedCrumbs } from 'smart/breadCrumbs/ConnectedCrumbs';
 
 interface Book {
     id: number;
@@ -26,21 +27,18 @@ export default class App extends React.Component {
                 <Container maxWidth="md">
                     <ConnectedRouter history={history}>
                         <NavigationPanel />
+                        <ConnectedCrumbs />
                         <Switch>
                             <Route path="/books" exact>
-                                <Crumbs />
                                 <ConnectedBookList />
                             </Route>
                             <Route path="/books/add" exact>
-                                <Crumbs />
                                 <ConnectedBookEditView />
                             </Route>
                             <Route path="/books/:id" exact>
-                                <Crumbs />
                                 <ConnectedBookEditView />
                             </Route>
                             <Route path="/" exact>
-                                <Crumbs />
                                 <Summary counts={{
                                     books: 5,
                                     comments: 4,

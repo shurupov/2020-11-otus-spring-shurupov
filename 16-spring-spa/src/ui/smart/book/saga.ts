@@ -5,6 +5,7 @@ import {displayAuthorListAction} from "smart/authors/saga";
 import {displayGenreListAction} from "smart/genres/saga";
 import {push} from "connected-react-router";
 import {EditorType} from "components/book/BookEditView";
+import {crumbsSlice} from "smart/breadCrumbs/slice";
 
 export const openBookListAction = () => {
     return {
@@ -43,6 +44,10 @@ export const removeBookAction = () => {
 };
 
 export function* workerDisplayList() {
+    yield put(crumbsSlice.actions.setCrumbs([
+        {caption: "Home", url: "/"},
+        {caption: "Books", url: "/books"},
+    ]));
     const response = yield call(fetch, "/api/books");
     const books = yield call([response, 'json']);
     yield put(bookSlice.actions.list(books));
@@ -63,6 +68,11 @@ export function* workerOpenBook() {
     const id = yield select(bookIdSelector);
     const response = yield call(fetch, "/api/books/" + id);
     const book = yield call([response, 'json']);
+    yield put(crumbsSlice.actions.setCrumbs([
+        {caption: "Home", url: "/"},
+        {caption: "Books", url: "/books"},
+        {caption: book.name, url: ""},
+    ]));
     yield put(bookSlice.actions.updateElementView(book));
     yield put(bookSlice.actions.switchEditor(EditorType.EDIT));
 }
@@ -76,6 +86,11 @@ export function* workerOpenEmptyBook() {
         authorId: 0,
         genres: []
     }));
+    yield put(crumbsSlice.actions.setCrumbs([
+        {caption: "Home", url: "/"},
+        {caption: "Books", url: "/books"},
+        {caption: "New Book", url: ""},
+    ]));
     yield put(bookSlice.actions.switchEditor(EditorType.ADD));
 }
 
