@@ -1,6 +1,16 @@
 import React from "react";
 import * as _ from "lodash";
-import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from "@material-ui/core";
+import {
+    Button,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography
+} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -59,6 +69,13 @@ export function DataList(props: DataListProps) {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button
+                component={Link}
+                to={props.uriPrefix + "add"}
+                variant="contained"
+                color="primary"
+                style={{ marginTop: 10, marginBottom: 10, float: "right" }}
+            >Create</Button>
         </>
     );
 }

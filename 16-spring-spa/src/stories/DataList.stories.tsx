@@ -34,5 +34,6 @@ TableWithHeaders.args = {
     data: [
         { id: 1, name: "Name1", itemDescription: "Description of the first element"  },
         { id: 2, name: "Name1", itemDescription: "Description of the second element"  },
-    ]
+    ],
+    uriPrefix: "/data/",
 };

@@ -31,6 +31,10 @@ export default class App extends React.Component {
                                 <Crumbs />
                                 <ConnectedBookList />
                             </Route>
+                            <Route path="/books/add" exact>
+                                <Crumbs />
+                                <ConnectedBookEditView />
+                            </Route>
                             <Route path="/books/:id" exact>
                                 <Crumbs />
                                 <ConnectedBookEditView />

@@ -27,7 +27,7 @@ public class BookController {
     }
 
     @PostMapping("/api/books")
-    public BookResponse bookAddPost(BookRequest bookRequest) {
+    public BookResponse bookAddPost(@RequestBody BookRequest bookRequest) {
         BookResponse bookResponse = map(bookService.create(bookRequest));
         return bookResponse;
     }

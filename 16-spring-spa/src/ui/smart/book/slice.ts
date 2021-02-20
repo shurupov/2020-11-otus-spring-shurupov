@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {EditorType} from "components/book/BookEditView";
 
 export const bookSlice = createSlice({
     name: "book",
@@ -10,7 +11,8 @@ export const bookSlice = createSlice({
             genres: [],
             authorId: 0
         },
-        elementToDeleteId: null
+        elementToDeleteId: null,
+        editorType: EditorType.EDIT,
     },
     reducers: {
         list: (state, action) => {
@@ -24,6 +26,12 @@ export const bookSlice = createSlice({
                 ...state,
                 element: action.payload
             }
+        },
+        switchEditor: (state, action) => {
+            return {
+                ...state,
+                editorType: action.payload,
+            };
         },
         deleteElement: (state, action) => {
             return {

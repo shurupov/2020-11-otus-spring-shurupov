@@ -27,12 +27,18 @@ interface Author {
     lastName: string;
 }
 
+export enum EditorType {
+    ADD,
+    EDIT
+}
+
 export interface BookEditProps {
     book: Book;
     genres: Array<Genre>;
     authors: Array<Author>;
     updateView: Function;
     update: Function;
+    type: EditorType;
 }
 
 export default class BookEditView extends React.Component<BookEditProps, Book> {
@@ -45,7 +51,7 @@ export default class BookEditView extends React.Component<BookEditProps, Book> {
 
     handleSubmit(event: FormEvent) {
         event.preventDefault();
-        this.props.update();
+        this.props.update(this.props.type);
     }
 
     handleChange(event: FormEvent<any>) {
@@ -122,7 +128,7 @@ export default class BookEditView extends React.Component<BookEditProps, Book> {
                         }
                     </FormGroup>
                 </Paper>
-                <Button variant="contained" color="primary" type="submit" style={{ marginTop: 10, float: "right" }}>
+                <Button variant="contained" color="primary" type="submit" style={{ marginTop: 10, marginBottom: 10, float: "right" }}>
                     Save
                 </Button>
             </form>

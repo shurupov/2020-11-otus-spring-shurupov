@@ -5,7 +5,14 @@ import {createRootReducer} from "./reducer";
 import {createBrowserHistory} from "history";
 import {routerMiddleware} from "connected-react-router";
 import {watchLocationChange} from "../routing/saga";
-import {watchDisplayBooksList, watchGetBook, watchRemoveBook, watchUpdateBook} from "smart/book/saga";
+import {
+    watchAddBook,
+    watchDisplayBooksList,
+    watchOpenBook,
+    watchOpenEmptyBook,
+    watchRemoveBook,
+    watchUpdateBook
+} from "smart/book/saga";
 import {watchDisplayAuthorList} from "smart/authors/saga";
 import {watchDisplayGenreList} from "smart/genres/saga";
 
@@ -34,8 +41,10 @@ export const store: Store = configureStore({});
 
 sagaMiddleware.run(watchLocationChange);
 sagaMiddleware.run(watchDisplayBooksList);
-sagaMiddleware.run(watchGetBook);
+sagaMiddleware.run(watchOpenBook);
+sagaMiddleware.run(watchOpenEmptyBook);
 sagaMiddleware.run(watchDisplayAuthorList);
 sagaMiddleware.run(watchDisplayGenreList);
 sagaMiddleware.run(watchUpdateBook);
+sagaMiddleware.run(watchAddBook);
 sagaMiddleware.run(watchRemoveBook);
