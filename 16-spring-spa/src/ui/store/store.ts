@@ -15,6 +15,7 @@ import {
 } from "smart/book/saga";
 import {watchDisplayAuthorList} from "smart/authors/saga";
 import {watchDisplayGenreList} from "smart/genres/saga";
+import {watchSummary} from "smart/summary/saga";
 
 export const history = createBrowserHistory();
 
@@ -40,6 +41,9 @@ export default function configureStore(preloadedState: PreloadedState<any>) {
 export const store: Store = configureStore({});
 
 sagaMiddleware.run(watchLocationChange);
+
+sagaMiddleware.run(watchSummary);
+
 sagaMiddleware.run(watchDisplayBooksList);
 sagaMiddleware.run(watchOpenBook);
 sagaMiddleware.run(watchOpenEmptyBook);

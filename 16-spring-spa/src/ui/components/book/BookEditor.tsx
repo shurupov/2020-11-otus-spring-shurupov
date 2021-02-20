@@ -32,7 +32,7 @@ export enum EditorType {
     EDIT
 }
 
-export interface BookEditProps {
+export interface BookEditorProps {
     book: Book;
     genres: Array<Genre>;
     authors: Array<Author>;
@@ -41,9 +41,9 @@ export interface BookEditProps {
     type: EditorType;
 }
 
-export default class BookEditView extends React.Component<BookEditProps, Book> {
+export default class BookEditor extends React.Component<BookEditorProps, Book> {
 
-    constructor(props: BookEditProps) {
+    constructor(props: BookEditorProps) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);

@@ -3,14 +3,13 @@ import { Provider } from "react-redux";
 import {Container} from "@material-ui/core";
 import 'fontsource-roboto';
 import {Route, Switch} from "react-router-dom";
-import Summary from "components/Summary";
 import NavigationPanel from "components/common/NavigationPanel";
-import Crumbs from "components/common/Crumbs";
 import {store, history} from "store/store";
 import { ConnectedBookList } from 'smart/book/ConnectedBookList';
 import {ConnectedRouter} from "connected-react-router";
-import { ConnectedBookEditView } from 'smart/book/ConnectedBookEditView';
+import { ConnectedBookEditor } from 'smart/book/ConnectedBookEditor';
 import { ConnectedCrumbs } from 'smart/breadCrumbs/ConnectedCrumbs';
+import { ConnectedSummary } from 'smart/summary/ConnectedSummary';
 
 interface Book {
     id: number;
@@ -33,18 +32,13 @@ export default class App extends React.Component {
                                 <ConnectedBookList />
                             </Route>
                             <Route path="/books/add" exact>
-                                <ConnectedBookEditView />
+                                <ConnectedBookEditor />
                             </Route>
                             <Route path="/books/:id" exact>
-                                <ConnectedBookEditView />
+                                <ConnectedBookEditor />
                             </Route>
                             <Route path="/" exact>
-                                <Summary counts={{
-                                    books: 5,
-                                    comments: 4,
-                                    authors: 6,
-                                    genres: 8
-                                }} />
+                                <ConnectedSummary />
                             </Route>
                         </Switch>
                     </ConnectedRouter>

@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import BookEditView, {EditorType} from "components/book/BookEditView";
+import BookEditor, {EditorType} from "components/book/BookEditor";
 import {Dispatch} from "redux";
 import {bookSlice} from "smart/book/slice";
 import {Book} from "components/book/BookList";
@@ -30,4 +30,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 };
 
 //@ts-ignore
-export const ConnectedBookEditView = connect(mapStateToProps, mapDispatchToProps)(BookEditView);
+export const ConnectedBookEditor = connect(mapStateToProps, mapDispatchToProps)(BookEditor);

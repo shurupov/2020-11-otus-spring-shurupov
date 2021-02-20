@@ -1,15 +1,15 @@
 import {Meta, Story} from "@storybook/react/types-6-0";
 import React from "react";
-import BookEditView, {BookEditProps} from "../ui/components/book/BookEditView";
+import BookEditor, {BookEditorProps} from "../ui/components/book/BookEditor";
 
 export default {
     title: 'BookEditView',
-    component: BookEditView,
+    component: BookEditor,
     argTypes: {
     },
 } as Meta;
 
-const Template: Story<BookEditProps> = (args) => <BookEditView {...args} />;
+const Template: Story<BookEditorProps> = (args) => <BookEditor {...args} />;
 
 export const BookEditExample = Template.bind({});
 BookEditExample.args = {

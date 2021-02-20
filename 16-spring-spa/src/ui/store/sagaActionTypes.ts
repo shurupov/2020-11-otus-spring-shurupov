@@ -1,4 +1,7 @@
 export const sagaActionTypes = {
+
+    SUMMARY_DISPLAY: "saga/summary",
+
     BOOK_LIST_DISPLAY: "saga/book/list",
     BOOK_ELEMENT_OPEN:  "saga/book/open",
     BOOK_ELEMENT_OPEN_EMPTY:  "saga/book/open/empty",
