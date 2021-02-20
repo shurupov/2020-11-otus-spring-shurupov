@@ -1,13 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {EditorType} from "components/book/BookEditor";
 
 export const genreSlice = createSlice({
     name: "genre",
     initialState: {
         list: [],
         element: {
-            id: '1',
+            id: 0,
             name: "",
         },
+        elementToDeleteId: null,
+        editorType: EditorType.EDIT,
     },
     reducers: {
         list: (state, action) => {
@@ -16,10 +19,22 @@ export const genreSlice = createSlice({
                 list: action.payload
             }
         },
-        get: (state, action) => {
+        openElement: (state, action) => {
             return {
                 ...state,
                 element: action.payload
+            }
+        },
+        switchEditor: (state, action) => {
+            return {
+                ...state,
+                editorType: action.payload,
+            };
+        },
+        deleteElement: (state, action) => {
+            return {
+                ...state,
+                elementToDeleteId: action.payload
             }
         },
     },

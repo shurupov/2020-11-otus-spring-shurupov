@@ -11,6 +11,6 @@ export const createRootReducer = (history: any) => combineReducers({
     crumbs: crumbsSlice.reducer,
     summary: summarySlice.reducer,
     book: bookSlice.reducer,
-    author: authorSlice.reducer,
     genre: genreSlice.reducer,
+    author: authorSlice.reducer,
 });

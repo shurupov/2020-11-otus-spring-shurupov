@@ -10,6 +10,7 @@ import {ConnectedRouter} from "connected-react-router";
 import { ConnectedBookEditor } from 'smart/book/ConnectedBookEditor';
 import { ConnectedCrumbs } from 'smart/breadCrumbs/ConnectedCrumbs';
 import { ConnectedSummary } from 'smart/summary/ConnectedSummary';
+import {ConnectedGenreList} from "smart/genres/ConnectedGenreList";
 
 interface Book {
     id: number;
@@ -28,18 +29,16 @@ export default class App extends React.Component {
                         <NavigationPanel />
                         <ConnectedCrumbs />
                         <Switch>
-                            <Route path="/books" exact>
-                                <ConnectedBookList />
-                            </Route>
-                            <Route path="/books/add" exact>
-                                <ConnectedBookEditor />
-                            </Route>
-                            <Route path="/books/:id" exact>
-                                <ConnectedBookEditor />
-                            </Route>
-                            <Route path="/" exact>
-                                <ConnectedSummary />
-                            </Route>
+                            <Route path="/" exact component={ConnectedSummary} />
+
+                            <Route path="/books" exact component={ConnectedBookList} />
+                            <Route path="/books/add" exact component={ConnectedBookEditor} />
+                            <Route path="/books/:id" exact component={ConnectedBookEditor} />
+
+                            <Route path="/genres" exact component={ConnectedGenreList} />
+                            {/*<Route path="/books/add" exact component={ConnectedBookEditor} />*/}
+                            {/*<Route path="/books/:id" exact component={ConnectedBookEditor} />*/}
+
                         </Switch>
                     </ConnectedRouter>
                 </Container>

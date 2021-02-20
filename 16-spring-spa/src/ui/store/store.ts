@@ -52,3 +52,5 @@ sagaMiddleware.run(watchDisplayGenreList);
 sagaMiddleware.run(watchUpdateBook);
 sagaMiddleware.run(watchAddBook);
 sagaMiddleware.run(watchRemoveBook);
+
+sagaMiddleware.run(watchDisplayGenreList);

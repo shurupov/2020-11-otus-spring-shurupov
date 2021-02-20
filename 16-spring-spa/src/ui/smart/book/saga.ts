@@ -2,10 +2,10 @@ import {call, put, select, takeEvery} from "redux-saga/effects";
 import {sagaActionTypes} from "store/sagaActionTypes";
 import {bookSlice} from "smart/book/slice";
 import {displayAuthorListAction} from "smart/authors/saga";
-import {displayGenreListAction} from "smart/genres/saga";
 import {push} from "connected-react-router";
 import {EditorType} from "components/book/BookEditor";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
+import {openGenreListAction} from "smart/genres/saga";
 
 export const openBookListAction = () => {
     return {
@@ -64,7 +64,7 @@ const bookToDeleteIdSelector = (state: any) => state.book.elementToDeleteId;
 
 export function* workerOpenBook() {
     yield put(displayAuthorListAction());
-    yield put(displayGenreListAction());
+    yield put(openGenreListAction());
     const id = yield select(bookIdSelector);
     const response = yield call(fetch, "/api/books/" + id);
     const book = yield call([response, 'json']);
@@ -73,14 +73,14 @@ export function* workerOpenBook() {
         {caption: "Books", url: "/books"},
         {caption: book.name, url: ""},
     ]));
-    yield put(bookSlice.actions.updateElementView(book));
+    yield put(bookSlice.actions.openElement(book));
     yield put(bookSlice.actions.switchEditor(EditorType.EDIT));
 }
 
 export function* workerOpenEmptyBook() {
     yield put(displayAuthorListAction());
-    yield put(displayGenreListAction());
-    yield put(bookSlice.actions.updateElementView({
+    yield put(openGenreListAction());
+    yield put(bookSlice.actions.openElement({
         id: null,
         name: "",
         authorId: 0,

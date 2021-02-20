@@ -17,7 +17,7 @@ const mapStateToProps = (storeState: any) => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         updateView: (book: Book) => {
-            dispatch(bookSlice.actions.updateElementView(book));
+            dispatch(bookSlice.actions.openElement(book));
         },
         update: (type: EditorType) => {
             if (type == EditorType.EDIT) {
