@@ -11,7 +11,7 @@ export interface SummaryProps {
 const icons: {[key: string]: React.ReactElement} = {
     books: <MenuBook />,
     comments: <Comment />,
-    author: <PermIdentity />,
+    authors: <PermIdentity />,
     genres: <Movie />,
 };
 
@@ -19,7 +19,7 @@ export default class Summary extends React.Component<SummaryProps> {
     render() {
         return (
             <List component="nav">
-                { Object.keys(this.props.counts).map((key) => (
+                { ["books", "authors", "genres", "comments"].map((key) => (
                     <ListItem
                         key={key}
                         component={Link}
