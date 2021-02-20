@@ -1,7 +1,7 @@
 import {call, put, select, takeEvery} from "redux-saga/effects";
 import {sagaActionTypes} from "store/sagaActionTypes";
 import {bookSlice} from "smart/book/slice";
-import {displayAuthorListAction} from "smart/authors/saga";
+import {openAuthorListAction} from "smart/authors/saga";
 import {push} from "connected-react-router";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {openGenreListAction} from "smart/genres/saga";
@@ -63,7 +63,7 @@ const bookSelector = (state: any) => state.book.element;
 const bookToDeleteIdSelector = (state: any) => state.book.elementToDeleteId;
 
 export function* workerOpenBook() {
-    yield put(displayAuthorListAction());
+    yield put(openAuthorListAction());
     yield put(openGenreListAction());
     const id = yield select(bookIdSelector);
     const response = yield call(fetch, "/api/books/" + id);
@@ -78,7 +78,7 @@ export function* workerOpenBook() {
 }
 
 export function* workerOpenEmptyBook() {
-    yield put(displayAuthorListAction());
+    yield put(openAuthorListAction());
     yield put(openGenreListAction());
     yield put(bookSlice.actions.openElement({
         id: null,

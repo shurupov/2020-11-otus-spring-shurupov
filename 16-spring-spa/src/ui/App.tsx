@@ -12,6 +12,8 @@ import { ConnectedCrumbs } from 'smart/breadCrumbs/ConnectedCrumbs';
 import { ConnectedSummary } from 'smart/summary/ConnectedSummary';
 import {ConnectedGenreList} from "smart/genres/ConnectedGenreList";
 import {ConnectedGenreEditor} from "smart/genres/ConnectedGenreEditor";
+import {ConnectedAuthorList} from "smart/authors/ConnectedAuthorList";
+import {ConnectedAuthorEditor} from "smart/authors/ConnectedAuthorEditor";
 
 interface Book {
     id: number;
@@ -39,6 +41,10 @@ export default class App extends React.Component {
                             <Route path="/genres" exact component={ConnectedGenreList} />
                             <Route path="/books/add" exact component={ConnectedGenreEditor} />
                             <Route path="/genres/:id" exact component={ConnectedGenreEditor} />
+
+                            <Route path="/authors" exact component={ConnectedAuthorList} />
+                            <Route path="/authors/add" exact component={ConnectedAuthorEditor} />
+                            <Route path="/authors/:id" exact component={ConnectedAuthorEditor} />
 
                         </Switch>
                     </ConnectedRouter>

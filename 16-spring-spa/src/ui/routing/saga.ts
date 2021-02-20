@@ -5,6 +5,8 @@ import {bookSlice} from "smart/book/slice";
 import {summaryAction} from "smart/summary/saga";
 import {openEmptyGenreAction, openGenreAction, openGenreListAction, removeGenreAction} from "smart/genres/saga";
 import {genreSlice} from "smart/genres/slice";
+import {authorSlice} from "smart/authors/slice";
+import {openAuthorAction, openAuthorListAction, openEmptyAuthorAction, removeAuthorAction} from "smart/authors/saga";
 
 export const pathSelector = (state: any) => state.router.location.pathname;
 
@@ -34,7 +36,20 @@ export function* workerLocationChange() {
         const id = result[1];
         yield put(genreSlice.actions.deleteElement(id));
         yield put(removeGenreAction());
-    }
+    } else
+
+    if (url == "/authors") {
+        yield put(openAuthorListAction());
+    } else if (/^\/authors\/\d+$/.test(url)) {
+        yield put(openAuthorAction());
+    } else if (url == "/authors/add") {
+        yield put(openEmptyAuthorAction());
+    } else if (/^\/authors\/(\d+)\/delete$/.test(url)) {
+        const result = url.match(/^\/authors\/(\d+)\/delete$/);
+        const id = result[1];
+        yield put(authorSlice.actions.deleteElement(id));
+        yield put(removeAuthorAction());
+    } else
 
     if (url == "/") {
         yield put(summaryAction());

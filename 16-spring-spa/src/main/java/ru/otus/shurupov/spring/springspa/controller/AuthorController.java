@@ -20,7 +20,7 @@ public class AuthorController {
     }
 
     @PostMapping("/api/authors")
-    public Author authorAddPost(Author author) {
+    public Author authorAddPost(@RequestBody Author author) {
         author = authorService.save(author);
         return author;
     }
@@ -32,7 +32,7 @@ public class AuthorController {
     }
 
     @PutMapping("/api/authors/{id}")
-    public Author bookEditPost(@PathVariable Long id, Author author) {
+    public Author bookEditPost(@PathVariable Long id, @RequestBody Author author) {
         author.setId(id);
         Author updated = authorService.save(author);
         return updated;

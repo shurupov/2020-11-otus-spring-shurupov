@@ -13,7 +13,13 @@ import {
     watchRemoveBook,
     watchUpdateBook
 } from "smart/book/saga";
-import {watchDisplayAuthorList} from "smart/authors/saga";
+import {
+    watchAddAuthor,
+    watchDisplayAuthorList, watchOpenAuthor,
+    watchOpenEmptyAuthor,
+    watchRemoveAuthor,
+    watchUpdateAuthor
+} from "smart/authors/saga";
 import {
     watchAddGenre,
     watchDisplayGenreList,
@@ -65,3 +71,8 @@ sagaMiddleware.run(watchAddGenre);
 sagaMiddleware.run(watchRemoveGenre);
 
 sagaMiddleware.run(watchDisplayAuthorList);
+sagaMiddleware.run(watchOpenAuthor);
+sagaMiddleware.run(watchOpenEmptyAuthor);
+sagaMiddleware.run(watchUpdateAuthor);
+sagaMiddleware.run(watchAddAuthor);
+sagaMiddleware.run(watchRemoveAuthor);

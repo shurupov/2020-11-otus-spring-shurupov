@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import {EditorType} from "../../utils/EditorType";
 
 export const authorSlice = createSlice({
     name: "author",
@@ -10,6 +11,8 @@ export const authorSlice = createSlice({
             firstName: "",
             lastName: "",
         },
+        elementToDeleteId: null,
+        editorType: EditorType.EDIT,
     },
     reducers: {
         list: (state, action) => {
@@ -18,10 +21,22 @@ export const authorSlice = createSlice({
                 list: action.payload
             }
         },
-        get: (state, action) => {
+        openElement: (state, action) => {
             return {
                 ...state,
                 element: action.payload
+            }
+        },
+        switchEditor: (state, action) => {
+            return {
+                ...state,
+                editorType: action.payload,
+            };
+        },
+        deleteElement: (state, action) => {
+            return {
+                ...state,
+                elementToDeleteId: action.payload
             }
         },
     },

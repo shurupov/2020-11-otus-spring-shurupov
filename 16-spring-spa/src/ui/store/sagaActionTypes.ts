@@ -18,6 +18,10 @@ export const sagaActionTypes = {
     GENRE_ELEMENT_ADD:         "saga/genre/add",
     GENRE_ELEMENT_REMOVE:      "saga/genre/remove",
 
-    AUTHOR_LIST_DISPLAY: "saga/author/list",
-    AUTHOR_GET_DISPLAY:  "saga/author/get",
+    AUTHOR_LIST_DISPLAY:        "saga/author/list",
+    AUTHOR_ELEMENT_OPEN:        "saga/author/open",
+    AUTHOR_ELEMENT_OPEN_EMPTY:  "saga/author/open/empty",
+    AUTHOR_ELEMENT_UPDATE:      "saga/author/update",
+    AUTHOR_ELEMENT_ADD:         "saga/author/add",
+    AUTHOR_ELEMENT_REMOVE:      "saga/author/remove",
 };
