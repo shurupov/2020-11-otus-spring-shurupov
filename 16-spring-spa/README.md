@@ -50,3 +50,6 @@ Use Spring, REST and SPA.
 
 ## Command to start the application
 `java -jar target/16-spring-spa-1.0.jar`
+
+## Command to build and start
+`mvn spring-boot:run`
