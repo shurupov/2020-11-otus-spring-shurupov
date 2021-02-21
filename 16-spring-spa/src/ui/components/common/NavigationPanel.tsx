@@ -23,7 +23,6 @@ export default function NavigationPanel() {
             <Toolbar>
                 { menuItem("Home", "/", true) }
                 { menuItem("Books", "/books") }
-                { menuItem("Comments", "/comments") }
                 { menuItem("Authors", "/authors") }
                 { menuItem("Genres", "/genres") }
             </Toolbar>

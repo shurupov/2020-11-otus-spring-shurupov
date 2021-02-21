@@ -5,20 +5,33 @@ Implement CRUD Shell application of book library with entities: Book, BookCommen
 Use Spring, REST and SPA.
 
 ## Used
-- Spring boot
-- Annotation-based configuration
-- Lombok
-- YML application configuration
-- Postgresql database for production
-- H2 Embedded database for tests
-- JPA
-- Spring Data JPA
-- Liquibase
-- JUnit 5
-- Mockito
-- AssertJ
-- Hamcrest
-- @WebMvcTest annotation in tests
+- Backend
+    - Spring boot
+    - Annotation-based configuration
+    - Lombok
+    - YML application configuration
+    - Postgresql database for production
+    - H2 Embedded database for tests
+    - JPA
+    - Spring Data JPA
+    - Liquibase
+    - JUnit 5
+    - Mockito
+    - AssertJ
+    - Hamcrest
+    - @WebMvcTest annotation in tests
+- Frontend
+    - npm, webpack, babel
+    - TypeScript
+    - React.js
+    - Redux
+    - @reduxjs/toolkit
+    - redux-saga
+    - Redux Router
+    - connected-react-router
+    - material-ui
+    - Storybook
+    
 
 ## Command to init postgres container image and start it (You need to have docker installed)
 `docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=springpassword -e POSTGRES_USER=springuser -e POSTGRES_DB=library postgres`

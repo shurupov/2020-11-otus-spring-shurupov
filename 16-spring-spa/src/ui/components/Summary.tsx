@@ -24,7 +24,11 @@ export default class Summary extends React.Component<SummaryProps> {
                         key={key}
                         component={Link}
                         button
-                        to={"/" + key}
+                        to={
+                            key == "comments"
+                                ? "/"
+                                : "/" + key
+                        }
                         style={{ textDecoration: "none", color: "inherit" }}
                     >
                         <ListItemAvatar>
