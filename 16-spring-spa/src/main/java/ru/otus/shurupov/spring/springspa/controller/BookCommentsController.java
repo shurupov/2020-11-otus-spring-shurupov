@@ -7,6 +7,7 @@ import ru.otus.shurupov.spring.springspa.domain.dto.BookCommentDto;
 import ru.otus.shurupov.spring.springspa.service.BookCommentService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,40 +15,36 @@ public class BookCommentsController {
 
     private final BookCommentService bookCommentService;
 
-    @GetMapping("/api/comments")
-    public List<BookComment> bookList() {
-        List<BookComment> comments = bookCommentService.getAll();
-        return comments;
+    @GetMapping("/api/books/{bookId}/comments")
+    public List<BookCommentDto> bookList(@PathVariable Long bookId) {
+        List<BookComment> comments = bookCommentService.getBookComments(bookId);
+        return comments.stream().map(this::map).collect(Collectors.toList());
     }
 
-    @PostMapping("/api/comments")
-    public BookCommentDto commentAddPost(BookCommentDto bookCommentDto) {
-        BookComment comment = bookCommentService.create(bookCommentDto);
-        BookCommentDto result = map(comment);
-        return result;
+    @PostMapping("/api/books/{bookId}/comments")
+    public void commentAddPost(@PathVariable Long bookId, @RequestBody BookCommentDto bookCommentDto) {
+        bookCommentService.create(bookId, bookCommentDto);
     }
 
-    @GetMapping("/api/comments/{id}")
-    public BookCommentDto commentView(@PathVariable Long id) {
+    @GetMapping("/api/books/{bookId}/comments/{id}")
+    public BookCommentDto commentView(@PathVariable Long bookId, @PathVariable Long id) {
         BookComment bookComment = bookCommentService.getById(id);
         BookCommentDto bookCommentDto = map(bookComment);
         return bookCommentDto;
     }
 
-    @PutMapping("/api/comments/{id}")
-    public String commentEditPost(@PathVariable Long id, BookCommentDto bookCommentDto) {
+    @PutMapping("/api/books/{bookId}/comments/{id}")
+    public void commentEditPost(@PathVariable Long bookId, @PathVariable Long id, @RequestBody BookCommentDto bookCommentDto) {
         bookCommentDto.setId(id);
-        BookComment bookComment = bookCommentService.update(bookCommentDto);
-        return "redirect:/comments";
+        bookCommentService.update(bookCommentDto);
     }
 
-    @DeleteMapping("/api/comments/{id}")
+    @DeleteMapping("/api/books/{bookId}/comments/{id}")
     public void bookRemove(@PathVariable Long id) {
         bookCommentService.removeById(id);
     }
 
     public BookCommentDto map(BookComment bookComment) {
-        BookCommentDto bookCommentDto = new BookCommentDto(bookComment.getId(), bookComment.getText(), bookComment.getBook().getId());
-        return bookCommentDto;
+        return new BookCommentDto(bookComment.getId(), bookComment.getText());
     }
 }

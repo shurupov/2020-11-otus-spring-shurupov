@@ -11,6 +11,13 @@ export const sagaActionTypes = {
     BOOK_ELEMENT_ADD:         "saga/book/add",
     BOOK_ELEMENT_REMOVE:      "saga/book/remove",
 
+    COMMENT_LIST_DISPLAY:        "saga/comment/list",
+    COMMENT_ELEMENT_OPEN:        "saga/comment/open",
+    COMMENT_ELEMENT_OPEN_EMPTY:  "saga/comment/open/empty",
+    COMMENT_ELEMENT_UPDATE:      "saga/comment/update",
+    COMMENT_ELEMENT_ADD:         "saga/comment/add",
+    COMMENT_ELEMENT_REMOVE:      "saga/comment/remove",
+
     GENRE_LIST_DISPLAY:        "saga/genre/list",
     GENRE_ELEMENT_OPEN:        "saga/genre/open",
     GENRE_ELEMENT_OPEN_EMPTY:  "saga/genre/open/empty",

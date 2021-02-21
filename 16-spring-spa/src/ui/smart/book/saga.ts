@@ -4,7 +4,7 @@ import {bookSlice} from "smart/book/slice";
 import {openAuthorListAction} from "smart/authors/saga";
 import {push} from "connected-react-router";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
-import {openGenreListAction} from "smart/genres/saga";
+import {openGenreListAction} from "smart/genre/saga";
 import {EditorType} from "../../utils/EditorType";
 
 export const openBookListAction = () => {
@@ -59,7 +59,7 @@ const bookIdSelector = (state: any) => {
     return parseFloat(result[1]);
 };
 
-const bookSelector = (state: any) => state.book.element;
+export const bookSelector = (state: any) => state.book.element;
 const bookToDeleteIdSelector = (state: any) => state.book.elementToDeleteId;
 
 export function* workerOpenBook() {

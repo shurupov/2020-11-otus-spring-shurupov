@@ -3,8 +3,8 @@ import GenreEditor from "components/genre/GenreEditor";
 import {Dispatch} from "redux";
 import {EditorType} from "../../utils/EditorType";
 import {Genre} from "components/genre/GenreList";
-import {genreSlice} from "smart/genres/slice";
-import {addGenreAction, updateGenreAction} from "smart/genres/saga";
+import {genreSlice} from "smart/genre/slice";
+import {addGenreAction, updateGenreAction} from "smart/genre/saga";
 
 const mapStateToProps = (storeState: any) => {
     return {

@@ -26,8 +26,15 @@ import {
     watchOpenEmptyGenre,
     watchOpenGenre, watchRemoveGenre,
     watchUpdateGenre
-} from "smart/genres/saga";
+} from "smart/genre/saga";
 import {watchSummary} from "smart/summary/saga";
+import {
+    watchAddComment,
+    watchDisplayCommentList,
+    watchOpenComment,
+    watchOpenEmptyComment, watchRemoveComment,
+    watchUpdateComment
+} from "smart/comment/saga";
 
 export const history = createBrowserHistory();
 
@@ -62,6 +69,13 @@ sagaMiddleware.run(watchOpenEmptyBook);
 sagaMiddleware.run(watchUpdateBook);
 sagaMiddleware.run(watchAddBook);
 sagaMiddleware.run(watchRemoveBook);
+
+sagaMiddleware.run(watchDisplayCommentList);
+sagaMiddleware.run(watchOpenComment);
+sagaMiddleware.run(watchOpenEmptyComment);
+sagaMiddleware.run(watchUpdateComment);
+sagaMiddleware.run(watchAddComment);
+sagaMiddleware.run(watchRemoveComment);
 
 sagaMiddleware.run(watchDisplayGenreList);
 sagaMiddleware.run(watchOpenGenre);

@@ -67,7 +67,7 @@ export function* workerOpenAuthor() {
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
         {caption: "Authors", url: "/authors"},
-        {caption: author.name, url: ""},
+        {caption: author.firstName + " " + author.lastName, url: ""},
     ]));
     yield put(authorSlice.actions.openElement(author));
     yield put(authorSlice.actions.switchEditor(EditorType.EDIT));

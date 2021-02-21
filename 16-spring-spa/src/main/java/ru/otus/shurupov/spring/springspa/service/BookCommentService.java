@@ -8,8 +8,8 @@ import java.util.List;
 public interface BookCommentService {
     long count();
     BookComment getById(long id);
-    BookComment create(BookCommentDto bookCommentDto);
+    BookComment create(Long bookId, BookCommentDto bookCommentDto);
     BookComment update(BookCommentDto bookCommentDto);
-    List<BookComment> getAll();
+    List<BookComment> getBookComments(Long bookId);
     void removeById(long id);
 }

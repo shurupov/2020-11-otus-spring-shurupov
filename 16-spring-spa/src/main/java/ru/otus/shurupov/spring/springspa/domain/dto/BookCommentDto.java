@@ -8,5 +8,4 @@ import lombok.Data;
 public class BookCommentDto {
     private Long id;
     private String text;
-    private Long bookId;
 }

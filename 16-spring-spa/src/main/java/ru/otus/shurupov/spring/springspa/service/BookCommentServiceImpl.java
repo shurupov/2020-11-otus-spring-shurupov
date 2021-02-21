@@ -31,31 +31,30 @@ public class BookCommentServiceImpl implements BookCommentService {
 
     @Override
     @Transactional
-    public BookComment create(BookCommentDto bookCommentDto) {
-        return save(new BookComment(), bookCommentDto);
+    public BookComment create(Long bookId, BookCommentDto bookCommentDto) {
+        BookComment bookComment = new BookComment();
+        bookComment.setText(bookCommentDto.getText());
+        Book book = bookRepository.findById(bookId).orElseThrow();
+        bookComment.setBook(book);
+        return bookCommentRepository.save(bookComment);
     }
 
     @Override
+    @Transactional
     public BookComment update(BookCommentDto bookCommentDto) {
         BookComment bookComment = bookCommentRepository.findById(bookCommentDto.getId()).orElseThrow();
-        return save(bookComment, bookCommentDto);
+        bookComment.setText(bookCommentDto.getText());
+        return bookCommentRepository.save(bookComment);
     }
 
     @Override
-    public List<BookComment> getAll() {
-        return bookCommentRepository.findAll(Sort.by("id"));
+    public List<BookComment> getBookComments(Long bookId) {
+        return bookCommentRepository.getAllByBookId(bookId, Sort.by("id"));
     }
 
     @Override
     @Transactional
     public void removeById(long id) {
         bookCommentRepository.deleteById(id);
-    }
-
-    private BookComment save(BookComment bookComment, BookCommentDto bookCommentDto) {
-        bookComment.setText(bookCommentDto.getText());
-        Book book = bookRepository.findById(bookCommentDto.getBookId()).orElseThrow();
-        bookComment.setBook(book);
-        return bookCommentRepository.save(bookComment);
     }
 }

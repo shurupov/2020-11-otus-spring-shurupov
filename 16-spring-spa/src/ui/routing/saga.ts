@@ -3,10 +3,17 @@ import {sagaActionTypes} from "store/sagaActionTypes";
 import {openBookListAction, openBookAction, openEmptyBookAction, removeBookAction} from "smart/book/saga";
 import {bookSlice} from "smart/book/slice";
 import {summaryAction} from "smart/summary/saga";
-import {openEmptyGenreAction, openGenreAction, openGenreListAction, removeGenreAction} from "smart/genres/saga";
-import {genreSlice} from "smart/genres/slice";
+import {openEmptyGenreAction, openGenreAction, openGenreListAction, removeGenreAction} from "smart/genre/saga";
+import {genreSlice} from "smart/genre/slice";
 import {authorSlice} from "smart/authors/slice";
 import {openAuthorAction, openAuthorListAction, openEmptyAuthorAction, removeAuthorAction} from "smart/authors/saga";
+import {
+    openCommentAction,
+    openCommentListAction,
+    openEmptyCommentAction,
+    removeCommentAction
+} from "smart/comment/saga";
+import {commentSlice} from "smart/comment/slice";
 
 export const pathSelector = (state: any) => state.router.location.pathname;
 
@@ -18,11 +25,23 @@ export function* workerLocationChange() {
         yield put(openEmptyBookAction());
     } else if (/^\/books\/\d+$/.test(url)) {
         yield put(openBookAction());
+        yield put(openCommentListAction());
     } else if (/^\/books\/(\d+)\/delete$/.test(url)) {
         const result = url.match(/^\/books\/(\d+)\/delete$/);
         const id = result[1];
         yield put(bookSlice.actions.deleteElement(id));
         yield put(removeBookAction());
+    } else
+
+    if (/^\/books\/\d+\/comments\/\d+$/.test(url)) {
+        yield put(openCommentAction());
+    } else if ( /^\/books\/\d+\/comments\/add$/.test(url)) {
+        yield put(openEmptyCommentAction());
+    } else if (/^\/books\/\d+\/comments\/(\d+)\/delete$/.test(url)) {
+        const result = url.match(/^\/books\/\d+\/comments\/(\d+)\/delete$/);
+        const id = result[1];
+        yield put(commentSlice.actions.deleteElement(id));
+        yield put(removeCommentAction());
     } else
 
     if (url == "/genres") {

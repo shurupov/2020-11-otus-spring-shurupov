@@ -38,7 +38,7 @@ export function DataList(props: DataListProps) {
 
     return (
         <>
-            <Typography variant="h3" component="h3">{props.title}</Typography>
+            <Typography variant="h3" component="h4">{props.title}</Typography>
             <TableContainer component={Paper}>
                 <Table style={{minWidth: 650}} size="medium">
                     <TableHead>

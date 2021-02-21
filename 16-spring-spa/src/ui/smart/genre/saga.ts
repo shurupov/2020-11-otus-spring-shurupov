@@ -1,6 +1,6 @@
 import {call, put, select, takeEvery} from "redux-saga/effects";
 import {sagaActionTypes} from "store/sagaActionTypes";
-import {genreSlice} from "smart/genres/slice";
+import {genreSlice} from "smart/genre/slice";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";

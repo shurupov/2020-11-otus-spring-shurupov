@@ -10,10 +10,12 @@ import {ConnectedRouter} from "connected-react-router";
 import { ConnectedBookEditor } from 'smart/book/ConnectedBookEditor';
 import { ConnectedCrumbs } from 'smart/breadCrumbs/ConnectedCrumbs';
 import { ConnectedSummary } from 'smart/summary/ConnectedSummary';
-import {ConnectedGenreList} from "smart/genres/ConnectedGenreList";
-import {ConnectedGenreEditor} from "smart/genres/ConnectedGenreEditor";
+import {ConnectedGenreList} from "smart/genre/ConnectedGenreList";
+import {ConnectedGenreEditor} from "smart/genre/ConnectedGenreEditor";
 import {ConnectedAuthorList} from "smart/authors/ConnectedAuthorList";
 import {ConnectedAuthorEditor} from "smart/authors/ConnectedAuthorEditor";
+import {ConnectedCommentEditor} from "smart/comment/ConnectedCommentEditor";
+import {ConnectedCommentList} from "smart/comment/ConnectedCommentList";
 
 interface Book {
     id: number;
@@ -36,7 +38,21 @@ export default class App extends React.Component {
 
                             <Route path="/books" exact component={ConnectedBookList} />
                             <Route path="/books/add" exact component={ConnectedBookEditor} />
-                            <Route path="/books/:id" exact component={ConnectedBookEditor} />
+                            <Route path="/books/:id" exact >
+                                <ConnectedBookEditor />
+                                <br />
+                                <ConnectedCommentList />
+                            </Route>
+                            <Route path="/books/:bookId/comments/add" exact>
+                                <ConnectedBookEditor />
+                                <br />
+                                <ConnectedCommentEditor />
+                            </Route>
+                            <Route path="/books/:bookId/comments/:id" exact>
+                                <ConnectedBookEditor />
+                                <br />
+                                <ConnectedCommentEditor />
+                            </Route>
 
                             <Route path="/genres" exact component={ConnectedGenreList} />
                             <Route path="/books/add" exact component={ConnectedGenreEditor} />

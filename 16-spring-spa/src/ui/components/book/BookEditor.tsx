@@ -78,7 +78,7 @@ export default class BookEditor extends React.Component<BookEditorProps, Book> {
 
     render() {
         return (
-            <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
+            <form noValidate autoComplete="off" onSubmit={this.handleSubmit} style={{ clear: "both" }}>
                 <TextField
                     label="Name"
                     name="name"
