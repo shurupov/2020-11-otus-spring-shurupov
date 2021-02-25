@@ -1,0 +1,69 @@
+databaseChangeLog:
+- changeSet:
+    id: genres-insert
+    author: eshurupov
+    changes:
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Action and Adventure
+          schemaName: public
+          tableName: genre
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Crime and Detective
+          schemaName: public
+          tableName: genre
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Fairy Tale
+          schemaName: public
+          tableName: genre
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Fantasy
+          schemaName: public
+          tableName: genre
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Satire
+          schemaName: public
+          tableName: genre
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Science Fiction
+          schemaName: public
+          tableName: genre
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Poem
+          schemaName: public
+          tableName: genre
+      - insert:
+          catalogName: library
+          columns:
+            - column:
+                name: name
+                value: Drama
+          schemaName: public
+          tableName: genre

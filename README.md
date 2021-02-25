@@ -35,3 +35,4 @@ Keywords: `Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation 
 
 - Web
     - [Spring MVC View](15-spring-mvc-view)
+    - [Spring, REST, SPA](16-spring-spa)
