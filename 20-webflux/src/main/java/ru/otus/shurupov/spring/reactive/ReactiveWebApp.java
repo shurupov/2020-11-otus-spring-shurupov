@@ -9,8 +9,12 @@ import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import ru.otus.shurupov.spring.reactive.domain.Book;
+import ru.otus.shurupov.spring.reactive.repository.BookRepository;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.web.reactive.function.BodyInserters.fromValue;
+import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
 import static org.springframework.web.reactive.function.server.RequestPredicates.queryParam;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 import static org.springframework.web.reactive.function.server.ServerResponse.ok;
@@ -24,16 +28,16 @@ public class ReactiveWebApp {
     }
 
     @Bean
-    public RouterFunction<ServerResponse> composedRoutes() {
+    public RouterFunction<ServerResponse> bookRoutes(BookRepository bookRepository) {
         return route()
                 .GET(
-                        "/api/2/books/{id}",
-                        queryParam("id", StringUtils::isNotEmpty),
-                        request -> ok().body(new Book(), Book.class)
+                        "/api/2/books",
+                        request -> ok().body(bookRepository.findAll(), Book.class)
                     )
                 .GET(
-                        "/api/2/books",
-                        request -> ok().body(Flux.just(new Book(), new Book()), Book.class)
+                        "/api/2/books/{id}",
+                        request -> bookRepository.findById(request.pathVariable("id"))
+                            .flatMap(book -> ok().body(fromValue(book)))
                     )
                 .build();
     }

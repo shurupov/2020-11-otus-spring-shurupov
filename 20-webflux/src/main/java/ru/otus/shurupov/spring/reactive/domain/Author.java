@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import ru.otus.shurupov.spring.reactive.domain.dto.AuthorDto;
 
 @Data
 @NoArgsConstructor
@@ -15,4 +16,9 @@ public class Author {
     private String id;
     private String firstName;
     private String lastName;
+
+    public Author(AuthorDto dto) {
+        firstName = dto.getFirstName();
+        lastName = dto.getLastName();
+    }
 }
