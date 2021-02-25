@@ -1,0 +1,9 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/library2
+
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package:
+    - ru.otus.shurupov.spring.reactive.mongock.changelog
