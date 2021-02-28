@@ -9,12 +9,14 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class BookDto {
+    private String id;
     private String authorId;
     private String name;
     private List<String> genres;
     private List<String> comments;
 
     public BookDto(Book book) {
+        this.id = book.getId();
         this.authorId = book.getAuthor().getId();
         this.name = book.getName();
         this.genres = book.getGenres();

@@ -16,12 +16,12 @@ public class BookController {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
-    @GetMapping("/api/1/books")
+    @GetMapping("/api/v1/books")
     public Flux<Book> getAll() {
         return bookRepository.findAll();
     }
 
-    @PostMapping("/api/1/books")
+    @PostMapping("/api/v1/books")
     public Mono<Book> post(@RequestBody BookDto book) {
         return authorRepository.findById(book.getAuthorId())
                 .flatMap(author -> {
@@ -34,13 +34,13 @@ public class BookController {
                 }).flatMap(bookRepository::save);
     }
 
-    @GetMapping("/api/1/books/{id}")
+    @GetMapping("/api/v1/books/{id}")
     public Mono<BookDto> get(@PathVariable String id) {
         return bookRepository.findById(id)
                 .flatMap(book -> Mono.just(new BookDto(book)));
     }
 
-    @PutMapping("/api/1/books/{id}")
+    @PutMapping("/api/v1/books/{id}")
     public Mono<Book> update(@PathVariable String id, @RequestBody BookDto book) {
         return bookRepository.findById(id)
                 .flatMap(book1 -> {
@@ -57,7 +57,7 @@ public class BookController {
                 ).flatMap(bookRepository::save);
     }
 
-    @DeleteMapping("/api/1/books/{id}")
+    @DeleteMapping("/api/v1/books/{id}")
     public Mono<Void> remove(@PathVariable String id) {
         return bookRepository.deleteById(id);
     }
