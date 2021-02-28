@@ -1,6 +1,6 @@
 {
-  "name": "spring-spa",
-  "version": "0.0.1",
+  "name": "spring-reactive-web",
+  "version": "1.0.0",
   "scripts": {
     "start": "webpack serve --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",

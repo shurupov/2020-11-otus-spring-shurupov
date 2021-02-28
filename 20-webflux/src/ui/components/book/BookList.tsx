@@ -12,8 +12,8 @@ export interface BookListProps {
     books: Array<Book>;
 }
 
-const columns = ["id", "name", "author", "genres"];
-const headers = {id: "#", name: "Name", author: "Author", genres: "Genres"};
+const columns = ["id", "name", "author", "genres", "comments"];
+const headers = {id: "#"};
 
 export default function BookList(props: BookListProps) {
     return <DataList
@@ -24,7 +24,8 @@ export default function BookList(props: BookListProps) {
         data={props.books}
         render={{
             author: (author: any) => author.firstName + " " + author.lastName,
-            genres: (genres: Array<string>) => genres.join(", ")
+            genres: (genres: Array<string>) => genres.join(", "),
+            comments: (comments: Array<string>) => comments ? comments.length : 0,
         }}
     />
 }

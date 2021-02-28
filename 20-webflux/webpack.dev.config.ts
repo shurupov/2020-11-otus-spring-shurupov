@@ -116,8 +116,9 @@ const config: webpack.Configuration = {
             app.get('/api/v1/books/603800398f4d9c4d64961055', (req, res) => res.send({
                 id: "603800398f4d9c4d64961055",
                 name: 'The Tale about Fisherman and a Gold Fish',
-                genres: [1,2,3],
-                authorId: 1
+                authorId: "603800398f4d9c4d6496089d",
+                genres: ["Fairy Tale", "Drama"],
+                comments: ["Interesting tale", "Cool!"],
             }));
         }
     },

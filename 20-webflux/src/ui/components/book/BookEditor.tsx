@@ -1,25 +1,21 @@
 import React, {FormEvent} from "react";
 import {
     Button,
-    Checkbox,
     FormControl,
-    FormControlLabel, FormGroup,
+    FormGroup, IconButton,
     InputLabel,
     MenuItem, Paper,
     Select,
     TextField, Typography
 } from "@material-ui/core";
 import {EditorType} from "../../utils/EditorType";
+import {Delete as DeleteIcon} from "@material-ui/icons";
 
 interface Book {
     name: string;
     authorId: number;
-    genres: Array<number>;
-}
-
-interface Genre {
-    id: number;
-    name: string;
+    genres: Array<string>;
+    comments: Array<string>;
 }
 
 interface Author {
@@ -42,6 +38,8 @@ export default class BookEditor extends React.Component<BookEditorProps, Book> {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.addGenre = this.addGenre.bind(this);
+        this.addComment = this.addComment.bind(this);
     }
 
     handleSubmit(event: FormEvent) {
@@ -49,24 +47,53 @@ export default class BookEditor extends React.Component<BookEditorProps, Book> {
         this.props.update(this.props.type);
     }
 
+    addGenre() {
+        this.props.updateView({
+            ...this.props.book,
+            genres: [...this.props.book.genres.slice(), ""],
+        });
+    }
+
+    removeGenre(i: number) {
+        this.props.updateView({
+            ...this.props.book,
+            genres: [...this.props.book.genres.slice(0, i), ...this.props.book.genres.slice(i + 1)],
+        });
+    }
+
+    addComment() {
+        this.props.updateView({
+            ...this.props.book,
+            comments: [...this.props.book.comments.slice(), ""]
+        });
+    }
+
+    removeComment(i: number) {
+        this.props.updateView({
+            ...this.props.book,
+            comments: [...this.props.book.comments.slice(0, i), ...this.props.book.comments.slice(i + 1)],
+        });
+    }
+
     handleChange(event: FormEvent<any>) {
         const element = event.target as HTMLFormElement;
 
         if (element.name == "genres") {
-            const genreId = parseFloat(element.id.substr(5));
-            if (element.checked && !this.props.book.genres.includes(genreId)) {
-                const genres = this.props.book.genres.slice();
-                genres.push(genreId);
-                this.props.updateView({
-                    ...this.props.book,
-                    genres
-                });
-            } else if (!element.checked && this.props.book.genres.includes(genreId)) {
-                this.props.updateView({
-                    ...this.props.book,
-                    genres: this.props.book.genres.filter(id => id != genreId)
-                });
-            }
+            const genreIndex = parseFloat(element.id.substr(5));
+            const genres = this.props.book.genres.slice();
+            genres[genreIndex] = element.value;
+            this.props.updateView({
+                ...this.props.book,
+                genres
+            });
+        } else if (element.name == "comments") {
+            const commentIndex = parseFloat(element.id.substr(7));
+            const comments = this.props.book.comments.slice();
+            comments[commentIndex] = element.value;
+            this.props.updateView({
+                ...this.props.book,
+                comments
+            });
         } else {
             this.props.updateView({
                 ...this.props.book,
@@ -100,29 +127,52 @@ export default class BookEditor extends React.Component<BookEditorProps, Book> {
                     </Select>
                 </FormControl>
 
-                {/*<Paper variant="outlined" style={{ padding: 10, marginTop: 10 }}>
+                <Paper variant="outlined" style={{ padding: 10, marginTop: 10 }}>
                     <Typography>Genres</Typography>
-                    <FormGroup row>
-                        {
-                            this.props.genres.map((genre:any) => (
-                                <FormControlLabel
-                                    key={genre.id}
-                                    control={
-                                        <Checkbox
-                                            key={genre.id}
-                                            id={"genre" + genre.id}
-                                            checked={this.props.book.genres.includes(genre.id)}
-                                            onChange={this.handleChange}
-                                            name="genres"
-                                            color="primary"
-                                        />
-                                    }
-                                    label={genre.name}
-                                />
-                            ))
-                        }
-                    </FormGroup>
-                </Paper>*/}
+                    {this.props.book.genres.map((genre:string, i: number) => (
+                        <FormGroup row key={i}>
+                            <TextField
+                                id={"genre" + i}
+                                label={"Genre " + (i + 1)}
+                                name="genres"
+                                variant="outlined"
+                                onChange={this.handleChange}
+                                value={genre}
+                                margin={"normal"}
+                            />
+                            <IconButton aria-label="delete">
+                                <DeleteIcon onClick={() => this.removeGenre(i)} />
+                            </IconButton>
+                        </FormGroup>
+                    ))}
+                    <Button variant="contained" color="primary" onClick={this.addGenre} style={{ marginTop: 10, marginBottom: 10 }}>
+                        Add Genre
+                    </Button>
+                </Paper>
+
+                <Paper variant="outlined" style={{ padding: 10, marginTop: 10 }}>
+                    <Typography>Comments</Typography>
+                    {this.props.book.comments.map((comment:string, i: number) => (
+                        <FormGroup row key={i}>
+                            <TextField
+                                id={"comment" + i}
+                                label={"Comment " + (i + 1)}
+                                name="comments"
+                                variant="outlined"
+                                onChange={this.handleChange}
+                                value={comment}
+                                margin={"normal"}
+                            />
+                            <IconButton aria-label="delete">
+                                <DeleteIcon onClick={() => this.removeComment(i)} />
+                            </IconButton>
+                        </FormGroup>
+                    ))}
+                    <Button variant="contained" color="primary" onClick={this.addComment} style={{ marginTop: 10, marginBottom: 10 }}>
+                        Add Comment
+                    </Button>
+                </Paper>
+
                 <Button variant="contained" color="primary" type="submit" style={{ marginTop: 10, marginBottom: 10, float: "right" }}>
                     Save
                 </Button>

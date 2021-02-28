@@ -9,6 +9,7 @@ export const bookSlice = createSlice({
             id: 0,
             name: "",
             genres: [],
+            comments: [],
             authorId: 0
         },
         elementToDeleteId: null,
