@@ -5,7 +5,7 @@ import {openAuthorListAction} from "smart/authors/saga";
 import {push} from "connected-react-router";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
-import {apiPrefixSelector} from "smart/apiType/saga";
+import {apiPrefixSelector} from "smart/apiSelect/saga";
 
 export const openBookListAction = () => {
     return {

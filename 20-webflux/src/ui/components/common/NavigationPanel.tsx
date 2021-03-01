@@ -1,6 +1,7 @@
 import React from "react";
 import {AppBar, Link, Toolbar, Typography} from "@material-ui/core";
 import {NavLink} from "react-router-dom";
+import { ConnectedApiSelect } from "smart/apiSelect/ConnectedApiSelect";
 
 const menuItem = (name: string, uri: string, exact = false) => {
     return (
@@ -24,6 +25,7 @@ export default function NavigationPanel() {
                 { menuItem("Home", "/", true) }
                 { menuItem("Books", "/books") }
                 { menuItem("Authors", "/authors") }
+                <ConnectedApiSelect />
             </Toolbar>
         </AppBar>
     );

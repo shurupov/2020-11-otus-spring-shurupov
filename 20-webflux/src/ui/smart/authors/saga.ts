@@ -4,7 +4,7 @@ import {authorSlice} from "smart/authors/slice";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
-import {apiPrefixSelector} from "smart/apiType/saga";
+import {apiPrefixSelector} from "smart/apiSelect/saga";
 
 export const openAuthorListAction = () => {
     return {

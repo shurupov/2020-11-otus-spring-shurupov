@@ -21,6 +21,7 @@ import {
     watchUpdateAuthor
 } from "smart/authors/saga";
 import {watchSummary} from "smart/summary/saga";
+import {apiSlice} from "smart/apiSelect/slice";
 
 export const history = createBrowserHistory();
 
@@ -62,3 +63,5 @@ sagaMiddleware.run(watchOpenEmptyAuthor);
 sagaMiddleware.run(watchUpdateAuthor);
 sagaMiddleware.run(watchAddAuthor);
 sagaMiddleware.run(watchRemoveAuthor);
+
+store.dispatch(apiSlice.actions.update("/api/v1"));
