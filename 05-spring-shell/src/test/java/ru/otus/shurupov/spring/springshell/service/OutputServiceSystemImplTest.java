@@ -39,14 +39,14 @@ class OutputServiceSystemImplTest {
     @DisplayName("Performed println correctly")
     public void shouldPerformPrintln() {
         outputService.println("Hello", "Evgeny", "Shurupov");
-        assertThat(outContent.toString()).endsWith("Hello, Evgeny Shurupov!\n");
+        assertThat(outContent.toString()).endsWith("Hello, Evgeny Shurupov!" + System.getProperty("line.separator"));
     }
 
     @Test
     @DisplayName("Performed empty println correctly")
     public void shouldPerformEmptyPrintln() {
         outputService.println();
-        assertThat(outContent.toString()).isEqualTo("\n");
+        assertThat(outContent.toString()).isEqualTo(System.getProperty("line.separator"));
     }
 
     private MessageSource messageSource() {

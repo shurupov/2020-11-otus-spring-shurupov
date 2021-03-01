@@ -31,13 +31,13 @@ class InteractiveServiceSystemImplTest {
     @DisplayName("Performed println correctly")
     public void shouldPerformPrintln() {
         interactiveService.println("hello");
-        assertThat(outContent.toString()).isEqualTo("hello\n");
+        assertThat(outContent.toString()).isEqualTo("hello" + System.getProperty("line.separator"));
     }
 
     @Test
     @DisplayName("Performed empty println correctly")
     public void shouldPerformEmptyPrintln() {
         interactiveService.println();
-        assertThat(outContent.toString()).isEqualTo("\n");
+        assertThat(outContent.toString()).isEqualTo(System.getProperty("line.separator"));
     }
 }
