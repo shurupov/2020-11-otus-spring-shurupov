@@ -2,6 +2,7 @@ import {sagaActionTypes} from "store/sagaActionTypes";
 import {call, put, select, takeEvery} from "redux-saga/effects";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {summarySlice} from "smart/summary/slice";
+import {apiPrefixSelector} from "smart/apiSelect/saga";
 
 export const summaryAction = () => {
     return {
@@ -13,7 +14,8 @@ export function* workerSummary() {
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
     ]));
-    const response = yield call(fetch, "/api/v1/summary");
+    const apiPrefix = yield select(apiPrefixSelector);
+    const response = yield call(fetch, apiPrefix + "/summary");
     const counts = yield call([response, 'json']);
     yield put(summarySlice.actions.setSummary(counts));
 }

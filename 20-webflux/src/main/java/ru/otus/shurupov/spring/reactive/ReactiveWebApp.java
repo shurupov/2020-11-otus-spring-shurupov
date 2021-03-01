@@ -15,6 +15,8 @@ import ru.otus.shurupov.spring.reactive.repository.AuthorRepository;
 import ru.otus.shurupov.spring.reactive.repository.BookRepository;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Map;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.web.reactive.function.BodyInserters.fromValue;
 import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
@@ -114,6 +116,19 @@ public class ReactiveWebApp {
                         "/api/v2/authors/{id}",
                         request -> authorRepository.deleteById(request.pathVariable("id"))
                                 .flatMap((removed) -> ok().build())
+                )
+                .GET(
+                        "/api/v2/summary",
+                        request -> bookRepository.count().flatMap(booksCount ->
+                                authorRepository.count().flatMap(authorsCount ->
+                                        Mono.just(
+                                                Map.of(
+                                                        "books", booksCount,
+                                                        "authors", authorsCount
+                                                )
+                                        )
+                                )
+                        ).flatMap((response) -> ok().bodyValue(response))
                 )
                 .build();
     }
