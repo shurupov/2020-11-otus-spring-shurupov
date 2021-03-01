@@ -4,6 +4,7 @@ import {authorSlice} from "smart/authors/slice";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
+import {apiPrefixSelector} from "smart/apiType/saga";
 
 export const openAuthorListAction = () => {
     return {
@@ -45,7 +46,8 @@ export function* workerDisplayList() {
         {caption: "Home", url: "/"},
         {caption: "Authors", url: "/authors"},
     ]));
-    const response = yield call(fetch, "/api/v1/authors");
+    const apiPrefix = yield select(apiPrefixSelector);
+    const response = yield call(fetch, apiPrefix + "/authors");
     const authors = yield call([response, 'json']);
     yield put(authorSlice.actions.list(authors));
 }
@@ -62,7 +64,8 @@ const authorIdSelector = (state: any) => {
 
 export function* workerOpenAuthor() {
     const id = yield select(authorIdSelector);
-    const response = yield call(fetch, "/api/v1/authors/" + id);
+    const apiPrefix = yield select(apiPrefixSelector);
+    const response = yield call(fetch, apiPrefix + "/authors/" + id);
     const author = yield call([response, 'json']);
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
@@ -98,7 +101,8 @@ const authorSelector = (state: any) => state.author.element;
 
 export function* workerUpdateAuthor() {
     const author = yield select(authorSelector);
-    yield call(fetch, "/api/v1/authors/" + author.id, {
+    const apiPrefix = yield select(apiPrefixSelector);
+    yield call(fetch, apiPrefix + "/authors/" + author.id, {
         method: "PUT",
         headers: {
             "Accept": "application/json",
@@ -115,7 +119,8 @@ export function* watchUpdateAuthor() {
 
 export function* workerAddAuthor() {
     const author = yield select(authorSelector);
-    yield call(fetch, "/api/v1/authors", {
+    const apiPrefix = yield select(apiPrefixSelector);
+    yield call(fetch, apiPrefix + "/authors", {
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -134,7 +139,8 @@ const authorToDeleteIdSelector = (state: any) => state.author.elementToDeleteId;
 
 export function* workerRemoveAuthor() {
     const id = yield select(authorToDeleteIdSelector);
-    yield call(fetch, "/api/v1/authors/" + id, {
+    const apiPrefix = yield select(apiPrefixSelector);
+    yield call(fetch, apiPrefix + "/authors/" + id, {
         method: "DELETE",
     });
     yield put(push("/authors"));

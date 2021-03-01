@@ -5,6 +5,7 @@ import {openAuthorListAction} from "smart/authors/saga";
 import {push} from "connected-react-router";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
+import {apiPrefixSelector} from "smart/apiType/saga";
 
 export const openBookListAction = () => {
     return {
@@ -47,7 +48,8 @@ export function* workerDisplayList() {
         {caption: "Home", url: "/"},
         {caption: "Books", url: "/books"},
     ]));
-    const response = yield call(fetch, "/api/v1/books");
+    const apiPrefix = yield select(apiPrefixSelector);
+    const response = yield call(fetch, apiPrefix + "/books");
     const books = yield call([response, 'json']);
     yield put(bookSlice.actions.list(books));
 }
@@ -63,9 +65,9 @@ const bookToDeleteIdSelector = (state: any) => state.book.elementToDeleteId;
 
 export function* workerOpenBook() {
     yield put(openAuthorListAction());
-    //yield put(openGenreListAction());
     const id = yield select(bookIdSelector);
-    const response = yield call(fetch, "/api/v1/books/" + id);
+    const apiPrefix = yield select(apiPrefixSelector);
+    const response = yield call(fetch, apiPrefix + "/books/" + id);
     const book = yield call([response, 'json']);
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
@@ -107,7 +109,8 @@ export function* watchOpenEmptyBook() {
 
 export function* workerUpdateBook() {
     const book = yield select(bookSelector);
-    yield call(fetch, "/api/v1/books/" + book.id, {
+    const apiPrefix = yield select(apiPrefixSelector);
+    yield call(fetch, apiPrefix + "/books/" + book.id, {
         method: "PUT",
         headers: {
             "Accept": "application/json",
@@ -124,7 +127,8 @@ export function* watchUpdateBook() {
 
 export function* workerAddBook() {
     const book = yield select(bookSelector);
-    yield call(fetch, "/api/v1/books", {
+    const apiPrefix = yield select(apiPrefixSelector);
+    yield call(fetch, apiPrefix + "/books", {
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -141,7 +145,8 @@ export function* watchAddBook() {
 
 export function* workerRemoveBook() {
     const id = yield select(bookToDeleteIdSelector);
-    yield call(fetch, "/api/v1/books/" + id, {
+    const apiPrefix = yield select(apiPrefixSelector);
+    yield call(fetch, apiPrefix + "/books/" + id, {
         method: "DELETE",
     });
     yield put(push("/books"));
