@@ -1,8 +1,8 @@
-# Spring REST SPA
+# Spring ЦуиАдгч
 
 ## Task
 Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
-Use Spring, REST and SPA.
+Use Spring Reactive Stack (Webflux).
 
 ## Used
 - Backend
@@ -10,16 +10,11 @@ Use Spring, REST and SPA.
     - Annotation-based configuration
     - Lombok
     - YML application configuration
-    - Postgresql database for production
-    - H2 Embedded database for tests
-    - JPA
-    - Spring Data JPA
-    - Liquibase
+    - MongoDB database for production
+    - Embedded MongoDB for tests
+    - Reactive Spring Data MongoDB
+    - Mongock
     - JUnit 5
-    - Mockito
-    - AssertJ
-    - Hamcrest
-    - @WebMvcTest annotation in tests
 - Frontend
     - npm, webpack, babel
     - TypeScript
@@ -49,7 +44,7 @@ Use Spring, REST and SPA.
 `mvn clean package`
 
 ## Command to start the application
-`java -jar target/16-spring-spa-1.0.jar`
+`java -jar target/20-webflux-1.0.jar`
 
 ## Command to build and start
 `mvn spring-boot:run`
