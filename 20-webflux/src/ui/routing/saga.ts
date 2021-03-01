@@ -16,8 +16,7 @@ export function* workerLocationChange() {
         yield put(openEmptyBookAction());
     } else if (/^\/books\/[\dabcdef]+$/.test(url)) {
         yield put(openBookAction());
-        //yield put(openCommentListAction());
-    } else if (/^\/books\/(\d+)\/delete$/.test(url)) {
+    } else if (/^\/books\/([\dabcdef]+)\/delete$/.test(url)) {
         const result = url.match(/^\/books\/([\dabcdef]+)\/delete$/);
         const id = result[1];
         yield put(bookSlice.actions.deleteElement(id));
@@ -26,10 +25,10 @@ export function* workerLocationChange() {
 
     if (url == "/authors") {
         yield put(openAuthorListAction());
-    } else if (/^\/authors\/[\dabcdef]+$/.test(url)) {
-        yield put(openAuthorAction());
     } else if (url == "/authors/add") {
         yield put(openEmptyAuthorAction());
+    } else if (/^\/authors\/[\dabcdef]+$/.test(url)) {
+        yield put(openAuthorAction());
     } else if (/^\/authors\/([\dabcdef]+)\/delete$/.test(url)) {
         const result = url.match(/^\/authors\/([\dabcdef]+)\/delete$/);
         const id = result[1];

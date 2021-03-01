@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 import ru.otus.shurupov.spring.reactive.domain.Author;
 import ru.otus.shurupov.spring.reactive.domain.Book;
+import ru.otus.shurupov.spring.reactive.domain.dto.AuthorDto;
 import ru.otus.shurupov.spring.reactive.domain.dto.BookDto;
 import ru.otus.shurupov.spring.reactive.repository.AuthorRepository;
 import ru.otus.shurupov.spring.reactive.repository.BookRepository;
@@ -38,7 +39,7 @@ public class ReactiveWebApp {
                 .GET(
                         "/api/v2/books/{id}",
                         request -> bookRepository.findById(request.pathVariable("id"))
-                            .flatMap(book -> ok().body(fromValue(book)))
+                            .flatMap(book -> ok().body(fromValue(new BookDto(book))))
                     )
                 .POST(
                         "/api/v2/books",
@@ -80,12 +81,6 @@ public class ReactiveWebApp {
                         request -> bookRepository.deleteById(request.pathVariable("id"))
                                 .flatMap((removed) -> ok().build())
                 )
-                .build();
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> bookRoutes(AuthorRepository authorRepository) {
-        return route()
                 .GET(
                         "/api/v2/authors",
                         request ->
@@ -106,11 +101,11 @@ public class ReactiveWebApp {
                 .PUT(
                         "/api/v2/authors/{id}",
                         accept(APPLICATION_JSON),
-                        request -> request.bodyToMono(Author.class)
-                                .flatMap(author -> authorRepository.findById(request.pathVariable("id"))
-                                    .flatMap(author1 -> {
-                                        author.setFirstName(author1.getFirstName());
-                                        author.setLastName(author1.getLastName());
+                        request -> request.bodyToMono(AuthorDto.class)
+                                .flatMap(authorDto -> authorRepository.findById(request.pathVariable("id"))
+                                    .flatMap(author -> {
+                                        author.setFirstName(authorDto.getFirstName());
+                                        author.setLastName(authorDto.getLastName());
                                         return authorRepository.save(author);
                                     }))
                                 .flatMap(author -> ok().body(fromValue(author)))

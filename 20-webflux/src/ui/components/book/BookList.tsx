@@ -13,7 +13,7 @@ export interface BookListProps {
 }
 
 const columns = ["id", "name", "author", "genres", "comments"];
-const headers = {id: "#", name: "Name", author: "Author", genres: "Genres"};
+const headers = {id: "#", name: "Name", author: "Author", genres: "Genres", comments: "Comments"};
 
 export default function BookList(props: BookListProps) {
     return <DataList
