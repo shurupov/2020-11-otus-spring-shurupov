@@ -25,7 +25,6 @@ Use Spring Reactive Stack (Webflux).
     - Redux Router
     - connected-react-router
     - material-ui
-    - Storybook
 
 
 ## Command to init mongo container image and start it (You need to have docker installed)
