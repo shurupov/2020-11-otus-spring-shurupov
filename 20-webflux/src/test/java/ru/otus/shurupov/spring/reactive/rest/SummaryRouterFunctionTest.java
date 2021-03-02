@@ -12,12 +12,12 @@ import static org.hamcrest.Matchers.is;
 public class SummaryRouterFunctionTest {
 
     @Autowired
-    private RouterFunction route;
+    private RouterFunction summaryRoute;
 
     @Test
     public void testSummaryRoute() {
         WebTestClient client = WebTestClient
-                .bindToRouterFunction(route)
+                .bindToRouterFunction(summaryRoute)
                 .build();
 
         client.get()
