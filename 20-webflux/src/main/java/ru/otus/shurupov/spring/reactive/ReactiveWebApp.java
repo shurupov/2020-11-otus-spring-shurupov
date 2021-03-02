@@ -37,12 +37,12 @@ public class ReactiveWebApp {
                 .GET(
                         "/api/v2/books",
                         request -> ok().body(bookRepository.findAll(), Book.class)
-                    )
+                )
                 .GET(
                         "/api/v2/books/{id}",
                         request -> bookRepository.findById(request.pathVariable("id"))
-                            .flatMap(book -> ok().body(fromValue(new BookDto(book))))
-                    )
+                                .flatMap(book -> ok().body(fromValue(new BookDto(book))))
+                )
                 .POST(
                         "/api/v2/books",
                         accept(APPLICATION_JSON),
@@ -83,6 +83,12 @@ public class ReactiveWebApp {
                         request -> bookRepository.deleteById(request.pathVariable("id"))
                                 .flatMap((removed) -> ok().build())
                 )
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> authorRoutes(AuthorRepository authorRepository) {
+        return route()
                 .GET(
                         "/api/v2/authors",
                         request ->
@@ -105,11 +111,11 @@ public class ReactiveWebApp {
                         accept(APPLICATION_JSON),
                         request -> request.bodyToMono(AuthorDto.class)
                                 .flatMap(authorDto -> authorRepository.findById(request.pathVariable("id"))
-                                    .flatMap(author -> {
-                                        author.setFirstName(authorDto.getFirstName());
-                                        author.setLastName(authorDto.getLastName());
-                                        return authorRepository.save(author);
-                                    }))
+                                        .flatMap(author -> {
+                                            author.setFirstName(authorDto.getFirstName());
+                                            author.setLastName(authorDto.getLastName());
+                                            return authorRepository.save(author);
+                                        }))
                                 .flatMap(author -> ok().body(fromValue(author)))
                 )
                 .DELETE(
@@ -117,6 +123,12 @@ public class ReactiveWebApp {
                         request -> authorRepository.deleteById(request.pathVariable("id"))
                                 .flatMap((removed) -> ok().build())
                 )
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> summaryRoute(BookRepository bookRepository, AuthorRepository authorRepository) {
+        return route()
                 .GET(
                         "/api/v2/summary",
                         request -> bookRepository.count().flatMap(booksCount ->
