@@ -1,7 +1,7 @@
-# Spring ЦуиАдгч
+# Spring Webflux
 
 ## Task
-Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
+Implement CRUD Shell application of book library with entities: Book (with comments and genres), Author. 
 Use Spring Reactive Stack (Webflux).
 
 ## Used
