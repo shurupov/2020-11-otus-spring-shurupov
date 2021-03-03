@@ -21,5 +21,6 @@
         <module>13-spring-data-mongodb</module>
         <module>15-spring-mvc-view</module>
         <module>16-spring-spa</module>
+        <module>20-webflux</module>
     </modules>
 </project>
