@@ -22,5 +22,6 @@
         <module>15-spring-mvc-view</module>
         <module>16-spring-spa</module>
         <module>20-webflux</module>
+        <module>23-security-authentication</module>
     </modules>
 </project>
