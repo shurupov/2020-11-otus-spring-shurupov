@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
+import ru.otus.shurupov.spring.authentication.config.security.NothingPasswordEncoder;
 import ru.otus.shurupov.spring.authentication.config.security.SpaAuthenticationSuccessHandler;
 import ru.otus.shurupov.spring.authentication.config.security.SpaLoginResponseGeneratingFilter;
 
@@ -42,16 +43,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence rawPassword) {
-                return rawPassword.toString();
-            }
-
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                return rawPassword.toString().equals(encodedPassword);
-            }
-        };
+        return new NothingPasswordEncoder();
     }
 }
