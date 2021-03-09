@@ -35,7 +35,7 @@ import {
     watchOpenEmptyComment, watchRemoveComment,
     watchUpdateComment
 } from "smart/comment/saga";
-import {watchLogin} from "smart/login/saga";
+import {watchLogin, watchLogout} from "smart/login/saga";
 
 export const history = createBrowserHistory();
 
@@ -93,3 +93,4 @@ sagaMiddleware.run(watchAddAuthor);
 sagaMiddleware.run(watchRemoveAuthor);
 
 sagaMiddleware.run(watchLogin);
+sagaMiddleware.run(watchLogout);

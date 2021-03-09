@@ -33,4 +33,5 @@ export const sagaActionTypes = {
     AUTHOR_ELEMENT_REMOVE:      "saga/author/remove",
 
     AUTHENTICATION_LOGIN:      "saga/authentication/login",
+    AUTHENTICATION_LOGOUT:     "saga/authentication/logout",
 };
