@@ -1,11 +1,13 @@
 import {call, put, select, takeEvery} from "redux-saga/effects";
 import {sagaActionTypes} from "store/sagaActionTypes";
 import {bookSlice} from "smart/book/slice";
-import {openAuthorListAction} from "smart/authors/saga";
 import {push} from "connected-react-router";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
-import {openGenreListAction} from "smart/genre/saga";
 import {EditorType} from "../../utils/EditorType";
+import {fetchOrLogin} from "smart/login/saga";
+import {authorSlice} from "smart/authors/slice";
+import {genreSlice} from "smart/genre/slice";
+import {commentSlice} from "smart/comment/slice";
 
 export const openBookListAction = () => {
     return {
@@ -48,8 +50,10 @@ export function* workerDisplayList() {
         {caption: "Home", url: "/"},
         {caption: "Books", url: "/books"},
     ]));
-    const response = yield call(fetch, "/api/books");
-    const books = yield call([response, 'json']);
+    const books = yield call(fetchOrLogin, "/api/books");
+    if (!books) {
+        return;
+    }
     yield put(bookSlice.actions.list(books));
 }
 
@@ -63,11 +67,17 @@ export const bookSelector = (state: any) => state.book.element;
 const bookToDeleteIdSelector = (state: any) => state.book.elementToDeleteId;
 
 export function* workerOpenBook() {
-    yield put(openAuthorListAction());
-    yield put(openGenreListAction());
     const id = yield select(bookIdSelector);
-    const response = yield call(fetch, "/api/books/" + id);
-    const book = yield call([response, 'json']);
+    const book = yield call(fetchOrLogin, "/api/books/" + id);
+    if (!book) {
+        return;
+    }
+    const authors = yield call(fetchOrLogin, "/api/authors");
+    yield put(authorSlice.actions.list(authors));
+    const genres = yield call(fetchOrLogin, "/api/genres");
+    yield put(genreSlice.actions.list(genres));
+    const comments = yield call(fetchOrLogin, "/api/books/" + book.id + "/comments");
+    yield put(commentSlice.actions.list(comments));
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
         {caption: "Books", url: "/books"},
@@ -78,8 +88,13 @@ export function* workerOpenBook() {
 }
 
 export function* workerOpenEmptyBook() {
-    yield put(openAuthorListAction());
-    yield put(openGenreListAction());
+    const authors = yield call(fetchOrLogin, "/api/authors");
+    if (!authors) {
+        return;
+    }
+    yield put(authorSlice.actions.list(authors));
+    const genres = yield call(fetchOrLogin, "/api/genres");
+    yield put(genreSlice.actions.list(genres));
     yield put(bookSlice.actions.openElement({
         id: null,
         name: "",
@@ -108,14 +123,10 @@ export function* watchOpenEmptyBook() {
 
 export function* workerUpdateBook() {
     const book = yield select(bookSelector);
-    yield call(fetch, "/api/books/" + book.id, {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(book)
-    });
+    const response = yield call(fetchOrLogin, "/api/books/" + book.id, "PUT", book);
+    if (!response) {
+        return;
+    }
     yield put(push("/books"));
 }
 
@@ -125,14 +136,10 @@ export function* watchUpdateBook() {
 
 export function* workerAddBook() {
     const book = yield select(bookSelector);
-    yield call(fetch, "/api/books", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(book)
-    });
+    const response = yield call(fetchOrLogin, "/api/books", "POST", book);
+    if (!response) {
+        return;
+    }
     yield put(push("/books"));
 }
 
@@ -142,9 +149,10 @@ export function* watchAddBook() {
 
 export function* workerRemoveBook() {
     const id = yield select(bookToDeleteIdSelector);
-    yield call(fetch, "/api/books/" + id, {
-        method: "DELETE",
-    });
+    const response = yield call(fetchOrLogin, "/api/books/" + id, "DELETE");
+    if (!response) {
+        return;
+    }
     yield put(push("/books"));
 }
 

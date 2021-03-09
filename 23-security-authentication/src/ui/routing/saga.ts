@@ -9,7 +9,6 @@ import {authorSlice} from "smart/authors/slice";
 import {openAuthorAction, openAuthorListAction, openEmptyAuthorAction, removeAuthorAction} from "smart/authors/saga";
 import {
     openCommentAction,
-    openCommentListAction,
     openEmptyCommentAction,
     removeCommentAction
 } from "smart/comment/saga";
@@ -25,7 +24,6 @@ export function* workerLocationChange() {
         yield put(openEmptyBookAction());
     } else if (/^\/books\/\d+$/.test(url)) {
         yield put(openBookAction());
-        yield put(openCommentListAction());
     } else if (/^\/books\/(\d+)\/delete$/.test(url)) {
         const result = url.match(/^\/books\/(\d+)\/delete$/);
         const id = result[1];

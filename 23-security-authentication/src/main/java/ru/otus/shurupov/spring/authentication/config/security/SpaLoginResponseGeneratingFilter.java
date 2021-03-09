@@ -67,8 +67,8 @@ public class SpaLoginResponseGeneratingFilter extends GenericFilterBean {
             response.put("status", "success");
             response.put("message", "You have successfully logged out!");
         } else {
-            response.put("status", "success");
-            response.put("message", "You have successfully authenticated!");
+            response.put("status", "error");
+            response.put("message", "You are not authenticated!");
         }
 
         ObjectMapper objectMapper = new ObjectMapper();

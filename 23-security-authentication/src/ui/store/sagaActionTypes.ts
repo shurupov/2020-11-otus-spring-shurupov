@@ -31,4 +31,6 @@ export const sagaActionTypes = {
     AUTHOR_ELEMENT_UPDATE:      "saga/author/update",
     AUTHOR_ELEMENT_ADD:         "saga/author/add",
     AUTHOR_ELEMENT_REMOVE:      "saga/author/remove",
+
+    AUTHENTICATION_LOGIN:      "saga/authentication/login",
 };

@@ -25,6 +25,7 @@ export default function NavigationPanel() {
                 { menuItem("Books", "/books") }
                 { menuItem("Authors", "/authors") }
                 { menuItem("Genres", "/genres") }
+                { menuItem("Login", "/auth") }
             </Toolbar>
         </AppBar>
     );

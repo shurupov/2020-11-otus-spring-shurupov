@@ -1,7 +1,8 @@
 import {sagaActionTypes} from "store/sagaActionTypes";
-import {call, put, select, takeEvery} from "redux-saga/effects";
+import {call, put, takeEvery} from "redux-saga/effects";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {summarySlice} from "smart/summary/slice";
+import {fetchOrLogin} from "smart/login/saga";
 
 export const summaryAction = () => {
     return {
@@ -13,8 +14,10 @@ export function* workerSummary() {
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
     ]));
-    const response = yield call(fetch, "/api/summary");
-    const counts = yield call([response, 'json']);
+    const counts = yield call(fetchOrLogin, "/api/summary");
+    if (!counts) {
+        return;
+    }
     yield put(summarySlice.actions.setSummary(counts));
 }
 
