@@ -8,7 +8,6 @@ interface LoginLogoutButtonProps {
 }
 
 export const LoginLogoutButton = (props: LoginLogoutButtonProps) => {
-    console.log(props);
     return (
         <Typography variant="h6">
             {
