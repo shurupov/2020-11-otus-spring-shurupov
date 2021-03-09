@@ -1,8 +1,8 @@
-# Spring REST SPA
+# Spring Security
 
 ## Task
 Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
-Use Spring, REST and SPA.
+Use Spring, REST and SPA. Use Spring Security.
 
 ## Used
 - Backend
@@ -19,7 +19,7 @@ Use Spring, REST and SPA.
     - Mockito
     - AssertJ
     - Hamcrest
-    - @WebMvcTest annotation in tests
+    - Spring Security
 - Frontend
     - npm, webpack, babel
     - TypeScript
