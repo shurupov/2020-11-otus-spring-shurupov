@@ -28,21 +28,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().mvcMatchers("/**").permitAll()
                 .and()
-                /*.logout().logoutSuccessHandler(new SimpleLogoutSuccessHandler())
-                .and()*/
-                /*.apply(new SinglePageAppConfigurer<>())
-                    .registerUrl("/api/register")
-                    .loginUrl("/api/login")*/
-
                 .addFilterBefore(new SpaLoginResponseGeneratingFilter(), DefaultLoginPageGeneratingFilter.class)
                 .formLogin()
-//                    .loginPage("/api/login")
                     .loginProcessingUrl("/api/login")
                     .successHandler(new SpaAuthenticationSuccessHandler())
                 .and()
                 .logout()
                     .logoutUrl("/api/logout")
-                    //.logoutSuccessHandler()
                 ;
     }
 
