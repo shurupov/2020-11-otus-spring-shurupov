@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.shurupov.spring.authentication.service.AuthorService;
 import ru.otus.shurupov.spring.authentication.service.BookCommentService;
@@ -33,7 +34,11 @@ class SummaryControllerTest {
     private GenreService genreService;
 
     @Test
-    @DisplayName("returns index page with correct counts")
+    @WithMockUser(
+            username = "admin",
+            authorities = {"ROLE_USER"}
+    )
+    @DisplayName("returns index page with correct counts is user is authenticated")
     void index() throws Exception {
         when(bookService.count()).thenReturn(10L);
         when(authorService.count()).thenReturn(20L);
@@ -45,6 +50,14 @@ class SummaryControllerTest {
                 .andExpect(jsonPath("$.authors", is(20)))
                 .andExpect(jsonPath("$.comments", is(30)))
                 .andExpect(jsonPath("$.genres", is(40)))
+        ;
+    }
+
+    @Test
+    @DisplayName("returns 3xx redirect if user is not authenticated")
+    void indexUnauthenticated() throws Exception {
+        mockMvc.perform(get("/api/summary"))
+                .andExpect(status().is3xxRedirection())
         ;
     }
 }
