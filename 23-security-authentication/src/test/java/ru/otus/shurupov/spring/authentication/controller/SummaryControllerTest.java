@@ -45,12 +45,7 @@ class SummaryControllerTest {
     public static class UserDetailsServiceConfiguration {
         @Bean
         public UserDetailsService userDetailsService() {
-            return new UserDetailsService() {
-                @Override
-                public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-                    return new User(username, "12345", List.of());
-                }
-            };
+            return username -> new User(username, "12345", List.of());
         }
     }
 
