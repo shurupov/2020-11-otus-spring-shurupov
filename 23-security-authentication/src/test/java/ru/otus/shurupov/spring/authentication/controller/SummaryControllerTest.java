@@ -4,13 +4,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.shurupov.spring.authentication.service.AuthorService;
 import ru.otus.shurupov.spring.authentication.service.BookCommentService;
 import ru.otus.shurupov.spring.authentication.service.BookService;
 import ru.otus.shurupov.spring.authentication.service.GenreService;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
@@ -32,6 +40,19 @@ class SummaryControllerTest {
     private BookCommentService bookCommentService;
     @MockBean
     private GenreService genreService;
+
+    @TestConfiguration
+    public static class UserDetailsServiceConfiguration {
+        @Bean
+        public UserDetailsService userDetailsService() {
+            return new UserDetailsService() {
+                @Override
+                public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+                    return new User(username, "12345", List.of());
+                }
+            };
+        }
+    }
 
     @Test
     @WithMockUser(
