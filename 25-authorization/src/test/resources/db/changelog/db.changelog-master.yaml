@@ -11,3 +11,7 @@ databaseChangeLog:
           path: db/changelog/2.0/structure/
     - includeAll:
           path: db/changelog/2.0/test-data/
+    - includeAll:
+          path: db/changelog/2.1/structure/
+    - includeAll:
+          path: db/changelog/2.1/test-data/
