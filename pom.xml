@@ -23,5 +23,6 @@
         <module>16-spring-spa</module>
         <module>20-webflux</module>
         <module>23-security-authentication</module>
+        <module>25-authorization</module>
     </modules>
 </project>
