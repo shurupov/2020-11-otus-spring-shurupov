@@ -4,6 +4,7 @@ import {authorSlice} from "smart/authors/slice";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
+import {fetchOrLogin} from "smart/login/saga";
 
 export const openAuthorListAction = () => {
     return {
@@ -45,8 +46,10 @@ export function* workerDisplayList() {
         {caption: "Home", url: "/"},
         {caption: "Authors", url: "/authors"},
     ]));
-    const response = yield call(fetch, "/api/authors");
-    const authors = yield call([response, 'json']);
+    const authors = yield call(fetchOrLogin, "/api/authors");
+    if (!authors) {
+        return;
+    }
     yield put(authorSlice.actions.list(authors));
 }
 
@@ -62,8 +65,10 @@ const authorIdSelector = (state: any) => {
 
 export function* workerOpenAuthor() {
     const id = yield select(authorIdSelector);
-    const response = yield call(fetch, "/api/authors/" + id);
-    const author = yield call([response, 'json']);
+    const author = yield call(fetchOrLogin, "/api/authors/" + id);
+    if (!author) {
+        return;
+    }
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
         {caption: "Authors", url: "/authors"},
@@ -98,14 +103,10 @@ const authorSelector = (state: any) => state.author.element;
 
 export function* workerUpdateAuthor() {
     const author = yield select(authorSelector);
-    yield call(fetch, "/api/authors/" + author.id, {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(author)
-    });
+    const response = yield call(fetchOrLogin, "/api/authors/" + author.id, "PUT", author);
+    if (!response) {
+        return;
+    }
     yield put(push("/authors"));
 }
 
@@ -115,14 +116,10 @@ export function* watchUpdateAuthor() {
 
 export function* workerAddAuthor() {
     const author = yield select(authorSelector);
-    yield call(fetch, "/api/authors", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(author)
-    });
+    const response = yield call(fetchOrLogin, "/api/authors", "POST", author);
+    if (!response) {
+        return;
+    }
     yield put(push("/authors"));
 }
 
@@ -134,9 +131,10 @@ const authorToDeleteIdSelector = (state: any) => state.author.elementToDeleteId;
 
 export function* workerRemoveAuthor() {
     const id = yield select(authorToDeleteIdSelector);
-    yield call(fetch, "/api/authors/" + id, {
-        method: "DELETE",
-    });
+    const response = yield call(fetchOrLogin, "/api/authors/" + id, "DELETE");
+    if (!response) {
+        return;
+    }
     yield put(push("/authors"));
 }
 

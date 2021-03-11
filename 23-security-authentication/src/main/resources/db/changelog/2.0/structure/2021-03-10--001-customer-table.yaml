@@ -1,0 +1,21 @@
+databaseChangeLog:
+- changeSet:
+    id: 2021-03-10--001-customer-table
+    author: eshurupov
+    createTable:
+      tableName: customer
+      columns:
+      - column:
+          name: id
+          type: bigint
+          autoIncrement: true
+          constraints:
+            nullable: false
+            primaryKey: true
+            primaryKeyName: pk_customer
+      - column:
+          name: username
+          type: varchar(255)
+      - column:
+          name: password
+          type: varchar(255)

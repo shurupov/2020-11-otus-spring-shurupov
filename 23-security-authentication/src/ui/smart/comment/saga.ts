@@ -5,6 +5,7 @@ import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
 import {bookSelector} from "smart/book/saga";
+import {fetchOrLogin} from "smart/login/saga";
 
 export const openCommentListAction = () => {
     return {
@@ -49,8 +50,10 @@ export function* workerDisplayList() {
         {caption: book.name, url: "/books/" + book.id},
         {caption: "Comments", url: "/books/" + book.id + "/comments"},
     ]));
-    const response = yield call(fetch, "/api/books/" + book.id + "/comments");
-    const comments = yield call([response, 'json']);
+    const comments = yield call(fetchOrLogin, "/api/books/" + book.id + "/comments");
+    if (!comments) {
+        return;
+    }
     yield put(commentSlice.actions.list(comments));
 }
 
@@ -67,8 +70,10 @@ const commentIdSelector = (state: any) => {
 export function* workerOpenComment() {
     const book = yield select(bookSelector);
     const id = yield select(commentIdSelector);
-    const response = yield call(fetch, "/api/books/" + book.id + "/comments/" + id);
-    const comment = yield call([response, 'json']);
+    const comment = yield call(fetchOrLogin, "/api/books/" + book.id + "/comments/" + id);
+    if (!comment) {
+        return;
+    }
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
         {caption: "Books", url: "/books"},
@@ -107,14 +112,10 @@ const commentSelector = (state: any) => state.comment.element;
 export function* workerUpdateComment() {
     const book = yield select(bookSelector);
     const comment = yield select(commentSelector);
-    yield call(fetch, "/api/books/" + book.id + "/comments/" + comment.id, {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(comment)
-    });
+    const response = yield call(fetchOrLogin, "/api/books/" + book.id + "/comments/" + comment.id, "PUT", comment);
+    if (!response) {
+        return;
+    }
     yield put(push("/books/" + book.id));
 }
 
@@ -125,14 +126,10 @@ export function* watchUpdateComment() {
 export function* workerAddComment() {
     const book = yield select(bookSelector);
     const comment = yield select(commentSelector);
-    yield call(fetch, "/api/books/" + book.id + "/comments", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(comment)
-    });
+    const response = yield call(fetchOrLogin, "/api/books/" + book.id + "/comments", "POST", comment);
+    if (!response) {
+        return;
+    }
     yield put(push("/books/" + book.id));
 }
 
@@ -145,9 +142,10 @@ const commentToDeleteIdSelector = (state: any) => state.comment.elementToDeleteI
 export function* workerRemoveComment() {
     const book = yield select(bookSelector);
     const id = yield select(commentToDeleteIdSelector);
-    yield call(fetch, "/api/books/" + book.id + "/comments/" + id, {
-        method: "DELETE",
-    });
+    const response = yield call(fetchOrLogin, "/api/books/" + book.id + "/comments/" + id, "DELETE");
+    if (!response) {
+        return;
+    }
     yield put(push("/books/" + book.id));
 }
 

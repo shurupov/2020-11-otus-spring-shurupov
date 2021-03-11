@@ -16,6 +16,8 @@ import {ConnectedAuthorList} from "smart/authors/ConnectedAuthorList";
 import {ConnectedAuthorEditor} from "smart/authors/ConnectedAuthorEditor";
 import {ConnectedCommentEditor} from "smart/comment/ConnectedCommentEditor";
 import {ConnectedCommentList} from "smart/comment/ConnectedCommentList";
+import Login from "components/login/Login";
+import {ConnectedLogin} from "smart/login/ConnectedLogin";
 
 interface Book {
     id: number;
@@ -35,6 +37,8 @@ export default class App extends React.Component {
                         <ConnectedCrumbs />
                         <Switch>
                             <Route path="/" exact component={ConnectedSummary} />
+
+                            <Route path="/auth" exact component={ConnectedLogin} />
 
                             <Route path="/books" exact component={ConnectedBookList} />
                             <Route path="/books/add" exact component={ConnectedBookEditor} />

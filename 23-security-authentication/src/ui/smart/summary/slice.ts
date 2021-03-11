@@ -4,10 +4,10 @@ export const summarySlice = createSlice({
     name: "summary",
     initialState: {
         counts: {
-            books: 5,
-            comments: 4,
-            authors: 6,
-            genres: 8
+            books: 0,
+            comments: 0,
+            authors: 0,
+            genres: 0
         },
     },
     reducers: {

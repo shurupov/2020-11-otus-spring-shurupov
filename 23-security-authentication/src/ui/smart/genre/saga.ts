@@ -4,6 +4,7 @@ import {genreSlice} from "smart/genre/slice";
 import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
+import {fetchOrLogin} from "smart/login/saga";
 
 export const openGenreListAction = () => {
     return {
@@ -45,8 +46,10 @@ export function* workerDisplayList() {
         {caption: "Home", url: "/"},
         {caption: "Genres", url: "/genres"},
     ]));
-    const response = yield call(fetch, "/api/genres");
-    const genres = yield call([response, 'json']);
+    const genres = yield call(fetchOrLogin, "/api/genres");
+    if (!genres) {
+        return;
+    }
     yield put(genreSlice.actions.list(genres));
 }
 
@@ -62,8 +65,10 @@ const genreIdSelector = (state: any) => {
 
 export function* workerOpenGenre() {
     const id = yield select(genreIdSelector);
-    const response = yield call(fetch, "/api/genres/" + id);
-    const genre = yield call([response, 'json']);
+    const genre = yield call(fetchOrLogin, "/api/genres/" + id);
+    if (!genre) {
+        return;
+    }
     yield put(crumbsSlice.actions.setCrumbs([
         {caption: "Home", url: "/"},
         {caption: "Genres", url: "/genres"},
@@ -98,14 +103,7 @@ const genreSelector = (state: any) => state.genre.element;
 
 export function* workerUpdateGenre() {
     const genre = yield select(genreSelector);
-    yield call(fetch, "/api/genres/" + genre.id, {
-        method: "PUT",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(genre)
-    });
+    yield call(fetchOrLogin, "/api/genres/" + genre.id, "PUT", genre);
     yield put(push("/genres"));
 }
 
@@ -115,14 +113,7 @@ export function* watchUpdateGenre() {
 
 export function* workerAddGenre() {
     const genre = yield select(genreSelector);
-    yield call(fetch, "/api/genres", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(genre)
-    });
+    yield call(fetchOrLogin, "/api/genres", "POST", genre);
     yield put(push("/genres"));
 }
 
@@ -134,9 +125,7 @@ const genreToDeleteIdSelector = (state: any) => state.genre.elementToDeleteId;
 
 export function* workerRemoveGenre() {
     const id = yield select(genreToDeleteIdSelector);
-    yield call(fetch, "/api/genres/" + id, {
-        method: "DELETE",
-    });
+    yield call(fetchOrLogin, "/api/genres/" + id, "DELETE");
     yield put(push("/genres"));
 }
 
