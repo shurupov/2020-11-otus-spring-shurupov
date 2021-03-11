@@ -47,7 +47,7 @@ export function* watchLogout() {
 }
 
 export function *fetchOrLogin(url: string, method = "GET", body = false) {
-    const response = yield call(fetch, url, {
+    const response: Response = yield call(fetch, url, {
         method,
         headers: {
             "Accept": "application/json",
@@ -55,6 +55,10 @@ export function *fetchOrLogin(url: string, method = "GET", body = false) {
         },
         body: body ? JSON.stringify(body) : undefined
     });
+    if (response.status == 403) {
+        yield put(goBack());
+        return false;
+    }
     const json = yield call([response, 'json']);
     if (json.hasOwnProperty("status") && json.status == "error") {
         yield put(authSlice.actions.logout());
