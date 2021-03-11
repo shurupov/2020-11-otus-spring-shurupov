@@ -17,7 +17,9 @@ Keywords: `Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation 
 `DAO`, `Lombok`, `Liquibase`, `Postgres`, `H2`,
 `Mongock`, `Embedded MongoDB`,
 `JUnit5`, `AssertJ`, `Mockito`,
-`@JdbcTest`, `@DataJpaTest`, `@DataMongoTest`, `@DirtiesContext`
+`@JdbcTest`, `@DataJpaTest`, `@DataMongoTest`, `@DirtiesContext`,
+`Reactive Programming`, `RxJava`, `WebFlux`, `Reactive Mongo Repository`,
+`Spring Security`, `Authentication`, `Authorization`
 
 ## Modules/Homeworks
 
@@ -39,5 +41,5 @@ Keywords: `Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation 
     - [Spring Webflux (Spring Reactive Stack)](20-webflux)
 
 - Security
-    - [Spring Security](23-security-authentication)
+    - [Spring Security Authentication](23-security-authentication)
     - [Spring Security Authorization](25-authorization)
