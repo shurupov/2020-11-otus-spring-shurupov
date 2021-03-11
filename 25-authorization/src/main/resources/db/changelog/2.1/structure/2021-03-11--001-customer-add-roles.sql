@@ -1,2 +1,2 @@
 ALTER TABLE customer
-    ADD COLUMN roles jsonb;
+    ADD COLUMN roles json;
