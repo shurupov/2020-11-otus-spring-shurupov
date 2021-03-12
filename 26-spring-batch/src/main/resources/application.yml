@@ -19,6 +19,9 @@ spring:
   data:
     mongodb:
       uri: mongodb://localhost:27017/library
+  batch:
+    initialize-schema: always
+
 
 mongock:
   runner-type: InitializingBean

@@ -1,6 +1,5 @@
 package ru.otus.shurupov.spring.batch.config;
 
-import org.hibernate.SessionFactory;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -9,15 +8,14 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.data.MongoItemReader;
 import org.springframework.batch.item.data.builder.MongoItemReaderBuilder;
-import org.springframework.batch.item.database.HibernateItemWriter;
 import org.springframework.batch.item.database.JpaItemWriter;
-import org.springframework.batch.item.database.builder.HibernateItemWriterBuilder;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import ru.otus.shurupov.spring.batch.domain.mongo.Book;
+import ru.otus.shurupov.spring.batch.domain.postgres.Author;
 import ru.otus.shurupov.spring.batch.domain.postgres.PostgresBook;
 
 import javax.persistence.EntityManager;
@@ -90,6 +88,7 @@ public class JobConfig {
         return (Book inputBook) -> {
             PostgresBook outputBook = new PostgresBook();
             outputBook.setName(inputBook.getName());
+            outputBook.setAuthor(new Author(2L, "Agatha", "Christie"));
             return outputBook;
         };
     }
