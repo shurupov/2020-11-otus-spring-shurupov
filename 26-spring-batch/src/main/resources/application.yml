@@ -20,14 +20,6 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/library
 
-
-liquibase:
-  enabled: true
-  driver-class-name: org.postgresql.Driver
-  url: jdbc:postgresql://localhost:5432/library
-  user: springuser
-  password: springpassword
-
 mongock:
   runner-type: InitializingBean
   change-logs-scan-package:
