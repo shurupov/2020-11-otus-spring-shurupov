@@ -10,19 +10,12 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @Document(collection = "book")
-public class Book {
+public class MongoBook {
     @Id
     private String id;
 
-    private Author author;
+    private MongoAuthor author;
     private String name;
     private List<String> genres;
     private List<String> comments;
-
-    public Book(Author author, String name, List<String> genres, List<String> comments) {
-        this.author = author;
-        this.name = name;
-        this.genres = genres;
-        this.comments = comments;
-    }
 }

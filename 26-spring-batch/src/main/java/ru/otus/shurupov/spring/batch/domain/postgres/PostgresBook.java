@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "book")
-//@NamedEntityGraph(name = "book-author-graph", attributeNodes = @NamedAttributeNode("author"))
 public class PostgresBook {
 
     @Id
@@ -20,9 +19,9 @@ public class PostgresBook {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(targetEntity = Author.class)
+    @ManyToOne(targetEntity = PostgresAuthor.class)
     @JoinColumn(name = "author_id")
-    private Author author;
+    private PostgresAuthor author;
 
     @ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
     @JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
@@ -30,13 +29,13 @@ public class PostgresBook {
     @BatchSize(size = 5)
     private List<Genre> genres;
 
-    /*@OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book")
-    private List<BookComment> comments;*/
+    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book")
+    private List<BookComment> comments;
 
     @Column(name = "name")
     private String name;
 
-    public PostgresBook(String name, Author author, List<Genre> genres) {
+    public PostgresBook(String name, PostgresAuthor author, List<Genre> genres) {
         this.id = null;
         this.author = author;
         this.genres = new ArrayList<>(genres);

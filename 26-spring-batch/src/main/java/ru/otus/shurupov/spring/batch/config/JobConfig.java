@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.batch.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
@@ -10,36 +11,35 @@ import org.springframework.batch.item.data.MongoItemReader;
 import org.springframework.batch.item.data.builder.MongoItemReaderBuilder;
 import org.springframework.batch.item.database.JpaItemWriter;
 import org.springframework.batch.item.database.builder.JpaItemWriterBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import ru.otus.shurupov.spring.batch.domain.mongo.Book;
-import ru.otus.shurupov.spring.batch.domain.postgres.Author;
+import ru.otus.shurupov.spring.batch.domain.mongo.MongoBook;
 import ru.otus.shurupov.spring.batch.domain.postgres.PostgresBook;
+import ru.otus.shurupov.spring.batch.service.BookProcessService;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.HashMap;
 
 @Configuration
+@AllArgsConstructor
 public class JobConfig {
 
     private static final int CHUNK_SIZE = 5;
 
     public static final String IMPORT_FROM_MONGO_TO_POSTGRES = "importFromMongoToPostgres";
 
-    @Autowired
-    private MongoTemplate mongoTemplate;
+    private final MongoTemplate mongoTemplate;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Autowired
-    private StepBuilderFactory stepBuilderFactory;
+    private final StepBuilderFactory stepBuilderFactory;
 
-    @Autowired
-    private JobBuilderFactory jobBuilderFactory;
+    private final JobBuilderFactory jobBuilderFactory;
+
+    private final BookProcessService bookProcessService;
 
     @Bean
     public Job fromMongoToPostgres(Step mongoToPostgresStep) {
@@ -52,12 +52,12 @@ public class JobConfig {
 
     @Bean
     public Step mongoToPostgresStep(
-            MongoItemReader<Book> mongoBookReader,
+            MongoItemReader<MongoBook> mongoBookReader,
             JpaItemWriter<PostgresBook> postgresBookWriter,
-            ItemProcessor<Book, PostgresBook> mongoToPostgresProcessor
+            ItemProcessor<MongoBook, PostgresBook> mongoToPostgresProcessor
             ) {
         return stepBuilderFactory.get("mongoToPostgresStep")
-                .<Book, PostgresBook>chunk(CHUNK_SIZE)
+                .<MongoBook, PostgresBook>chunk(CHUNK_SIZE)
                 .reader(mongoBookReader)
                 .processor(mongoToPostgresProcessor)
                 .writer(postgresBookWriter)
@@ -65,12 +65,12 @@ public class JobConfig {
     }
 
     @Bean
-    public MongoItemReader<Book> mongoBookReader() {
-        return new MongoItemReaderBuilder<Book>()
+    public MongoItemReader<MongoBook> mongoBookReader() {
+        return new MongoItemReaderBuilder<MongoBook>()
                 .name("mongoBookReader")
                 .template(mongoTemplate)
                 .jsonQuery("{}")
-                .targetType(Book.class)
+                .targetType(MongoBook.class)
                 .sorts(new HashMap<>())
                 .build();
     }
@@ -84,12 +84,7 @@ public class JobConfig {
     }
 
     @Bean
-    public ItemProcessor<Book, PostgresBook> mongoToPostgresProcessor() {
-        return (Book inputBook) -> {
-            PostgresBook outputBook = new PostgresBook();
-            outputBook.setName(inputBook.getName());
-            outputBook.setAuthor(new Author(2L, "Agatha", "Christie"));
-            return outputBook;
-        };
+    public ItemProcessor<MongoBook, PostgresBook> mongoToPostgresProcessor() {
+        return bookProcessService::process;
     }
 }

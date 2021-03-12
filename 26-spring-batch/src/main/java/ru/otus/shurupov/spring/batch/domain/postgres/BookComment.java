@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "book_comment")
-//@NamedEntityGraph(name = "comment-book-graph", attributeNodes = @NamedAttributeNode("book"))
 public class BookComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,7 +15,7 @@ public class BookComment {
 
     @ManyToOne(targetEntity = PostgresBook.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
-    private PostgresBook postgresBook;
+    private PostgresBook book;
 
     @Column(name = "comment_text")
     private String text;

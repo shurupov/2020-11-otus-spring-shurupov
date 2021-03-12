@@ -7,7 +7,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "author")
-public class Author {
+public class PostgresAuthor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,16 +20,16 @@ public class Author {
     @Column(name = "last_name")
     private String lastName;
 
-    public Author(String firstName, String lastName) {
+    public PostgresAuthor(String firstName, String lastName) {
         this.lastName = lastName;
         this.firstName = firstName;
     }
 
-    public Author(Long id, String firstName, String lastName) {
+    public PostgresAuthor(Long id, String firstName, String lastName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    public Author() {
+    public PostgresAuthor() {
     }
 }

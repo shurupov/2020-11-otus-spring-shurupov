@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "author")
-public class Author {
+public class MongoAuthor {
     @Id
     private String id;
     private String firstName;
