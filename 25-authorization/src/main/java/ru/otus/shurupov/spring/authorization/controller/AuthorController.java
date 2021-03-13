@@ -1,7 +1,7 @@
 package ru.otus.shurupov.spring.authorization.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.authorization.domain.Author;
 import ru.otus.shurupov.spring.authorization.service.AuthorService;
@@ -21,29 +21,29 @@ public class AuthorController {
     }
 
     @PostMapping("/api/authors")
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Author add(@RequestBody Author author) {
         author = authorService.save(author);
         return author;
     }
 
-    @Secured("ROLE_ADMIN")
     @GetMapping("/api/authors/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Author get(@PathVariable Long id) {
         Author author = authorService.getById(id);
         return author;
     }
 
-    @Secured("ROLE_ADMIN")
     @PutMapping("/api/authors/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Author update(@PathVariable Long id, @RequestBody Author author) {
         author.setId(id);
         Author updated = authorService.save(author);
         return updated;
     }
 
-    @Secured("ROLE_ADMIN")
     @DeleteMapping("/api/authors/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void remove(@PathVariable Long id) {
         authorService.removeById(id);
     }

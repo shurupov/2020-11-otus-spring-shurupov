@@ -6,7 +6,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableSwagger2
 public class SpringSecurityAuthorizationApp {
     public static void main(String[] args) {
