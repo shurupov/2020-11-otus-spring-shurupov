@@ -29,7 +29,7 @@ public class BookProcessService {
         outputBook.setName(mongoBook.getName());
         outputBook.setAuthor(getOrCreateAuthor(mongoBook.getAuthor()));
         outputBook.setGenres(getOrCreateGenres(mongoBook.getGenres()));
-        outputBook.setComments(createComments(mongoBook.getComments()));
+        outputBook.setComments(createComments(mongoBook.getComments(), outputBook));
         return outputBook;
     }
 
@@ -62,7 +62,7 @@ public class BookProcessService {
         return genres;
     }
 
-    private List<BookComment> createComments(List<String> contents) {
+    private List<BookComment> createComments(List<String> contents, PostgresBook book) {
         if (contents == null) {
             return List.of();
         }
@@ -70,7 +70,8 @@ public class BookProcessService {
         for (String text : contents) {
             BookComment comment = new BookComment();
             comment.setText(text);
-            comment = commentRepository.save(comment);
+            comment.setBook(book);
+            //comment = commentRepository.save(comment);
             comments.add(comment);
         }
         return comments;

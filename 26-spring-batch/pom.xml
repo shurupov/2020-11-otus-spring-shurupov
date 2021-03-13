@@ -64,11 +64,11 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
+		<!--<dependency>
 			<groupId>de.flapdoodle.embed</groupId>
 			<artifactId>de.flapdoodle.embed.mongo</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -77,11 +77,11 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<!--<dependency>
+		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
 			<version>${liquibase.version}</version>
-		</dependency>-->
+		</dependency>
 
 		<dependency>
 			<groupId>com.github.cloudyrock.mongock</groupId>
