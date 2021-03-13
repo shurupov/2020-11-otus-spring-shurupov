@@ -8,6 +8,7 @@ import org.hibernate.annotations.FetchMode;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -47,8 +48,11 @@ public class PostgresBook {
 
     @Override
     public String toString() {
-        return "Book{" +
+        return "PostgresBook{" +
                 "id=" + id +
+                ", author=" + author +
+                ", genres=" + genres +
+                ", comments=" + comments.stream().map(BookComment::getText).collect(Collectors.toList()) +
                 ", name='" + name + '\'' +
                 '}';
     }
