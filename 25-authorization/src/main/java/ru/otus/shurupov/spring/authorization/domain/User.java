@@ -1,10 +1,15 @@
 package ru.otus.shurupov.spring.authorization.domain;
 
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 import lombok.Data;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
+@TypeDef(name = "json", typeClass = JsonStringType.class)
 @Entity
 @Table(name = "customer")
 public class User {
@@ -19,4 +24,7 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Type(type = "json")
+    private List<String> roles;
 }

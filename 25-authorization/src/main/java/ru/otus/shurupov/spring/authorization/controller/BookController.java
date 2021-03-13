@@ -1,6 +1,8 @@
 package ru.otus.shurupov.spring.authorization.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.authorization.domain.Book;
 import ru.otus.shurupov.spring.authorization.domain.Genre;

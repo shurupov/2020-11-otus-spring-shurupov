@@ -2,6 +2,7 @@ package ru.otus.shurupov.spring.authorization.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.shurupov.spring.authorization.repository.GenreRepository;
@@ -21,12 +22,14 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Genre getById(Long id) {
         return genreRepository.findById(id).orElseThrow();
     }
 
     @Override
     @Transactional
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Genre insert(Genre genre) {
         if (genre.getId() != null) {
             genre.setId(null);
@@ -36,6 +39,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     @Transactional
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Genre update(Long id, Genre genre) {
         Genre genre1 = genreRepository.findById(id).orElseThrow();
         genre1.setName(genre.getName());
@@ -43,6 +47,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void removeById(Long id) {
         genreRepository.deleteById(id);
     }
