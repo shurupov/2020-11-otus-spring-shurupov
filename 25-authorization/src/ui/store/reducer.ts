@@ -7,6 +7,7 @@ import {crumbsSlice} from "smart/breadCrumbs/slice";
 import {summarySlice} from "smart/summary/slice";
 import {commentSlice} from "smart/comment/slice";
 import {authSlice} from "smart/login/slice";
+import {alertSlice} from "smart/message/alertSlice";
 
 export const createRootReducer = (history: any) => combineReducers({
     router: connectRouter(history),
@@ -17,4 +18,5 @@ export const createRootReducer = (history: any) => combineReducers({
     genre: genreSlice.reducer,
     author: authorSlice.reducer,
     auth: authSlice.reducer,
+    alert: alertSlice.reducer,
 });

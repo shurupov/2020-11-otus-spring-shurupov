@@ -16,15 +16,8 @@ import {ConnectedAuthorList} from "smart/authors/ConnectedAuthorList";
 import {ConnectedAuthorEditor} from "smart/authors/ConnectedAuthorEditor";
 import {ConnectedCommentEditor} from "smart/comment/ConnectedCommentEditor";
 import {ConnectedCommentList} from "smart/comment/ConnectedCommentList";
-import Login from "components/login/Login";
 import {ConnectedLogin} from "smart/login/ConnectedLogin";
-
-interface Book {
-    id: number;
-    name: string;
-    author: string;
-    genres: string
-}
+import { ConnectedMessage } from 'smart/message/ConnectedMessage';
 
 export default class App extends React.Component {
 
@@ -68,6 +61,7 @@ export default class App extends React.Component {
 
                         </Switch>
                     </ConnectedRouter>
+                    <ConnectedMessage />
                 </Container>
             </Provider>
         )
