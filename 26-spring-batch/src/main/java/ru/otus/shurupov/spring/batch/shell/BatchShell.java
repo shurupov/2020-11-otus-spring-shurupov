@@ -13,7 +13,7 @@ public class BatchShell {
     private final JobLauncher jobLauncher;
     private final Job fromMongoToPostgres;
 
-    @ShellMethod(value = "migrateMongoToPostgres", key = "m-p")
+    @ShellMethod(value = "migrateMongoToPostgres", key = "import")
     public void migrateMongoToPostgres() throws Exception {
         JobExecution execution = jobLauncher.run(fromMongoToPostgres, new JobParameters());
         System.out.println(execution);
