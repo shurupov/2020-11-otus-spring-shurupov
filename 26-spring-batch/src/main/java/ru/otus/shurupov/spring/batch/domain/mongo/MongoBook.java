@@ -18,4 +18,11 @@ public class MongoBook {
     private String name;
     private List<String> genres;
     private List<String> comments;
+
+    public MongoBook(MongoAuthor author, String name, List<String> genres, List<String> comments) {
+        this.author = author;
+        this.name = name;
+        this.genres = genres;
+        this.comments = comments;
+    }
 }

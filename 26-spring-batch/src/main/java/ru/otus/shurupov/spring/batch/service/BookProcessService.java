@@ -27,7 +27,7 @@ public class BookProcessService {
     public PostgresBook process(MongoBook mongoBook) {
         PostgresBook outputBook = new PostgresBook();
         outputBook.setName(mongoBook.getName());
-        outputBook.setPostgresAuthor(getOrCreateAuthor(mongoBook.getAuthor()));
+        outputBook.setAuthor(getOrCreateAuthor(mongoBook.getAuthor()));
         outputBook.setGenres(getOrCreateGenres(mongoBook.getGenres()));
         outputBook.setComments(createComments(mongoBook.getComments()));
         return outputBook;

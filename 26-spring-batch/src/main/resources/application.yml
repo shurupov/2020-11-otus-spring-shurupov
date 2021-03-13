@@ -31,9 +31,7 @@ spring:
 mongock:
   runner-type: InitializingBean
   change-logs-scan-package:
-    - ru.otus.shurupov.spring.springdatamongodb.mongock.changelog
-
-
+    - ru.otus.shurupov.spring.batch.mongock.changelog
 
 liquibase:
   enabled: true
