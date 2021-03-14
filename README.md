@@ -43,3 +43,6 @@ Keywords: `Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation 
 - Security
     - [Spring Security Authentication](23-security-authentication)
     - [Spring Security Authorization](25-authorization)
+
+- Batch
+    - [Spring Batch](26-spring-batch)
