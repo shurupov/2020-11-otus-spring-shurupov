@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import ru.otus.shurupov.spring.batch.domain.mongo.MongoBook;
 import ru.otus.shurupov.spring.batch.domain.postgres.PostgresBook;
-import ru.otus.shurupov.spring.batch.repository.CommentRepository;
 import ru.otus.shurupov.spring.batch.service.BookProcessService;
 
 import javax.persistence.EntityManager;
@@ -33,8 +32,6 @@ public class SaveBookGenreAuthorStepConfig {
 
     private final StepBuilderFactory stepBuilderFactory;
     private final BookProcessService bookProcessService;
-
-    private final CommentRepository commentRepository;
 
     @Bean
     public Step saveBookGenreAuthorStep(

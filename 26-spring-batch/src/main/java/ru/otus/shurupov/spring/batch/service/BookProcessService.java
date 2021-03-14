@@ -9,7 +9,6 @@ import ru.otus.shurupov.spring.batch.domain.postgres.Genre;
 import ru.otus.shurupov.spring.batch.domain.postgres.PostgresAuthor;
 import ru.otus.shurupov.spring.batch.domain.postgres.PostgresBook;
 import ru.otus.shurupov.spring.batch.repository.AuthorRepository;
-import ru.otus.shurupov.spring.batch.repository.CommentRepository;
 import ru.otus.shurupov.spring.batch.repository.GenreRepository;
 
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class BookProcessService {
 
     private final AuthorRepository authorRepository;
     private final GenreRepository genreRepository;
-    private final CommentRepository commentRepository;
 
     public PostgresBook process(MongoBook mongoBook) {
         PostgresBook outputBook = new PostgresBook();
@@ -71,7 +69,6 @@ public class BookProcessService {
             BookComment comment = new BookComment();
             comment.setText(text);
             comment.setBook(book);
-            //comment = commentRepository.save(comment);
             comments.add(comment);
         }
         return comments;

@@ -23,7 +23,7 @@ spring:
       enabled: false
   shell:
     interactive:
-      enabled: true
+      enabled: false
 
 
 mongock:
