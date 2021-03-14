@@ -29,7 +29,7 @@ public class BookProcessService {
         outputBook.setName(mongoBook.getName());
         outputBook.setAuthor(getOrCreateAuthor(mongoBook.getAuthor()));
         outputBook.setGenres(getOrCreateGenres(mongoBook.getGenres()));
-        //outputBook.setComments(createComments(mongoBook.getComments(), outputBook));
+        outputBook.setComments(createComments(mongoBook.getComments(), outputBook));
         return outputBook;
     }
 

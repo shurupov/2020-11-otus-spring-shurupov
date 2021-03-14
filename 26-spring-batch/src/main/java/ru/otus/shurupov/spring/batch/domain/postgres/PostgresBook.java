@@ -30,7 +30,7 @@ public class PostgresBook {
     @BatchSize(size = 5)
     private List<Genre> genres;
 
-    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book")
+    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.MERGE)
     private List<BookComment> comments;
 
     @Column(name = "name")

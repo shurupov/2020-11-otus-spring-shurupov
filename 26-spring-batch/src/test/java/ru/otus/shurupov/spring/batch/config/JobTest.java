@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.test.JobLauncherTestUtils;
 import org.springframework.batch.test.JobRepositoryTestUtils;
 import org.springframework.batch.test.context.SpringBatchTest;
@@ -13,15 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static ru.otus.shurupov.spring.batch.config.JobConfig.IMPORT_FROM_MONGO_TO_POSTGRES;
+import static ru.otus.shurupov.spring.batch.config.job.JobConfig.IMPORT_FROM_MONGO_TO_POSTGRES;
 
 @SpringBootTest
 @SpringBatchTest
 class JobTest {
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
     private JobRepositoryTestUtils jobRepositoryTestUtils;
 
