@@ -6,7 +6,6 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,18 +29,11 @@ public class PostgresBook {
     @BatchSize(size = 5)
     private List<Genre> genres;
 
-    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.MERGE)
+    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.PERSIST)
     private List<BookComment> comments;
 
     @Column(name = "name")
     private String name;
-
-    public PostgresBook(String name, PostgresAuthor author, List<Genre> genres) {
-        this.id = null;
-        this.author = author;
-        this.genres = new ArrayList<>(genres);
-        this.name = name;
-    }
 
     public PostgresBook() {
     }
