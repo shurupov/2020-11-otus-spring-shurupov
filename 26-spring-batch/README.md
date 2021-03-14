@@ -1,7 +1,7 @@
 # Spring Batch
 
 ## Task
-Implement Spring Batch Application that convert data from one database to another.
+Implement Spring Batch Application that converts data from one database (MongoDB) to another (Postgres).
 
 ## Used
 - Backend
