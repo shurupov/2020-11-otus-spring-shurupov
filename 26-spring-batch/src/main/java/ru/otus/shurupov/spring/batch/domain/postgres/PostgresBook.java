@@ -23,13 +23,13 @@ public class PostgresBook {
     @JoinColumn(name = "author_id")
     private PostgresAuthor author;
 
-    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.EAGER)
     @JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)
     private List<Genre> genres;
 
-    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book", cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = BookComment.class, fetch = FetchType.EAGER, mappedBy = "book", cascade = CascadeType.PERSIST)
     private List<BookComment> comments;
 
     @Column(name = "name")
