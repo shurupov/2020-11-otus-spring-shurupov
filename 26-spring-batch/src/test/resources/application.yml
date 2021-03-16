@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:library;MODE=postgresql
+    initialization-mode: never
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  data:
+    mongodb:
+      database: library
+      port: 0
+  batch:
+    initialize-schema: always
+    job:
+      enabled: false
+  shell:
+    interactive:
+      enabled: false
+
+
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package:
+    - ru.otus.shurupov.spring.batch.mongock.test.changelog
+
+liquibase:
+  enabled: true

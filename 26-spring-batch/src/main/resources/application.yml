@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: springuser
+    password: springpassword
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/library
+  batch:
+    initialize-schema: always
+    job:
+      enabled: false
+  shell:
+    interactive:
+      enabled: true
+
+
+mongock:
+  runner-type: InitializingBean
+  change-logs-scan-package:
+    - ru.otus.shurupov.spring.batch.mongock.changelog
+
+liquibase:
+  enabled: true
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/library
+  user: springuser
+  password: springpassword
