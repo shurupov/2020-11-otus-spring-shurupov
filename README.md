@@ -22,7 +22,8 @@ Certificate: (Link will be here)
   `JUnit5`, `AssertJ`, `Mockito`,
   `@JdbcTest`, `@DataJpaTest`, `@DataMongoTest`, `@DirtiesContext`,
   `Reactive Programming`, `RxJava`, `WebFlux`, `Reactive Mongo Repository`,
-  `Spring Security`, `Authentication`, `Authorization`
+  `Spring Security`, `Authentication`, `Authorization`,
+  `Spring Batch`
 </details>
 
 ## Modules/Homeworks
