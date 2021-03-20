@@ -7,7 +7,8 @@ Student: Evgeny Shurupov
 Certificate: (Link will be here)
 
 <details>
-  <summary>Keywords: </summary>`Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation Based Configuration`,
+  <summary>Keywords: </summary>
+  `Maven`, `XML Configuration`, `Java Based Configuration`, `Annotation Based Configuration`,
   `Spring Context`, `BeanPostProcessor`, `BeanFactory`, `Spring Boot`,
   `Spring Boot Starter`, `YML application configuration`, `Java Internationalization`,
   `Spring Shell`, `Spring Events`, `Conditional`, `Test Context Configuration`,
