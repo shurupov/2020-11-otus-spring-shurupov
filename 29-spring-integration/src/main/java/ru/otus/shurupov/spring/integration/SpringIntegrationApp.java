@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.integration.annotation.IntegrationComponentScan;
+import ru.otus.shurupov.spring.integration.domain.Dish;
 import ru.otus.shurupov.spring.integration.domain.FoodItem;
 import ru.otus.shurupov.spring.integration.domain.OrderItem;
 import ru.otus.shurupov.spring.integration.gateway.Table;
@@ -17,27 +18,37 @@ import java.util.List;
 @SpringBootApplication
 public class SpringIntegrationApp {
 
-    private static final String[] MENU = { "coffee", "tea", "smoothie", "whiskey", "beer", "cola", "water" };
-
     public static void main(String[] args) {
         ConfigurableApplicationContext ctx = SpringApplication.run(SpringIntegrationApp.class);
 
         Table table = ctx.getBean(Table.class);
 
-        Collection<FoodItem> food = table.waiter(generateOrderItems());
-        System.out.println("SpringIntegrationApp.main");
-        food.forEach(System.out::println);
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            Collection<OrderItem> orderItems = generateOrderItems();
+            System.out.println("Ordered " + orderItems);
+            Collection<FoodItem> food = table.waiter(orderItems);
+            System.out.println("Cooked " + food);
+            System.out.println();
+        }
+
+
     }
 
     private static Collection<OrderItem> generateOrderItems() {
         List<OrderItem> items = new ArrayList<>();
-        for ( int i = 0; i < RandomUtils.nextInt( 1, 5 ); ++ i ) {
+        for ( int i = 0; i < RandomUtils.nextInt( 1, 10 ); ++ i ) {
             items.add( generateOrderItem() );
         }
         return items;
     }
 
     private static OrderItem generateOrderItem() {
-        return new OrderItem( MENU[ RandomUtils.nextInt( 0, MENU.length ) ] );
+        return new OrderItem(Dish.values()[ RandomUtils.nextInt( 0, 4 ) ].getName() );
     }
 }

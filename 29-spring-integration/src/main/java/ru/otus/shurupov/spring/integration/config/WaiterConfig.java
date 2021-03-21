@@ -9,9 +9,14 @@ import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
 import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.scheduling.PollerMetadata;
+import ru.otus.shurupov.spring.integration.domain.Dish;
+import ru.otus.shurupov.spring.integration.domain.DishType;
+import ru.otus.shurupov.spring.integration.domain.OrderItem;
+
+import java.util.Objects;
 
 @Configuration
-public class IntegrationConfiguration {
+public class WaiterConfig {
 
     @Bean
     public QueueChannel waiterOrder() {
@@ -27,9 +32,12 @@ public class IntegrationConfiguration {
     public IntegrationFlow waiterFlow() {
         return IntegrationFlows.from("waiterOrder")
                 .split()
-                .handle("kitchenService", "cook")
-                .aggregate()
-                .channel("waiterFood")
+                .<OrderItem, DishType>route(
+                        i -> Objects.requireNonNull(Dish.fromString(i.getName())).getType(),
+                        mapping -> mapping
+                                .subFlowMapping(DishType.COLD_DISH, sf -> sf.channel("coldShopChannel"))
+                                .subFlowMapping(DishType.HOT_DISH, sf -> sf.channel("hotShopChannel"))
+                )
                 .get();
     }
 
