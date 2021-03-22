@@ -18,7 +18,7 @@ public class ColdShopConfig {
     @Bean
     public IntegrationFlow coldShopFlow() {
         return IntegrationFlows.from("coldShopChannel")
-                .handle("kitchenService", "cook")
+                .handle("coldShop", "cook")
                 .channel("readyFoodChannel")
                 .get();
     }
