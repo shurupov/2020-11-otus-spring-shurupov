@@ -31,10 +31,11 @@ public class WaiterFoodCarryingConfig {
                                 continue;
                             }
                             FoodItem foodItem = (FoodItem) foodItemMessage.getPayload();
-                            if (!foods.containsKey("1")) {
-                                foods.put("1", new ArrayList());
+                            String table = Integer.toString(foodItem.getTable());
+                            if (!foods.containsKey(table)) {
+                                foods.put(table, new ArrayList());
                             }
-                            List<FoodItem> list = (List<FoodItem>) foods.get("1");
+                            List<FoodItem> list = (List<FoodItem>) foods.get(table);
                             list.add(foodItem);
                         }
                         return foods;

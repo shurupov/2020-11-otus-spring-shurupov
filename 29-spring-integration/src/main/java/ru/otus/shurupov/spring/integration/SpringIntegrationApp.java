@@ -41,14 +41,15 @@ public class SpringIntegrationApp {
     }
 
     private static Collection<OrderItem> generateOrderItems() {
+        int tableNumber = RandomUtils.nextInt(1, 10);
         List<OrderItem> items = new ArrayList<>();
         for ( int i = 0; i < RandomUtils.nextInt( 1, 10 ); ++ i ) {
-            items.add( generateOrderItem() );
+            items.add( generateOrderItem(tableNumber) );
         }
         return items;
     }
 
-    private static OrderItem generateOrderItem() {
-        return new OrderItem(Dish.values()[ RandomUtils.nextInt( 0, 4 ) ].getName() );
+    private static OrderItem generateOrderItem(int tableNumber) {
+        return new OrderItem(tableNumber, Dish.values()[ RandomUtils.nextInt( 0, 4 ) ].getName() );
     }
 }
