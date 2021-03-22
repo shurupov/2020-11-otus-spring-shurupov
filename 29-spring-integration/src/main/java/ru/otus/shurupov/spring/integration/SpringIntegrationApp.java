@@ -6,38 +6,44 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import ru.otus.shurupov.spring.integration.domain.Dish;
-import ru.otus.shurupov.spring.integration.domain.FoodItem;
 import ru.otus.shurupov.spring.integration.domain.OrderItem;
 import ru.otus.shurupov.spring.integration.gateway.Table;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ForkJoinPool;
+import java.util.stream.Collectors;
 
 @IntegrationComponentScan
 @SpringBootApplication
 public class SpringIntegrationApp {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         ConfigurableApplicationContext ctx = SpringApplication.run(SpringIntegrationApp.class);
 
         Table table = ctx.getBean(Table.class);
+        ForkJoinPool pool = ForkJoinPool.commonPool();
+
+        System.out.println("Restaurant is open.");
 
         while (true) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Thread.sleep(RandomUtils.nextInt(1000, 5000));
 
-            Collection<OrderItem> orderItems = generateOrderItems();
-            System.out.println("Ordered " + orderItems);
-            Collection<FoodItem> food = table.waiter(orderItems);
-            System.out.println("Cooked " + food);
-            System.out.println();
+            pool.execute( () -> {
+                Collection<OrderItem> orderItems = generateOrderItems();
+                table.order(orderItems);
+                System.out.println();
+                System.out.printf(
+                        "Ordered %s for table %s.%n ",
+                        orderItems.stream()
+                                .map(OrderItem::getName)
+                                .collect(Collectors.joining(",")),
+                        orderItems.stream().findFirst().get().getTable()
+                );
+                System.out.println();
+            });
         }
-
-
     }
 
     private static Collection<OrderItem> generateOrderItems() {
@@ -50,6 +56,6 @@ public class SpringIntegrationApp {
     }
 
     private static OrderItem generateOrderItem(int tableNumber) {
-        return new OrderItem(tableNumber, Dish.values()[ RandomUtils.nextInt( 0, 4 ) ].getName() );
+        return new OrderItem(tableNumber, Dish.values()[ RandomUtils.nextInt( 0, Dish.values().length ) ].getName() );
     }
 }

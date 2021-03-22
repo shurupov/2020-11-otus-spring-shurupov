@@ -7,7 +7,6 @@ import lombok.Getter;
 @Getter
 public enum Dish {
 
-
     GREEK_SALAD("greek salad", DishType.COLD_DISH),
     OLIVIE_SALAD("olivie salad", DishType.COLD_DISH),
 
@@ -20,7 +19,7 @@ public enum Dish {
     JUICE("juice", DishType.COLD_DRINK),
     SMOOTHIE("smoothie", DishType.COLD_DRINK),
     BEER("BEER", DishType.COLD_DRINK),
-    water("water", DishType.COLD_DRINK),
+    WATER("water", DishType.COLD_DRINK),
 
     CAKE("cake", DishType.DESSERT),
     CHEESECAKE("cheesecake", DishType.DESSERT);
