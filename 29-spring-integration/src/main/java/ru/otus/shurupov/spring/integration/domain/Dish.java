@@ -18,7 +18,7 @@ public enum Dish {
 
     JUICE("juice", DishType.COLD_DRINK),
     SMOOTHIE("smoothie", DishType.COLD_DRINK),
-    BEER("BEER", DishType.COLD_DRINK),
+    BEER("beer", DishType.COLD_DRINK),
     WATER("water", DishType.COLD_DRINK),
 
     CAKE("cake", DishType.DESSERT),
