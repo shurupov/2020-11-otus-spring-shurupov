@@ -49,5 +49,8 @@ Certificate: (Link will be here)
     - [Spring Security Authentication](23-security-authentication)
     - [Spring Security Authorization](25-authorization)
 
-- Batch
+- Spring Batch
     - [Spring Batch](26-spring-batch)
+
+- Spring Integration
+    - [Spring Integration](29-spring-integration)
