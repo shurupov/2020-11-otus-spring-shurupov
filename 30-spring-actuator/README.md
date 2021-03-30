@@ -58,7 +58,7 @@ Add Actuator to microservice. Implement CRUD interface using Spring Data REST. U
 `mvn clean package`
   
 ## Command to start the application
-`java -jar target/16-spring-spa-1.0.jar`
+`java -jar target/30-spring-actuator-1.0.jar`
 
 ## Command to build and start
 `mvn spring-boot:run`
