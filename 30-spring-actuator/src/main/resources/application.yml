@@ -16,6 +16,10 @@ spring:
       hibernate:
         format_sql: true
 
+  data:
+    rest:
+      base-path: /api/v2
+
 liquibase:
   enabled: true
   driver-class-name: org.postgresql.Driver
