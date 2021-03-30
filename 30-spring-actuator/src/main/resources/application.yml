@@ -36,13 +36,3 @@ management:
   health:
     defaults:
       enabled: true
-
-logging:
-  level:
-    root: INFO
-    ru.otus: DEBUG
-  pattern:
-    console: "%black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
-    file: "%d %p %c{1.} [%t] %m%n"
-  file:
-    name: logs/app.log
