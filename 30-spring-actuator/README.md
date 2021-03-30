@@ -49,13 +49,13 @@ Add Actuator to microservice. Implement CRUD interface using Spring Data REST. U
 ## Command to remove postgres container image
 `docker rm postgres`
 
-## Command to build
-`mvn clean package`
-
 </details>
 
 <details>
   <summary>Application (how to build, start)</summary>
+
+## Command to build
+`mvn clean package`
   
 ## Command to start the application
 `java -jar target/16-spring-spa-1.0.jar`
