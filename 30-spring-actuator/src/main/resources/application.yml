@@ -27,12 +27,14 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,env,metrics,shutdown
+        include: health,info,env,metrics,shutdown,prometheus
   endpoint:
     shutdown:
       enabled: true
     health:
       show-details: always
+    prometheus:
+      enabled: true
   health:
     defaults:
       enabled: true

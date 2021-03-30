@@ -53,3 +53,7 @@ Use Spring, REST and SPA. Use Spring Security. Separate access to urls and servi
 
 ## Command to build and start
 `mvn spring-boot:run`
+
+
+## Start Prometheus
+`docker run -p 9090:9090 -v ./prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus`
