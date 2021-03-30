@@ -1,8 +1,7 @@
-# Spring Security Authorization
+# Spring Boot Actuator, Spring Data REST, HATEOAS, HAL-Explorer, Prometheus
 
 ## Task
-Implement CRUD Shell application of book library with entities: Book, BookComment, Author, Genre. 
-Use Spring, REST and SPA. Use Spring Security. Separate access to urls and service methods by user roles. 
+Add Actuator to microservice. Implement CRUD interface using Spring Data REST. Use HATEOAS Priciple. Use HAL-Explorer. 
 
 ## Used
 - Backend
@@ -20,6 +19,9 @@ Use Spring, REST and SPA. Use Spring Security. Separate access to urls and servi
     - AssertJ
     - Hamcrest
     - Spring Security
+    - Spring Boot Actuator
+    - Spring Data REST
+    - HAL-Explorer
 - Frontend
     - npm, webpack, babel
     - TypeScript
@@ -32,6 +34,8 @@ Use Spring, REST and SPA. Use Spring Security. Separate access to urls and servi
     - material-ui
     - Storybook
     
+<details>
+  <summary>Database (how to build, start, stop, remove)</summary>
 
 ## Command to init postgres container image and start it (You need to have docker installed)
 `docker run -d --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=springpassword -e POSTGRES_USER=springuser -e POSTGRES_DB=library postgres`
@@ -48,12 +52,22 @@ Use Spring, REST and SPA. Use Spring Security. Separate access to urls and servi
 ## Command to build
 `mvn clean package`
 
+</details>
+
+<details>
+  <summary>Application (how to build, start)</summary>
+  
 ## Command to start the application
 `java -jar target/16-spring-spa-1.0.jar`
 
 ## Command to build and start
 `mvn spring-boot:run`
 
+[Application UI](http://localhost:8080)
+
+[HAL-Explorer](http://localhost:8080/api/v2)
+
+</details>
 
 ## Start Prometheus
 `docker run -p 9090:9090 -v ./prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus`

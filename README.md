@@ -23,7 +23,8 @@ Certificate: (Link will be here)
   `@JdbcTest`, `@DataJpaTest`, `@DataMongoTest`, `@DirtiesContext`,
   `Reactive Programming`, `RxJava`, `WebFlux`, `Reactive Mongo Repository`,
   `Spring Security`, `Authentication`, `Authorization`,
-  `Spring Batch`
+  `Spring Batch`,
+  `Spring Boot Actuator`, `Prometheus`, `Spring Data Rest`, `HATEOAS`, `HAL-Explorer`
 </details>
 
 ## Modules/Homeworks
@@ -54,3 +55,6 @@ Certificate: (Link will be here)
 
 - Spring Integration
     - [Spring Integration](29-spring-integration)
+
+- Microservices
+    - [Spring Actuator](30-spring-actuator)
