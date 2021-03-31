@@ -69,5 +69,12 @@ Add Actuator to microservice. Implement CRUD interface using Spring Data REST. U
 
 </details>
 
+<details>
+  <summary>Prometheus (how to build, start, access)</summary>
+
 ## Start Prometheus
 `docker run -p 9090:9090 -v ./prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus`
+
+[Prometheus UI](http://localhost:9090)
+
+</details>
