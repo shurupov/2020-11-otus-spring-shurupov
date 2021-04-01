@@ -26,5 +26,6 @@
         <module>25-authorization</module>
         <module>26-spring-batch</module>
         <module>29-spring-integration</module>
+        <module>30-spring-actuator</module>
     </modules>
 </project>
