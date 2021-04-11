@@ -27,5 +27,6 @@
         <module>26-spring-batch</module>
         <module>29-spring-integration</module>
         <module>30-spring-actuator</module>
+        <module>32-docker</module>
     </modules>
 </project>
