@@ -16,7 +16,7 @@ services:
 
   backend:
     container_name: backend
-    image: 32-docker:latest
+    image: 32-docker-backend:latest
     depends_on:
       - postgresdb
     ports:
