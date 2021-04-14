@@ -15,7 +15,7 @@ const config: webpack.Configuration = {
     output: {
         path: path.resolve(__dirname, "target/classes/public/"),
         filename: "[name].[contenthash].js",
-        publicPath: "",
+        publicPath: "/",
     },
     module: {
         rules: [
