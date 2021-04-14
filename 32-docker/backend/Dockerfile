@@ -1,10 +1,9 @@
-FROM maven:3.6.3-jdk-11
+FROM maven:3.6.3-openjdk-11
 ENV PROJECT_DIR=/opt/project
 RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR
 
-ADD ./* $PROJECT_DIR/
-ADD ./src/ $PROJECT_DIR/src
+ADD ./ $PROJECT_DIR/
 RUN mvn package -DskipTests
 
 FROM openjdk:11-jdk
