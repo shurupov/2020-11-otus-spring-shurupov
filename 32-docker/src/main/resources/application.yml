@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: springuser
+    password: springpassword
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  data:
+    rest:
+      base-path: /api/v2
+
+liquibase:
+  enabled: true
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/library
+  user: springuser
+  password: springpassword
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,metrics,shutdown,prometheus
+  endpoint:
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+    prometheus:
+      enabled: true
+  health:
+    defaults:
+      enabled: true
