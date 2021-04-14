@@ -16,7 +16,7 @@ services:
 
   backend:
     container_name: backend
-    image: 32-docker:latest
+    image: 32-docker-backend:latest
     depends_on:
       - postgresdb
     ports:
@@ -31,10 +31,7 @@ services:
 
   frontend:
     container_name: frontend
-    image: library/nginx:1.17.1-alpine
-    volumes:
-    - ./default.conf:/etc/nginx/conf.d/default.conf
-    - ./build:/usr/share/nginx/html
+    image: 32-docker-frontend:latest
     depends_on:
       - backend
     ports:
