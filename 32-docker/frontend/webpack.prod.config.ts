@@ -11,7 +11,7 @@ import { CleanWebpackPlugin } from "clean-webpack-plugin";
 
 const config: webpack.Configuration = {
     mode: "production",
-    entry: "./src/ui/index.tsx",
+    entry: "./src/index.tsx",
     output: {
         path: path.resolve(__dirname, "build/"),
         filename: "[name].[contenthash].js",
@@ -47,14 +47,14 @@ const config: webpack.Configuration = {
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
         alias: {
-            components: path.resolve(__dirname, "src/ui/components"),
-            store: path.resolve(__dirname, "src/ui/store"),
-            smart: path.resolve(__dirname, "src/ui/smart"),
+            components: path.resolve(__dirname, "src/components"),
+            store: path.resolve(__dirname, "src/store"),
+            smart: path.resolve(__dirname, "src/smart"),
         },
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "src/ui/index.html",
+            template: "src/index.html",
         }),
         new ForkTsCheckerWebpackPlugin({
             async: false,

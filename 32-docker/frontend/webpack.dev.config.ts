@@ -14,7 +14,7 @@ const config: webpack.Configuration = {
     output: {
         publicPath: "/",
     },
-    entry: "./src/ui/index.tsx",
+    entry: "./src/index.tsx",
     module: {
         rules: [
             {
@@ -54,14 +54,14 @@ const config: webpack.Configuration = {
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
         alias: {
-            components: path.resolve(__dirname, "src/ui/components"),
-            store: path.resolve(__dirname, "src/ui/store"),
-            smart: path.resolve(__dirname, "src/ui/smart"),
+            components: path.resolve(__dirname, "src/components"),
+            store: path.resolve(__dirname, "src/store"),
+            smart: path.resolve(__dirname, "src/smart"),
         },
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "src/ui/index.html",
+            template: "src/index.html",
         }),
         new webpack.HotModuleReplacementPlugin(),
         new ForkTsCheckerWebpackPlugin({
