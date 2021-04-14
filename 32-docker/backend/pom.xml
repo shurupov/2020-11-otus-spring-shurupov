@@ -10,9 +10,9 @@
 	</parent>
 
 	<groupId>ru.otus.shurupov.spring</groupId>
-	<artifactId>32-docker</artifactId>
+	<artifactId>32-docker-backend</artifactId>
 	<version>1.0</version>
-	<name>32-docker</name>
+	<name>32-docker-backend</name>
 	<description>Docker</description>
 
 	<properties>
