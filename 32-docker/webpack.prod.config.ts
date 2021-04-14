@@ -13,7 +13,7 @@ const config: webpack.Configuration = {
     mode: "production",
     entry: "./src/ui/index.tsx",
     output: {
-        path: path.resolve(__dirname, "target/classes/public/"),
+        path: path.resolve(__dirname, "build/"),
         filename: "[name].[contenthash].js",
         publicPath: "/",
     },
