@@ -29,8 +29,16 @@ Pack application to docker containers. Start application using docker-compose, s
 
 The first time it takes about 10 minutes to build and to start.
 
+</details>
+
 [Application UI](http://localhost)
+
+Available users to login in username:password format:
+
+| username | password |
+| -------- | ------- |
+| user1 | !user1 |
+| admin | !admin |
 
 [HAL-Explorer](http://localhost/api/v2)
 
-</details>
