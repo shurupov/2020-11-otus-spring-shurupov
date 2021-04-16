@@ -58,4 +58,4 @@ Certificate: (Link will be here)
 
 - Microservices
     - [Spring Actuator](30-spring-actuator)
-    - [Docker, Docker Compose, Swarm/Stacks, Kubernetes](32-docker)
+    - [Docker, Docker Compose, Kubernetes](32-docker)

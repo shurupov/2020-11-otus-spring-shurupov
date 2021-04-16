@@ -3,24 +3,18 @@ services:
   postgresdb:
     container_name: postgresdb
     image: library/postgres:13.2
-    ports:
-      - 5432:5432
     environment:
       POSTGRES_USER: springuser1
       POSTGRES_PASSWORD: springpassword1
       POSTGRES_DB: library
-#    volumes:
-#      - db-data:/var/lib/postgresql/data
     networks:
       - backend
 
   backend:
     container_name: backend
-    image: 32-docker-backend:latest
+    image: 32-docker-backend:v1
     depends_on:
       - postgresdb
-    ports:
-      - 8080:8080
     networks:
       - backend
       - frontend
@@ -31,7 +25,7 @@ services:
 
   frontend:
     container_name: frontend
-    image: 32-docker-frontend:latest
+    image: 32-docker-frontend:v1
     depends_on:
       - backend
     ports:
@@ -43,6 +37,3 @@ services:
 networks:
   frontend:
   backend:
-
-#volumes:
-#  db-data:

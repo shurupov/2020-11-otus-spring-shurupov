@@ -11,10 +11,10 @@ Pack application to docker containers. Start application using docker-compose, s
   <summary>Build docker-images (you need this one time)</summary>
 
 ## Command to build backend docker-image
-`docker build -t 32-docker-backend ./backend`
+`docker build -t 32-docker-backend:v1 ./backend`
 
 ## Command to build frontend docker-image
-`docker build -t 32-docker-frontend ./frontend`
+`docker build -t 32-docker-frontend:v1 ./frontend`
 
 </details>
 
