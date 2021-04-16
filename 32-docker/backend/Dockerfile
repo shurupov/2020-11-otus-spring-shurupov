@@ -6,7 +6,7 @@ WORKDIR $PROJECT_DIR
 ADD ./ $PROJECT_DIR/
 RUN mvn package -DskipTests
 
-FROM openjdk:11-jdk
+FROM openjdk:11-jre-slim
 ENV PROJECT_DIR=/opt/project
 RUN mkdir -p $PROJECT_DIR
 WORKDIR $PROJECT_DIR

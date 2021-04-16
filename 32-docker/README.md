@@ -1,4 +1,4 @@
-# Spring Boot Actuator, Spring Data REST, HATEOAS, HAL-Explorer, Prometheus
+# Docker, Docker Compose
 
 ## Task
 Pack application to docker containers. Start application using docker-compose, stacks, kubernetes. 
@@ -21,8 +21,13 @@ Pack application to docker containers. Start application using docker-compose, s
 <details>
   <summary>Start application using Docker Compose</summary>
 
-## Command to launch
+## Command to start
 `docker-compose up`
+
+## Command to start with images building
+`docker-compose --file docker-compose-with-build.yml up`
+
+The first time it takes about 10 minutes to build and to start.
 
 [Application UI](http://localhost)
 
