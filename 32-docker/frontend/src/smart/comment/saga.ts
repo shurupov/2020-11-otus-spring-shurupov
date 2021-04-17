@@ -5,7 +5,7 @@ import {crumbsSlice} from "../breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
 import {bookSelector} from "../book/saga";
-import {fetchOrLogin} from "../login/saga";
+import {fetchOrLogin, justFetch} from "../login/saga";
 
 export const openCommentListAction = () => {
     return {
@@ -142,10 +142,7 @@ const commentToDeleteIdSelector = (state: any) => state.comment.elementToDeleteI
 export function* workerRemoveComment() {
     const book = yield select(bookSelector);
     const id = yield select(commentToDeleteIdSelector);
-    const response = yield call(fetchOrLogin, "/api/books/" + book.id + "/comments/" + id, "DELETE");
-    if (!response) {
-        return;
-    }
+    yield call(justFetch, "/api/books/" + book.id + "/comments/" + id, "DELETE");
     yield put(push("/books/" + book.id));
 }
 

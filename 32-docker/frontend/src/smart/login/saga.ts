@@ -51,6 +51,17 @@ export function* watchLogout() {
     yield takeEvery(sagaActionTypes.AUTHENTICATION_LOGOUT, workerLogout);
 }
 
+export function *justFetch(url: string, method = "GET", body = false) {
+    yield call(fetch, url, {
+        method,
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: body ? JSON.stringify(body) : undefined
+    });
+}
+
 export function *fetchOrLogin(url: string, method = "GET", body = false) {
     const response: Response = yield call(fetch, url, {
         method,

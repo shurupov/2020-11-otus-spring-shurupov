@@ -4,7 +4,7 @@ import {genreSlice} from "./slice";
 import {crumbsSlice} from "../breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
-import {fetchOrLogin} from "../login/saga";
+import {fetchOrLogin, justFetch} from "../login/saga";
 
 export const openGenreListAction = () => {
     return {
@@ -125,7 +125,7 @@ const genreToDeleteIdSelector = (state: any) => state.genre.elementToDeleteId;
 
 export function* workerRemoveGenre() {
     const id = yield select(genreToDeleteIdSelector);
-    yield call(fetchOrLogin, "/api/genres/" + id, "DELETE");
+    yield call(justFetch, "/api/genres/" + id, "DELETE");
     yield put(push("/genres"));
 }
 

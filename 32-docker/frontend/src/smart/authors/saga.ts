@@ -4,7 +4,7 @@ import {authorSlice} from "./slice";
 import {crumbsSlice} from "../breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
 import {push} from "connected-react-router";
-import {fetchOrLogin} from "../login/saga";
+import {fetchOrLogin, justFetch} from "../login/saga";
 
 export const openAuthorListAction = () => {
     return {
@@ -131,10 +131,7 @@ const authorToDeleteIdSelector = (state: any) => state.author.elementToDeleteId;
 
 export function* workerRemoveAuthor() {
     const id = yield select(authorToDeleteIdSelector);
-    const response = yield call(fetchOrLogin, "/api/authors/" + id, "DELETE");
-    if (!response) {
-        return;
-    }
+    yield call(justFetch, "/api/authors/" + id, "DELETE");
     yield put(push("/authors"));
 }
 

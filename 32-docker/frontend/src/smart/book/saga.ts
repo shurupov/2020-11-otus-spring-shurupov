@@ -4,7 +4,7 @@ import {bookSlice} from "./slice";
 import {push} from "connected-react-router";
 import {crumbsSlice} from "../breadCrumbs/slice";
 import {EditorType} from "../../utils/EditorType";
-import {fetchOrLogin} from "../login/saga";
+import {fetchOrLogin, justFetch} from "../login/saga";
 import {authorSlice} from "../authors/slice";
 import {genreSlice} from "../genre/slice";
 import {commentSlice} from "../comment/slice";
@@ -149,10 +149,7 @@ export function* watchAddBook() {
 
 export function* workerRemoveBook() {
     const id = yield select(bookToDeleteIdSelector);
-    const response = yield call(fetchOrLogin, "/api/books/" + id, "DELETE");
-    if (!response) {
-        return;
-    }
+    yield call(justFetch, "/api/books/" + id, "DELETE");
     yield put(push("/books"));
 }
 
