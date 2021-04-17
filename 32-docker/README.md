@@ -33,7 +33,7 @@ The first time it takes about 10 minutes to build and to start.
 
 [Application UI](http://localhost)
 
-Available users to login in username:password format:
+Available users:
 
 | username | password |
 | -------- | ------- |
