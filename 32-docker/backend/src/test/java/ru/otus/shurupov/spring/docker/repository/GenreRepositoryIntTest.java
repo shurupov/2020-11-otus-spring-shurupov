@@ -1,4 +1,4 @@
-package ru.otus.shurupov.spring.docker.utils;
+package ru.otus.shurupov.spring.docker.repository;
 
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -13,7 +13,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
-import ru.otus.shurupov.spring.docker.repository.GenreRepository;
 import ru.otus.shurupov.spring.docker.service.GenreService;
 
 import static org.junit.Assert.assertTrue;
@@ -21,8 +20,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(initializers = {PostgresContainerBaseIntegrationTest.Initializer.class})
-public class PostgresContainerBaseIntegrationTest {
+@ContextConfiguration(initializers = {GenreRepositoryIntTest.Initializer.class})
+public class GenreRepositoryIntTest {
 
     @ClassRule
     public static PostgreSQLContainer postgreSQLContainer = new PostgreSQLContainer("postgres:13.2")
@@ -39,14 +38,6 @@ public class PostgresContainerBaseIntegrationTest {
             ).applyTo(configurableApplicationContext.getEnvironment());
         }
     }
-
-    /*@TestConfiguration
-    public static class TestContextConfiguration {
-        @Bean
-        public GenreService genreService(GenreRepository genreRepository) {
-            return new GenreServiceImpl(genreRepository);
-        }
-    }*/
 
     @Autowired
     private GenreRepository genreRepository;

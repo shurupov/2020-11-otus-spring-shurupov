@@ -24,7 +24,8 @@ Certificate: (Link will be here)
   `Reactive Programming`, `RxJava`, `WebFlux`, `Reactive Mongo Repository`,
   `Spring Security`, `Authentication`, `Authorization`,
   `Spring Batch`,
-  `Spring Boot Actuator`, `Prometheus`, `Spring Data Rest`, `HATEOAS`, `HAL-Explorer`
+  `Spring Boot Actuator`, `Prometheus`, `Spring Data Rest`, `HATEOAS`, `HAL-Explorer`,
+  `Docker`, `Docker Compose`, `Testcontainers`, `nginx`
 </details>
 
 ## Modules/Homeworks

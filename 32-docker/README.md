@@ -1,11 +1,21 @@
 # Docker, Docker Compose
 
 ## Task
-Pack application to docker containers. Start application using docker-compose, stacks, kubernetes. 
+Pack application to docker containers. Start application using docker-compose, stacks, kubernetes.
+Implement integration tests that use real database. 
 
 ## Used
 - Docker
 - Docker compose
+- Testcontainers
+    
+<details>
+  <summary>Launch tests (including integration on real db)</summary>
+
+## Command to launch tests
+`mvn clean test`
+
+</details>
     
 <details>
   <summary>Build docker-images (you need this one time)</summary>
