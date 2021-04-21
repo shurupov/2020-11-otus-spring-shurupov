@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:library;MODE=postgresql
+    initialization-mode: never
+
+liquibase:
+  enabled: true
