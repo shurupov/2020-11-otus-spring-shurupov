@@ -1,0 +1,39 @@
+version: "3"
+services:
+  postgresdb:
+    container_name: postgresdb
+    image: library/postgres:13.2
+    environment:
+      POSTGRES_USER: springuser1
+      POSTGRES_PASSWORD: springpassword1
+      POSTGRES_DB: library
+    networks:
+      - backend
+
+  backend:
+    container_name: backend
+    image: 32-docker-backend:v1
+    depends_on:
+      - postgresdb
+    networks:
+      - backend
+      - frontend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/library
+      SPRING_DATASOURCE_USERNAME: springuser1
+      SPRING_DATASOURCE_PASSWORD: springpassword1
+
+  frontend:
+    container_name: frontend
+    image: 32-docker-frontend:v1
+    depends_on:
+      - backend
+    ports:
+      - 80:80
+    networks:
+      - frontend
+
+
+networks:
+  frontend:
+  backend:
