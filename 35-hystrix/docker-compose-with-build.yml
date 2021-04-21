@@ -14,7 +14,7 @@ services:
     build:
       context: ./backend
     container_name: backend
-    image: 32-docker-backend:v1
+    image: 35-hystrix-backend:v2
     depends_on:
       - postgresdb
     networks:
