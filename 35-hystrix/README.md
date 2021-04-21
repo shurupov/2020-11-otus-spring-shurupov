@@ -16,28 +16,25 @@ Implement integration tests that use real database.
 `mvn clean test`
 
 </details>
-    
-<details>
-  <summary>Build docker-images (you need this one time)</summary>
-
-## Command to build backend docker-image
-`docker build -t 35-hystrix-backend:v1 ./backend`
-
-## Command to build frontend docker-image
-`docker build -t 32-docker-frontend:v1 ./frontend`
-
-</details>
 
 <details>
   <summary>Start application using Docker Compose</summary>
 
-## Command to start
-`docker-compose up`
+## Command to start.
+The first launch will also build about 10 seconds
 
-## Command to start with images building
-`docker-compose --file docker-compose-with-build.yml up`
+`docker-compose up` for linux and `docker compose up` for windows
 
-The first time it takes about 10 minutes to build and to start.
+</details>
+    
+<details>
+  <summary>Build docker-images separately</summary>
+
+## Command to build backend docker-image
+`docker build -t 35-hystrix-backend:v2 ./backend`
+
+## Command to build frontend docker-image
+`docker build -t 32-docker-frontend:v2 ./frontend`
 
 </details>
 
