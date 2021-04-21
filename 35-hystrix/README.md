@@ -21,7 +21,7 @@ Implement integration tests that use real database.
   <summary>Build docker-images (you need this one time)</summary>
 
 ## Command to build backend docker-image
-`docker build -t 32-docker-backend:v1 ./backend`
+`docker build -t 35-hystrix-backend:v1 ./backend`
 
 ## Command to build frontend docker-image
 `docker build -t 32-docker-frontend:v1 ./frontend`

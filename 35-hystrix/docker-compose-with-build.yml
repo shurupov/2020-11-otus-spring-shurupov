@@ -1,7 +1,7 @@
 version: "3"
 services:
   postgresdb:
-    container_name: postgresdb
+    container_name: 35-hystrix-postgresdb
     image: library/postgres:13.2
     environment:
       POSTGRES_USER: springuser1
@@ -13,7 +13,7 @@ services:
   backend:
     build:
       context: ./backend
-    container_name: backend
+    container_name: 35-hystrix-backend
     image: 35-hystrix-backend:v2
     depends_on:
       - postgresdb
@@ -28,8 +28,8 @@ services:
   frontend:
     build:
       context: ./frontend
-    container_name: frontend
-    image: 32-docker-frontend:v1
+    container_name: 35-hystrix-frontend
+    image: 35-hystrix-frontend:v2
     depends_on:
       - backend
     ports:
