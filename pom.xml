@@ -28,5 +28,6 @@
         <module>29-spring-integration</module>
         <module>30-spring-actuator</module>
         <module>32-docker/backend</module>
+        <module>35-hystrix/backend</module>
     </modules>
 </project>

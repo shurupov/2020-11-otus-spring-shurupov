@@ -1,5 +1,6 @@
 package ru.otus.shurupov.spring.hystrix.service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -53,6 +54,7 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    @HystrixCommand(commandKey="getGenres", fallbackMethod="buildFallbackGenres")
     public List<Genre> getAll() {
         return genreRepository.findAll(Sort.by("id"));
     }

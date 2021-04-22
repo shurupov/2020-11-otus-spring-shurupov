@@ -42,3 +42,11 @@ management:
   health:
     defaults:
       enabled: true
+
+hystrix:
+  command:
+    getGenres:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
