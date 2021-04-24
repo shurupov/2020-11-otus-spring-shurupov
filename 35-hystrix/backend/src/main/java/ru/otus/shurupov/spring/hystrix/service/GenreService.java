@@ -2,7 +2,7 @@ package ru.otus.shurupov.spring.hystrix.service;
 
 import ru.otus.shurupov.spring.hystrix.domain.Genre;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface GenreService {
     long count();
@@ -11,5 +11,5 @@ public interface GenreService {
     Genre update(Long id, Genre genre);
     void removeById(Long id);
 
-    List<Genre> getAll();
+    Collection<Genre> getAll();
 }

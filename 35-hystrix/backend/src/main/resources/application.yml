@@ -45,8 +45,14 @@ management:
 
 hystrix:
   command:
-    getGenres:
+    default:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 3000
+            timeoutInMilliseconds: 2000
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 15000
+      circuitBreaker:
+        requestVolumeThreshold: 4
+        sleepWindowInMilliseconds: 30000

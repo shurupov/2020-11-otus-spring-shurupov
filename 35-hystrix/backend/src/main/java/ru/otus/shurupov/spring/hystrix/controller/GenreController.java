@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.hystrix.domain.Genre;
 import ru.otus.shurupov.spring.hystrix.service.GenreService;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,8 +14,8 @@ public class GenreController {
     private final GenreService genreService;
 
     @GetMapping("/api/genres")
-    public List<Genre> genreList() {
-        List<Genre> genres = genreService.getAll();
+    public Collection<Genre> genreList() {
+        Collection<Genre> genres = genreService.getAll();
         return genres;
     }
 
