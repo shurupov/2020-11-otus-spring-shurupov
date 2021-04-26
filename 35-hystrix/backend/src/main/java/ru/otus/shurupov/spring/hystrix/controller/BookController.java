@@ -9,6 +9,7 @@ import ru.otus.shurupov.spring.hystrix.domain.dto.BookRequest;
 import ru.otus.shurupov.spring.hystrix.domain.dto.PoorBookResponse;
 import ru.otus.shurupov.spring.hystrix.service.BookService;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class BookController {
 
     @GetMapping("/api/books")
     public List<BookResponse> bookList() {
-        List<Book> books = bookService.getAll();
+        Collection<Book> books = bookService.getAll();
         List<BookResponse> bookResponses = books.stream()
                 .map(this::map).collect(Collectors.toList());
         return bookResponses;
