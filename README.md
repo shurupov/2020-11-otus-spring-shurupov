@@ -25,7 +25,8 @@ Certificate: (Link will be here)
   `Spring Security`, `Authentication`, `Authorization`,
   `Spring Batch`,
   `Spring Boot Actuator`, `Prometheus`, `Spring Data Rest`, `HATEOAS`, `HAL-Explorer`,
-  `Docker`, `Docker Compose`, `Testcontainers`, `nginx`
+  `Docker`, `Docker Compose`, `Testcontainers`, `nginx`,
+  `Hystrix`
 </details>
 
 ## Modules/Homeworks
@@ -60,3 +61,4 @@ Certificate: (Link will be here)
 - Microservices
     - [Spring Actuator](30-spring-actuator)
     - [Docker, Docker Compose, Testcontainers](32-docker)
+    - [Histryx](35-hystrix)

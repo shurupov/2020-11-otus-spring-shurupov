@@ -1,13 +1,10 @@
-# Docker, Docker Compose, Testcontainers
+# Hystrix
 
 ## Task
-Pack application to docker containers. Start application using docker-compose, stacks, kubernetes.
-Implement integration tests that use real database. 
+Cover methods/endpoint with hystrix fallback processing.
 
 ## Used
-- Docker
-- Docker compose
-- Testcontainers
+- Hystrix
     
 <details>
   <summary>Launch tests (including integration on real db)</summary>
@@ -26,17 +23,6 @@ The first launch will also build about 10 seconds
 `docker-compose up` for linux and `docker compose up` for windows
 
 </details>
-    
-<details>
-  <summary>Build docker-images separately</summary>
-
-## Command to build backend docker-image
-`docker build -t 35-hystrix-backend:v2 ./backend`
-
-## Command to build frontend docker-image
-`docker build -t 32-hystrix-frontend:v2 ./frontend`
-
-</details>
 
 [Application UI](http://localhost)
 
@@ -46,8 +32,6 @@ Available users:
 | -------- | ------- |
 | user1 | !user1 |
 | admin | !admin |
-
-[HAL-Explorer](http://localhost/api/v2)
 
 ##Hystrix
 
