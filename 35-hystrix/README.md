@@ -33,7 +33,7 @@ Available users:
 | user1 | !user1 |
 | admin | !admin |
 
-##Hystrix
+## Hystrix
 
 To check whether hystrix is working good after some clicks on UI stop postgres.
 
