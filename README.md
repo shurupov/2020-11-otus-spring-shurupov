@@ -61,4 +61,4 @@ Certificate: (Link will be here)
 - Microservices
     - [Spring Actuator](30-spring-actuator)
     - [Docker, Docker Compose, Testcontainers](32-docker)
-    - [Histryx](35-hystrix)
+    - [Hystrix](35-hystrix)
