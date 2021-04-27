@@ -23,7 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
     private Map<Long, Author> cache = Collections.emptyMap();
 
     @Override
-    @HystrixCommand(commandKey="getAuthors", fallbackMethod="throwException")
+    @HystrixCommand(commandKey="getAuthors", fallbackMethod="countFallback")
     public long count() {
         return authorRepository.count();
     }
@@ -71,5 +71,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     public void throwException() {
         throw new ServerErrorException("Temporary server problems", new RuntimeException());
+    }
+
+    public long countFallback() {
+        return 0L;
     }
 }

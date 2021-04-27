@@ -34,7 +34,7 @@ The first launch will also build about 10 seconds
 `docker build -t 35-hystrix-backend:v2 ./backend`
 
 ## Command to build frontend docker-image
-`docker build -t 32-docker-frontend:v2 ./frontend`
+`docker build -t 32-hystrix-frontend:v2 ./frontend`
 
 </details>
 
@@ -48,4 +48,14 @@ Available users:
 | admin | !admin |
 
 [HAL-Explorer](http://localhost/api/v2)
+
+##Hystrix
+
+To check whether hystrix is working good after some clicks on UI stop postgres.
+
+## Command to stop postgres
+`docker-compose stop postgresdb`
+
+## Command to start postgres again
+`docker-compose start postgresdb`
 

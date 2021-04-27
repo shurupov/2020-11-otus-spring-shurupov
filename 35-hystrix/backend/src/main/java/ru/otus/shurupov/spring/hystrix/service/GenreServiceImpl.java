@@ -25,7 +25,7 @@ public class GenreServiceImpl implements GenreService {
     private Map<Long, Genre> genresCache = new HashMap<>();
 
     @Override
-    @HystrixCommand(commandKey="getGenres", fallbackMethod="throwException")
+    @HystrixCommand(commandKey="getGenres", fallbackMethod="countFallback")
     public long count() {
         return genreRepository.count();
     }
@@ -86,5 +86,9 @@ public class GenreServiceImpl implements GenreService {
 
     public void throwException() {
         throw new ServerErrorException("Temporary server problems");
+    }
+
+    public long countFallback() {
+        return 0L;
     }
 }

@@ -31,7 +31,7 @@ public class BookServiceImpl implements BookService {
     private Map<Long, Book> cache = Collections.emptyMap();
 
     @Override
-    @HystrixCommand(commandKey="getBooks", fallbackMethod="throwException")
+    @HystrixCommand(commandKey="getBooks", fallbackMethod="countFallback")
     public long count() {
         return bookRepository.count();
     }
@@ -102,5 +102,9 @@ public class BookServiceImpl implements BookService {
 
     public void throwException() {
         throw new ServerErrorException("Temporary server problems", new RuntimeException());
+    }
+
+    public long countFallback() {
+        return 0L;
     }
 }
