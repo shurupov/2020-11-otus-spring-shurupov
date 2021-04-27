@@ -23,6 +23,7 @@ public class AuthorServiceImpl implements AuthorService {
     private Map<Long, Author> cache = Collections.emptyMap();
 
     @Override
+    @HystrixCommand(commandKey="getAuthors", fallbackMethod="throwException")
     public long count() {
         return authorRepository.count();
     }

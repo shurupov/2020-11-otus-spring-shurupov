@@ -25,6 +25,7 @@ public class GenreServiceImpl implements GenreService {
     private Map<Long, Genre> genresCache = new HashMap<>();
 
     @Override
+    @HystrixCommand(commandKey="getGenres", fallbackMethod="throwException")
     public long count() {
         return genreRepository.count();
     }

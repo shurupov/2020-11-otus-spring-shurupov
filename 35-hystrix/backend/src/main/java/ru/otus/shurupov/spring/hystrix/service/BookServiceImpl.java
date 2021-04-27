@@ -31,6 +31,7 @@ public class BookServiceImpl implements BookService {
     private Map<Long, Book> cache = Collections.emptyMap();
 
     @Override
+    @HystrixCommand(commandKey="getBooks", fallbackMethod="throwException")
     public long count() {
         return bookRepository.count();
     }
