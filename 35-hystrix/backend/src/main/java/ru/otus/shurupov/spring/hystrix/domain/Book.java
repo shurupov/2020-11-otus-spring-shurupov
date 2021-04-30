@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "book")
-@NamedEntityGraph(name = "book-author-graph", attributeNodes = @NamedAttributeNode("author"))
 public class Book {
 
     @Id
@@ -20,14 +19,15 @@ public class Book {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(targetEntity = Author.class)
+    @ManyToOne(targetEntity = Author.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
+    @Fetch(FetchMode.SELECT)
     private Author author;
 
-    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.EAGER)
     @JoinTable(name = "book_genre", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @Fetch(FetchMode.SELECT)
-    @BatchSize(size = 5)
+    @BatchSize(size = 30)
     private List<Genre> genres;
 
     @OneToMany(targetEntity = BookComment.class, fetch = FetchType.LAZY, mappedBy = "book")

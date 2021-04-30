@@ -1,2 +1,2 @@
 ALTER TABLE customer
-    ADD COLUMN roles json;
+    ADD COLUMN roles varchar(255);

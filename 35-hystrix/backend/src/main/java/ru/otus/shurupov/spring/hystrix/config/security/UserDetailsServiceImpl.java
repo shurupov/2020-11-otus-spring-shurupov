@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.otus.shurupov.spring.hystrix.domain.User;
 import ru.otus.shurupov.spring.hystrix.repository.UserRepository;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,8 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                user.getRoles()
-                        .stream()
+                Arrays.stream(user.getRoles().split(","))
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList())
             );

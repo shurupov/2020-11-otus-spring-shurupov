@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.otus.shurupov.spring.hystrix.domain.Author;
 import ru.otus.shurupov.spring.hystrix.service.AuthorService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -15,8 +16,8 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping("/api/authors")
-    public List<Author> authorList() {
-        List<Author> authors = authorService.getAll();
+    public Collection<Author> authorList() {
+        Collection<Author> authors = authorService.getAll();
         return authors;
     }
 
