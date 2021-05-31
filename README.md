@@ -28,7 +28,8 @@ Certificate: [english](https://otus.ru/certificate/d6030b55f7274d0d9b6be132332e9
   `Spring Batch`,
   `Spring Boot Actuator`, `Prometheus`, `Spring Data Rest`, `HATEOAS`, `HAL-Explorer`,
   `Docker`, `Docker Compose`, `Testcontainers`, `nginx`,
-  `Hystrix`
+  `Hystrix`,
+  `JWT`, `Zuul Gateway API`, `Eureka Service Discovery`
 </details>
 
 ## Modules/Homeworks
