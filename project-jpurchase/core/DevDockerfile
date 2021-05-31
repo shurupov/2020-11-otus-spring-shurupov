@@ -1,0 +1,4 @@
+FROM openjdk:11-jre-slim
+WORKDIR /opt/project
+EXPOSE 8002
+CMD ["java", "-jar", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5002", "/opt/project/jpurchase-core-1.0.jar"]

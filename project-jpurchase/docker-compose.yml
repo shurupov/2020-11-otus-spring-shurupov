@@ -1,0 +1,60 @@
+version: "3"
+services:
+  postgresdb:
+    container_name: jpurchase-postgresdb
+    image: library/postgres:13.2
+    environment:
+      POSTGRES_USER: jpurchaseuser1
+      POSTGRES_PASSWORD: jpurchasepassword1
+      POSTGRES_DB: jpurchase
+    networks:
+      - backend
+
+  core:
+    build:
+      context: ./core
+    container_name: jpurchase-core
+    image: jpurchase-core:v1
+    depends_on:
+      - postgresdb
+    networks:
+      - backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/jpurchase
+      SPRING_DATASOURCE_USERNAME: jpurchaseuser1
+      SPRING_DATASOURCE_PASSWORD: jpurchasepassword1
+
+  registry:
+    build:
+      context: ./service-registry
+    container_name: service-registry
+    image: service-registry:v1
+    networks:
+      - backend
+
+  gateway:
+    build:
+      context: ./zuul-gateway
+    container_name: jpurchase-gateway
+    image: jpurchase-gateway:v1
+    depends_on:
+      - registry
+    networks:
+      - backend
+      - frontend
+
+  frontend:
+    build:
+      context: ./ui
+    container_name: jpurchase-ui
+    image: jpurchase-ui:v1
+    depends_on:
+      - gateway
+    ports:
+      - 80:80
+    networks:
+      - frontend
+
+networks:
+  frontend:
+  backend:

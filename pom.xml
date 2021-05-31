@@ -29,5 +29,6 @@
         <module>30-spring-actuator</module>
         <module>32-docker/backend</module>
         <module>35-hystrix/backend</module>
+        <module>project-jpurchase</module>
     </modules>
 </project>

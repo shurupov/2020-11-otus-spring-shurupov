@@ -64,3 +64,4 @@ Certificate: [english](https://otus.ru/certificate/d6030b55f7274d0d9b6be132332e9
     - [Spring Actuator](30-spring-actuator)
     - [Docker, Docker Compose, Testcontainers](32-docker)
     - [Hystrix](35-hystrix)
+    - [JWT-Token, Zuul Gateway API, Eureka Discovery](project-jpurchase)

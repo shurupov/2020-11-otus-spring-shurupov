@@ -1,0 +1,50 @@
+server:
+  port: 8002
+
+jwt:
+  secret: otusspringprojectsecret
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://service-registry:8001/eureka
+  instance:
+    instance-id: ${spring.application.name}:${server.port}
+    lease-renewal-interval-in-seconds: 15
+    lease-expiration-duration-in-seconds: 15
+    prefer-ip-address: true
+
+spring:
+  application:
+    name: core
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/jpurchase
+    username: springuser
+    password: springpassword
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: never
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  data:
+    rest:
+      base-path: /api
+#      default-media-type: application/json
+
+liquibase:
+  enabled: true
+  driver-class-name: org.postgresql.Driver
+  url: jdbc:postgresql://localhost:5432/jpurchase
+  user: springuser
+  password: springpassword

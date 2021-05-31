@@ -1,0 +1,84 @@
+version: "3"
+services:
+  postgresdb:
+    container_name: jpurchase-postgresdb
+    image: library/postgres:13.2
+    environment:
+      POSTGRES_USER: jpurchaseuser1
+      POSTGRES_PASSWORD: jpurchasepassword1
+      POSTGRES_DB: jpurchase
+    networks:
+      - backend
+    ports:
+      - 5432:5432
+
+  core:
+    build:
+      context: ./core
+      dockerfile: ./DevDockerfile
+    container_name: jpurchase-core-dev
+    image: jpurchase-core:dev
+    depends_on:
+      - postgresdb
+      - registry
+    ports:
+      - 8002:8002
+      - 5002:5002
+    networks:
+      - backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/jpurchase
+      SPRING_DATASOURCE_USERNAME: jpurchaseuser1
+      SPRING_DATASOURCE_PASSWORD: jpurchasepassword1
+    volumes:
+      - "./core/target:/opt/project"
+
+  registry:
+    build:
+      context: ./service-registry
+      dockerfile: ./DevDockerfile
+    container_name: service-registry
+    image: service-registry:dev
+    ports:
+      - 8001:8001
+      - 5001:5001
+    networks:
+      - backend
+    volumes:
+      - "./service-registry/target:/opt/project"
+
+  gateway:
+    build:
+      context: ./zuul-gateway
+      dockerfile: ./DevDockerfile
+    container_name: jpurchase-gateway-dev
+    image: jpurchase-gateway:dev
+    depends_on:
+      - registry
+    ports:
+      - 8003:8003
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - "./zuul-gateway/target:/opt/project"
+
+  frontend:
+    container_name: jpurchase-ui
+    image: nginx:1.17.1-alpine
+    depends_on:
+      - gateway
+    ports:
+      - 80:80
+    networks:
+      - frontend
+    volumes:
+      - "./ui/default.conf:/etc/nginx/conf.d/default.conf"
+      - "./ui/build/:/usr/share/nginx/html/"
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  postgresvolume:

@@ -1,0 +1,4 @@
+FROM openjdk:11-jre-slim
+WORKDIR /opt/project
+EXPOSE 8003
+CMD ["java", "-jar", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5003", "/opt/project/jpurchase-gateway-1.0.jar"]
